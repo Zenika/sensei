@@ -37,6 +37,7 @@ body {
 
 .reveal .slides section,
 .reveal .slides section section {
+  box-shadow: 0 0 5px 1px #cccccc;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
