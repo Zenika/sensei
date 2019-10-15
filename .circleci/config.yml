@@ -1,0 +1,17 @@
+version: 2.1
+
+jobs:
+  build-docker-image:
+    docker:
+      - image: docker
+    steps:
+      - setup_remote_docker
+      - checkout
+      - run: sh build.sh
+
+workflows:
+  version: 2.0
+
+  build:
+    jobs:
+      - build-docker-image
