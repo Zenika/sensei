@@ -4,7 +4,8 @@
   "scripts": {
     "prettier": "prettier \"{*,**/*}.{yml,html,css,js}\"",
     "prettier:check": "npm run prettier -- --check",
-    "prettier:write": "npm run prettier -- --write"
+    "prettier:write": "npm run prettier -- --write",
+    "test": "tap \"**/*.test.js\""
   },
   "dependencies": {
     "css-loader": "^3.2.0",
@@ -21,6 +22,7 @@
     "webpack-dev-server": "^3.8.2"
   },
   "devDependencies": {
-    "prettier": "^1.18.2"
+    "prettier": "^1.18.2",
+    "tap": "^14.7.0"
   }
 }
