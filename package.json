@@ -5,7 +5,8 @@
     "prettier": "prettier \"{*,**/*}.{yml,html,css,js}\"",
     "prettier:check": "npm run prettier -- --check",
     "prettier:write": "npm run prettier -- --write",
-    "test": "tap \"**/*.test.js\""
+    "test": "tap \"**/*.test.js\"",
+    "test:watch": "npm run test -- --watch"
   },
   "dependencies": {
     "css-loader": "^3.2.0",
