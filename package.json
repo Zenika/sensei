@@ -1,6 +1,11 @@
 {
   "name": "@zenika/sensei",
   "version": "1.0.0",
+  "scripts": {
+    "prettier": "prettier \"{*,**/*}.{yml,html,css,js}\"",
+    "prettier:check": "npm run prettier -- --check",
+    "prettier:write": "npm run prettier -- --write"
+  },
   "dependencies": {
     "css-loader": "^3.2.0",
     "expose-loader": "^0.7.5",
@@ -14,5 +19,8 @@
     "webpack": "^4.41.1",
     "webpack-cli": "^3.3.9",
     "webpack-dev-server": "^3.8.2"
+  },
+  "devDependencies": {
+    "prettier": "^1.18.2"
   }
 }

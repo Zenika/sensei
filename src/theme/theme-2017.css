@@ -1,5 +1,5 @@
 @font-face {
-  font-family: 'Inconsolata';
+  font-family: "Inconsolata";
   src: url("fonts-2017/Inconsolata/Inconsolata-Regular.ttf") format("truetype");
 }
 
@@ -9,10 +9,10 @@
 
 body {
   background: white;
-  --content-font-family: 'Calibri', sans-serif;
-  --header-font-family: 'Calibri Light', var(--content-font-family);
-  --table-font-family: 'Calibri Light', var(--content-font-family);
-  --code-font-family: 'Inconsolata', monospace;
+  --content-font-family: "Calibri", sans-serif;
+  --header-font-family: "Calibri Light", var(--content-font-family);
+  --table-font-family: "Calibri Light", var(--content-font-family);
+  --code-font-family: "Inconsolata", monospace;
   --zenika-red: #b30c37;
   --grey: #aaaaaa;
   --default-border-size: 1px;
@@ -67,7 +67,8 @@ body {
   line-height: 1.2em;
 }
 
-.reveal .slides table th, .reveal .slides table td {
+.reveal .slides table th,
+.reveal .slides table td {
   padding: 0px 10px;
 }
 
@@ -101,7 +102,12 @@ body {
  * HEADERS
  *********************************************/
 
-.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
   font-family: var(--header-font-family);
   text-transform: uppercase;
   hyphens: none;
@@ -120,11 +126,11 @@ body {
 }
 
 .reveal h1::before {
-  background-image: url('./images-2017/zenia-logo-white-shadow-no-text.png');
+  background-image: url("./images-2017/zenia-logo-white-shadow-no-text.png");
   background-size: cover;
   width: 200px;
   height: 200px;
-  content: '';
+  content: "";
 }
 
 .reveal h2,
@@ -164,14 +170,14 @@ body {
   color: var(--zenika-red);
 }
 
-.reveal blockquote p:first-child, .reveal blockquote p:last-child {
+.reveal blockquote p:first-child,
+.reveal blockquote p:last-child {
   display: block;
 }
 
 .reveal blockquote {
   background: rgba(230, 230, 230, 1);
 }
-
 
 /*********************************************
  * CODE
@@ -182,17 +188,19 @@ body {
   box-shadow: none;
   border-left: 1px solid var(--zenika-red);
   padding-left: 10px;
-  width:100%;
+  width: 100%;
   white-space: pre-wrap;
 }
 
 .reveal h2 + pre,
-.reveal h3 + pre { /* Whole-slide code block */
+.reveal h3 + pre {
+  /* Whole-slide code block */
   border: none;
   padding-left: 0;
 }
 
-.reveal pre code, .reveal .code {
+.reveal pre code,
+.reveal .code {
   color: black;
   max-height: none;
   font-family: var(--code-font-family);
@@ -200,8 +208,9 @@ body {
   line-height: normal;
 }
 
-.slides section > section:not([class^=page-]) {
-  background-image: url('./images-2017/zenika-triangles-4.png'), url('./images-2017/zenika-logo-red-shadow-no-text.png');
+.slides section > section:not([class^="page-"]) {
+  background-image: url("./images-2017/zenika-triangles-4.png"),
+    url("./images-2017/zenika-logo-red-shadow-no-text.png");
   background-position: left top, right 5% bottom 5%;
   background-repeat: no-repeat, no-repeat;
   background-size: auto, 100px 100px;
@@ -212,12 +221,12 @@ body {
  *********************************************/
 
 .slides section:first-child::after {
-    color: white;
-    font-size: 13px;
-    content: "2017-09-01#b550551";
-    position: absolute;
-    bottom: 5mm;
-    right: 5mm;
+  color: white;
+  font-size: 13px;
+  content: "2017-09-01#b550551";
+  position: absolute;
+  bottom: 5mm;
+  right: 5mm;
 }
 
 .reveal section.page-title h1 {
@@ -240,20 +249,19 @@ body {
 }
 
 .reveal section.page-questions {
-  background: white center center no-repeat url('./images-2017/questions.svg');
+  background: white center center no-repeat url("./images-2017/questions.svg");
   background-size: 60%;
 }
 
 .reveal section [class^="page-tp"]:before {
-  content: '';
+  content: "";
   display: inline-block;
   vertical-align: middle;
   height: 80%;
 }
 .reveal section [class^="page-tp"] {
-  background: white center center no-repeat url('./images-2017/tp.svg');
+  background: white center center no-repeat url("./images-2017/tp.svg");
   background-size: 60%;
-
 }
 .reveal section [class^="page-tp"]:after {
   display: block;
@@ -358,7 +366,7 @@ body {
 }
 
 .reveal section.page-demo {
-  background: transparent center center no-repeat url('./images-2017/demo.png');
+  background: transparent center center no-repeat url("./images-2017/demo.png");
   background-size: 50%;
 }
 
@@ -369,7 +377,7 @@ body {
 .reveal a:not(.image) {
   color: var(--zenika-red);
   text-decoration: none;
-  transition: color .15s ease;
+  transition: color 0.15s ease;
 }
 
 .reveal a:not(.image):hover {
@@ -465,7 +473,8 @@ body {
  * FOOTER (style copied from reveal.css -> .reveal .slide-number)
  *********************************************/
 
-.reveal footer, .reveal .slides footer {
+.reveal footer,
+.reveal .slides footer {
   position: absolute;
   bottom: var(--footer-vertical-margin);
   font-size: 12px;
@@ -537,7 +546,7 @@ body {
 
 /** incusion de font-awesome avec reveal : cf https://github.com/FortAwesome/Font-Awesome/pull/2131 */
 .reveal .fa {
-  font-family: 'FontAwesome';
+  font-family: "FontAwesome";
   font-style: normal;
 }
 

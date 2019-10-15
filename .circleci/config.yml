@@ -9,9 +9,18 @@ jobs:
       - checkout
       - run: sh build.sh
 
+  prettier:
+    docker:
+      - image: node:12
+    steps:
+      - checkout
+      - run: npm ci
+      - run: npm run prettier:check
+
 workflows:
   version: 2.0
 
   build:
     jobs:
       - build-docker-image
+      - prettier
