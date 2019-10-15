@@ -7,9 +7,11 @@ using a simpler and newer stack.
 
 ## Usage
 
+> 🐳 Requires Docker
+
 - Clone this repo and `cd` into the created folder
-- `docker image build . --tag zenika/sensei`
+- `sh build.sh`
 - `cd` into the folder of a training (must have `Slides/slides.json`)
-- `docker container run -it --rm -v $(pwd):/app/training-material -p 8080:8080 zenika/sensei`
+- `sh ../path/to/sensei/run.sh`
 - Navigate to `localhost:8080`
-- Admire the great looking slides 🎉
+- Enjoy the great looking slides 🎉
