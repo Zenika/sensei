@@ -16,13 +16,12 @@ using a simpler and newer stack.
 - Navigate to `localhost:8080`
 - Enjoy the great looking slides 🎉
 
-## Usage using a prebuilt image
+## Tip: using a shell alias
 
-> 🐳 Requires Docker
+You may want to define the following alias to be able to run slides using `slides`:
 
-- Define an alias using 
 ```
->$alias slides='docker container run \
+alias slides='docker container run \
   --interactive \
   --tty \
   --rm \
@@ -30,7 +29,3 @@ using a simpler and newer stack.
   --publish 8080:8080 \
   zenika/sensei' 
 ```
-- `cd` into the folder of a training (must have `Slides/slides.json`)
-- Launch using the command `slides`
-- Navigate to `localhost:8080`
-- Enjoy the great looking slides 🎉
