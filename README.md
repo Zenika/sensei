@@ -15,6 +15,7 @@ using a simpler and newer stack.
 - `sh ../path/to/sensei/run.sh`
 - Navigate to `localhost:8080`
 - Enjoy the great looking slides 🎉
+- To generate a PDF, run `sh ../path/to/sensei/pdf.sh` while `run.sh` is still running
 
 ## Tip: using a shell alias
 
@@ -27,5 +28,5 @@ alias slides='docker container run \
   --rm \
   --volume $(pwd):/app/training-material \
   --publish 8080:8080 \
-  zenika/sensei' 
+  zenika/sensei'
 ```
