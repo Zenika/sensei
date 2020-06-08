@@ -22,14 +22,14 @@ reveal.initialize({
   mouseWheel: true,
   margin: 0,
   maxScale: 2.0,
-  // width: selectWidth(window.location.search),
-  height: 795,
+  width: 1420,
+  height: 800,
   dependencies: [
     // Zoom in and out with Alt+click
     { src: revealPluginZoom, async: true },
     // Speaker notes
     { src: revealPluginNotes, async: true },
-    // // MathJax
+    // MathJax
     { src: revealPluginMathJax, async: true }
   ]
 });
