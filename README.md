@@ -7,11 +7,17 @@ using a simpler and newer stack.
 
 ## Usage
 
-### Using Docker 🐳
+### Using the published Docker image 🐳
+
+- `cd` into a training material folder (must have `Slides/slides.json` and `CahierExercices/parts.json`)
+- Run `docker run -it --rm -p 8080:8080 -v ($pwd):/training-material zenika/sensei`.
+- Navigate to `http://localhost:8080/slides.html` for slides and `http://localhost:8080/labs.html` for labs
+
+### Using a Docker image built from sources 🐳
 
 - Clone this repo and `cd` into the created folder
 - `sh build.sh`
-- `cd` into a training material folder (must have `Slides/slides.json`)
+- `cd` into a training material folder (must have `Slides/slides.json` and `CahierExercices/parts.json`)
 - `sh ../path/to/sensei/run.sh`
 - Navigate to `http://localhost:8080/slides.html` for slides and `http://localhost:8080/labs.html` for labs
 
