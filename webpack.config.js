@@ -25,15 +25,15 @@ module.exports = (env = {}, argv) => {
         {
           test: /slides\.json$/,
           type: "javascript/auto",
-          use: "./src/loaders/slides-json-loader"
+          use: "./src/loaders/slides-json-loader",
         },
         {
           test: /\.md$/,
-          use: ["html-loader", "./src/loaders/revealjs-loader"]
+          use: ["html-loader", "./src/loaders/revealjs-loader"],
         },
         {
           test: /\.css$/,
-          use: [{ loader: MiniCssExtractPlugin.loader }, "css-loader"]
+          use: [{ loader: MiniCssExtractPlugin.loader }, "css-loader"],
         },
         {
           test: /\.(png|jpe?g|gif|svg|webp|ttf)$/i,
@@ -41,9 +41,9 @@ module.exports = (env = {}, argv) => {
             loader: "file-loader",
             options: {
               name: "[name]-[contenthash].[ext]",
-              outputPath: "static-assets"
-            }
-          }
+              outputPath: "static-assets",
+            },
+          },
         },
         {
           test: /reveal\.js[\/\\]plugin[\/\\]/,
@@ -60,41 +60,41 @@ module.exports = (env = {}, argv) => {
                 loader: "file-loader",
                 options: {
                   name: "[name].[ext]",
-                  outputPath: "reveal-plugins"
-                }
-              }
+                  outputPath: "reveal-plugins",
+                },
+              },
             },
             {
               use: {
                 loader: "file-loader",
                 options: {
                   name: "[name]-[contenthash].[ext]",
-                  outputPath: "reveal-plugins"
-                }
-              }
-            }
-          ]
+                  outputPath: "reveal-plugins",
+                },
+              },
+            },
+          ],
         },
         {
           test: /reveal\.js[\/\\]js[\/\\]reveal\.js$/,
-          use: { loader: "expose-loader", options: "Reveal" }
-        }
-      ]
+          use: { loader: "expose-loader", options: "Reveal" },
+        },
+      ],
     },
     resolve: {
       alias: {
-        "training-material": trainingMaterialFolder
-      }
+        "training-material": trainingMaterialFolder,
+      },
     },
     output: {
-      path: path.resolve("./dist")
+      path: path.resolve("./dist"),
     },
     plugins: [
       new HtmlWebpackPlugin({ template: "src/index.html" }),
-      new MiniCssExtractPlugin()
+      new MiniCssExtractPlugin(),
     ],
     devServer: {
-      contentBase: false
-    }
+      contentBase: false,
+    },
   };
 };

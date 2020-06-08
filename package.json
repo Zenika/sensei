@@ -24,7 +24,7 @@
     "webpack-dev-server": "3.11.0"
   },
   "devDependencies": {
-    "prettier": "1.19.1",
+    "prettier": "2.0.5",
     "tap": "14.10.7"
   }
 }

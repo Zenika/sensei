@@ -30,6 +30,6 @@ reveal.initialize({
     // Speaker notes
     { src: revealPluginNotes, async: true },
     // MathJax
-    { src: revealPluginMathJax, async: true }
-  ]
+    { src: revealPluginMathJax, async: true },
+  ],
 });

@@ -2,10 +2,10 @@ const marked = require("marked");
 const Prism = require("prismjs");
 require("prismjs/components/prism-clike");
 
-module.exports = content => {
+module.exports = (content) => {
   return slidify(content, {
     verticalSeparator: "^\r?\n\r?\n\r?\n",
-    notesSeparator: "^Notes :"
+    notesSeparator: "^Notes :",
   });
 };
 
@@ -102,7 +102,7 @@ function slidify(markdown, options) {
     if (sectionStack[i] instanceof Array) {
       markdownSections += "<section " + options.attributes + ">";
 
-      sectionStack[i].forEach(function(child) {
+      sectionStack[i].forEach(function (child) {
         const classes = getEmbeddedClasses(child);
         markdownSections +=
           `<section ${classes}>` +
@@ -170,7 +170,7 @@ function createMarkdownSlide(content, options) {
     highlight(code, lang) {
       const prismLang = Prism.languages[lang] || Prism.languages.clike;
       return Prism.highlight(code, prismLang);
-    }
+    },
   }); //'<script type="text/template">' + marked(content) + "</script>";
 }
 
