@@ -6,7 +6,7 @@ import revealPluginMathJax from "reveal.js/plugin/math/math.js";
 import "reveal.js/css/reveal.css";
 import "prismjs/themes/prism.css";
 import "./theme/theme-2017.css";
-import slides from "../training-material/Slides/slides.json";
+import slides from "training-material/Slides/slides.json";
 
 const slideContainer = document.querySelector(".slides");
 slideContainer.innerHTML = slides.join("\n");

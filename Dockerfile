@@ -7,7 +7,8 @@ RUN npm ci --production
 
 COPY ./ ./
 
-VOLUME [ "/app/training-material" ]
+VOLUME [ "/training-material" ]
 EXPOSE 8080
 
-CMD ["npx", "webpack-dev-server", "--host", "0.0.0.0"]
+ENTRYPOINT [ "npm",  "start", "--silent", "--" ]
+CMD ["--host", "0.0.0.0", "--env.material=/training-material"]

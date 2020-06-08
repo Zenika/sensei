@@ -7,15 +7,28 @@ using a simpler and newer stack.
 
 ## Usage
 
-> 🐳 Requires Docker
+### Using Docker 🐳
 
 - Clone this repo and `cd` into the created folder
 - `sh build.sh`
-- `cd` into the folder of a training (must have `Slides/slides.json`)
+- `cd` into a training material folder (must have `Slides/slides.json`)
 - `sh ../path/to/sensei/run.sh`
 - Navigate to `localhost:8080`
 - Enjoy the great looking slides 🎉
-- To generate a PDF, run `sh ../path/to/sensei/pdf.sh` while `run.sh` is still running
+
+### Using Node.js
+
+- Clone this repo and `cd` into the created folder
+- `npm install`
+- `npm start -- --env.material=/path/to/training-material-folder`
+- Navigate to `localhost:8080`
+- Enjoy the great looking slides 🎉
+
+### Generating a PDF
+
+> 🐳 Requires Docker
+
+Run `sh pdf.sh` while the slide server is up.
 
 ## Tip: using a shell alias
 
@@ -26,7 +39,7 @@ alias slides='docker container run \
   --interactive \
   --tty \
   --rm \
-  --volume $(pwd):/app/training-material \
+  --volume $(pwd):/training-material \
   --publish 8080:8080 \
   zenika/sensei'
 ```

@@ -4,6 +4,6 @@ docker container run \
   --interactive \
   --tty \
   --rm \
-  --volume $(pwd):/app/training-material \
+  --volume $(pwd):/training-material:ro \
   --publish 8080:8080 \
   zenika/sensei

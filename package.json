@@ -6,7 +6,8 @@
     "prettier:check": "npm run prettier -- --check",
     "prettier:write": "npm run prettier -- --write",
     "test": "tap \"**/*.test.js\"",
-    "test:watch": "npm run test -- --watch"
+    "test:watch": "npm run test -- --watch",
+    "start": "webpack-dev-server"
   },
   "dependencies": {
     "css-loader": "^3.2.0",
