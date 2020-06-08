@@ -7,7 +7,8 @@
     "prettier:write": "npm run prettier -- --write",
     "test": "tap \"src/**/*.test.js\"",
     "test:watch": "npm run test -- --watch",
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "pdf": "npx decktape reveal http://localhost:8080 slides.pdf"
   },
   "dependencies": {
     "css-loader": "3.5.3",
