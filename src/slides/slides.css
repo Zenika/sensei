@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Inconsolata";
-  src: url("fonts-2017/Inconsolata/Inconsolata-Regular.ttf") format("truetype");
+  src: url("./assets/Inconsolata-Regular.ttf") format("truetype");
 }
 
 /*********************************************
@@ -127,7 +127,7 @@ body {
 }
 
 .reveal h1::before {
-  background-image: url("./images-2017/zenia-logo-white-shadow-no-text.png");
+  background-image: url("./assets/zenia-logo-white-shadow-no-text.png");
   background-size: cover;
   width: 200px;
   height: 200px;
@@ -210,8 +210,8 @@ body {
 }
 
 .slides section > section:not([class^="page-"]) {
-  background-image: url("./images-2017/zenika-triangles-4.png"),
-    url("./images-2017/zenika-logo-red-shadow-no-text.png");
+  background-image: url("./assets/zenika-triangles-4.png"),
+    url("./assets/zenika-logo-red-shadow-no-text.png");
   background-position: left top, right 5% bottom 5%;
   background-repeat: no-repeat, no-repeat;
   background-size: auto, 100px 100px;
@@ -250,7 +250,7 @@ body {
 }
 
 .reveal section.page-questions {
-  background: white center center no-repeat url("./images-2017/questions.svg");
+  background: white center center no-repeat url("./assets/questions.svg");
   background-size: 60%;
 }
 
@@ -261,7 +261,7 @@ body {
   height: 80%;
 }
 .reveal section [class^="page-tp"] {
-  background: white center center no-repeat url("./images-2017/tp.svg");
+  background: white center center no-repeat url("./assets/tp.svg");
   background-size: 60%;
 }
 .reveal section [class^="page-tp"]:after {
@@ -367,7 +367,7 @@ body {
 }
 
 .reveal section.page-demo {
-  background: transparent center center no-repeat url("./images-2017/demo.png");
+  background: transparent center center no-repeat url("./assets/demo.png");
   background-size: 50%;
 }
 

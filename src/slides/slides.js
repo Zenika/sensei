@@ -5,7 +5,7 @@ import revealPluginZoom from "reveal.js/plugin/zoom-js/zoom.js";
 import revealPluginMathJax from "reveal.js/plugin/math/math.js";
 import "reveal.js/css/reveal.css";
 import "prismjs/themes/prism.css";
-import "./theme/theme-2017.css";
+import "./slides.css";
 import slides from "training-material/Slides/slides.json";
 
 const slideContainer = document.querySelector(".slides");

@@ -19,11 +19,11 @@ module.exports = (env = {}, argv) => {
   );
   return {
     mode: "development",
-    entry: "./src/slides.js",
+    entry: { slides: "./src/slides/slides.js", labs: "./src/labs/labs.js" },
     module: {
       rules: [
         {
-          test: /slides\.json$/,
+          test: [/slides\.json$/, /parts\.json$/],
           type: "javascript/auto",
           use: "./src/loaders/slides-json-loader",
         },
@@ -90,7 +90,16 @@ module.exports = (env = {}, argv) => {
       path: path.resolve("./dist"),
     },
     plugins: [
-      new HtmlWebpackPlugin({ template: "src/index.html" }),
+      new HtmlWebpackPlugin({
+        template: "src/slides/slides.html",
+        chunks: ["slides"],
+        filename: "slides.html",
+      }),
+      new HtmlWebpackPlugin({
+        template: "src/labs/labs.html",
+        chunks: ["labs"],
+        filename: "labs.html",
+      }),
       new MiniCssExtractPlugin(),
     ],
     devServer: {

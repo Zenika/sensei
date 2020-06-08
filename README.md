@@ -13,18 +13,16 @@ using a simpler and newer stack.
 - `sh build.sh`
 - `cd` into a training material folder (must have `Slides/slides.json`)
 - `sh ../path/to/sensei/run.sh`
-- Navigate to `localhost:8080`
-- Enjoy the great looking slides 🎉
-- To generate a PDF, run `sh pdf.sh` while the slide server is up.
+- Navigate to `http://localhost:8080/slides.html` for slides and `http://localhost:8080/labs.html` for labs
+- To generate a PDF of the slides, run `sh pdf.sh` while the slide server is up.
 
 ### Using Node.js
 
 - Clone this repo and `cd` into the created folder
 - `npm install`
 - `npm start -- --env.material=/path/to/training-material-folder`
-- Navigate to `localhost:8080`
-- Enjoy the great looking slides 🎉
-- To generate a PDF, run `npm run pdf` while the slide server is up.
+- Navigate to `http://localhost:8080/slides.html` for slides and `http://localhost:8080/labs.html` for labs
+- To generate a PDF of the slides, run `npm run pdf` while the slide server is up.
 
 ## Tip: using a shell alias
 

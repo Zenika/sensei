@@ -6,4 +6,4 @@ docker container run \
   --rm \
   --volume $(pwd):/slides \
   --net host \
-  astefanutti/decktape http://localhost:8080 slides.pdf
+  astefanutti/decktape http://localhost:8080/slides.html slides.pdf
