@@ -14,7 +14,6 @@ using a simpler and newer stack.
 - `cd` into a training material folder (must have `Slides/slides.json`)
 - `sh ../path/to/sensei/run.sh`
 - Navigate to `http://localhost:8080/slides.html` for slides and `http://localhost:8080/labs.html` for labs
-- To generate a PDF of the slides, run `sh pdf.sh` while the slide server is up.
 
 ### Using Node.js
 
@@ -22,7 +21,14 @@ using a simpler and newer stack.
 - `npm install`
 - `npm start -- --env.material=/path/to/training-material-folder`
 - Navigate to `http://localhost:8080/slides.html` for slides and `http://localhost:8080/labs.html` for labs
-- To generate a PDF of the slides, run `npm run pdf` while the slide server is up.
+
+### Generating PDFs
+
+- Run the web server like described above and leave it running
+- `cd` into `src/pdf`
+- `npm install`
+- `npm run slides` to generate a PDF for the slides
+- `npm run labs` to generate a PDF for the labs
 
 ## Tip: using a shell alias
 

@@ -1,0 +1,12 @@
+{
+  "name": "@zenika/sensei-pdf",
+  "version": "0.0.0",
+  "scripts": {
+    "labs": "node pdf.js http://localhost:8080/labs.html labs.pdf",
+    "slides": "decktape --pause 0 reveal http://localhost:8080/slides.html slides.pdf"
+  },
+  "dependencies": {
+    "decktape": "^3.0.0",
+    "puppeteer": "^3.3.0"
+  }
+}
