@@ -36,16 +36,6 @@ module.exports = (env = {}, argv) => {
           use: [{ loader: MiniCssExtractPlugin.loader }, "css-loader"],
         },
         {
-          test: /\.(png|jpe?g|gif|svg|webp|ttf)$/i,
-          use: {
-            loader: "file-loader",
-            options: {
-              name: "[name]-[contenthash].[ext]",
-              outputPath: "static-assets",
-            },
-          },
-        },
-        {
           test: /reveal\.js[\/\\]plugin[\/\\]/,
           oneOf: [
             {
@@ -78,6 +68,16 @@ module.exports = (env = {}, argv) => {
         {
           test: /reveal\.js[\/\\]js[\/\\]reveal\.js$/,
           use: { loader: "expose-loader", options: "Reveal" },
+        },
+        {
+          test: /\.(png|jpe?g|gif|svg|webp|mp3|ttf)$/i,
+          use: {
+            loader: "file-loader",
+            options: {
+              name: "[name]-[contenthash].[ext]",
+              outputPath: "static-assets",
+            },
+          },
         },
       ],
     },
