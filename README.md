@@ -1,9 +1,7 @@
 # @zenika/sensei
 
-⚠️ THIS IS A VERY EARLY PROTOTYPE
-
 Sensei is meant to be a replacement of [zenika-formation-framework](https://github.com/Zenika/zenika-formation-framework/),
-using a simpler and newer stack.
+using a simpler and newer stack. It's not up-to-par in terms of features, but it's ready for test drives.
 
 ## Usage
 
