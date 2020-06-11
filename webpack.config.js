@@ -36,36 +36,6 @@ module.exports = (env = {}, argv) => {
           use: [{ loader: MiniCssExtractPlugin.loader }, "css-loader"],
         },
         {
-          test: /reveal\.js[\/\\]plugin[\/\\]/,
-          oneOf: [
-            {
-              /*
-               * The files of the notes plugin must be treated specially
-               * as the file names need to stay the exact same for it to work.
-               * See https://github.com/hakimel/reveal.js/blob/3.8.0/plugin/notes/notes.js#L24-L26
-               * for details on the why.
-               */
-              test: /notes\.(html|js)$/,
-              use: {
-                loader: "file-loader",
-                options: {
-                  name: "[name].[ext]",
-                  outputPath: "reveal-plugins",
-                },
-              },
-            },
-            {
-              use: {
-                loader: "file-loader",
-                options: {
-                  name: "[name]-[contenthash].[ext]",
-                  outputPath: "reveal-plugins",
-                },
-              },
-            },
-          ],
-        },
-        {
           test: /reveal\.js[\/\\]js[\/\\]reveal\.js$/,
           use: { loader: "expose-loader", options: "Reveal" },
         },

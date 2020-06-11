@@ -1,15 +1,14 @@
-import reveal from "reveal.js/js/reveal.js";
+import reveal from "reveal.js/dist/reveal.js";
 import revealPluginNotes from "reveal.js/plugin/notes/notes.js";
-import "reveal.js/plugin/notes/notes.html";
-import revealPluginZoom from "reveal.js/plugin/zoom-js/zoom.js";
+import revealPluginZoom from "reveal.js/plugin/zoom/zoom.js";
 import revealPluginMathJax from "reveal.js/plugin/math/math.js";
-import "reveal.js/css/reveal.css";
+import "reveal.js/dist/reveal.css";
 import "prismjs/themes/prism.css";
 import "./slides.css";
-import slides from "training-material/Slides/slides.json";
+import slidesContent from "training-material/Slides/slides.json";
 
 const slideContainer = document.querySelector(".slides");
-slideContainer.innerHTML = slides.join("\n");
+slideContainer.innerHTML = slidesContent.join("\n");
 
 reveal.initialize({
   controls: true,
@@ -21,15 +20,7 @@ reveal.initialize({
   slideNumber: false,
   mouseWheel: true,
   margin: 0,
-  maxScale: 2.0,
   width: 1420,
   height: 800,
-  dependencies: [
-    // Zoom in and out with Alt+click
-    { src: revealPluginZoom, async: true },
-    // Speaker notes
-    { src: revealPluginNotes, async: true },
-    // MathJax
-    { src: revealPluginMathJax, async: true },
-  ],
+  plugins: [revealPluginMathJax, revealPluginNotes, revealPluginZoom],
 });
