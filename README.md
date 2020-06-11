@@ -34,6 +34,11 @@ using a simpler and newer stack. It's not up-to-par in terms of features, but it
 - `npm run slides` to generate a PDF for the slides
 - `npm run labs` to generate a PDF for the labs
 
+## Reveal plugins
+
+The following plugins are enabled: Markdown, Highlight, Zoom, Notes and Math.
+Refer to [Reveal's documentation](https://revealjs.com/plugins/#built-in-plugins) for usage.
+
 ## Tip: using a shell alias
 
 You may want to define the following alias to be able to run slides using `slides`:
