@@ -252,8 +252,11 @@ body {
   margin-top: 620px;
 }
 
-.reveal section.toc-2-columns ul {
-  column-count: 2;
+.reveal section.toc ul {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  max-height: 70%;
 }
 
 .reveal section.page-questions {
