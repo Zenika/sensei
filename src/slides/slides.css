@@ -1,6 +1,11 @@
 @font-face {
-  font-family: "Inconsolata";
-  src: url("./assets/Inconsolata-Regular.ttf") format("truetype");
+  font-family: "Montserrat";
+  src: url("./assets/Montserrat-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Source Sans Pro";
+  src: url("./assets/SourceSansPro-Regular.ttf") format("truetype");
 }
 
 /*********************************************
@@ -9,10 +14,12 @@
 
 body {
   background: white;
-  --content-font-family: "Calibri", sans-serif;
-  --header-font-family: "Calibri Light", var(--content-font-family);
-  --table-font-family: "Calibri Light", var(--content-font-family);
-  --code-font-family: "Inconsolata", monospace;
+  --content-font-family: "Source Sans Pro", "Calibri", sans-serif;
+  --header-font-family: "Montserrat", "Calibri Light",
+    var(--content-font-family);
+  --table-font-family: "Source Sans Pro", "Calibri Light",
+    var(--content-font-family);
+  --code-font-family: "Menlo", "Monaco", "Courier New", monospace;
   --zenika-red: #b30c37;
   --grey: #aaaaaa;
   --default-border-size: 1px;
@@ -62,12 +69,6 @@ body {
   text-shadow: none;
 }
 
-.reveal p {
-  margin: 0;
-  margin-bottom: 10px;
-  line-height: 1.2em;
-}
-
 .reveal .slides table th,
 .reveal .slides table td {
   padding: 0px 10px;
@@ -114,7 +115,6 @@ body {
   hyphens: none;
   -ms-hyphens: none;
   -webkit-hyphens: none;
-  font-weight: lighter;
 }
 
 .reveal h1 {
@@ -127,19 +127,25 @@ body {
 }
 
 .reveal h1::before {
-  background-image: url("./assets/zenia-logo-white-shadow-no-text.png");
+  background-image: url("./assets/zenika-logo-red-no-shadow-no-text.png");
   background-size: cover;
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 180px;
   content: "";
+  margin-bottom: 20px;
 }
 
 .reveal h2,
 .reveal h3 {
-  padding: 50px 0;
+  margin-top: 2em;
+  margin-bottom: 0.5em;
   text-align: left;
   font-size: 40pt;
-  margin: 0;
+}
+
+.reveal h2::after {
+  content: ".";
+  color: #b51432;
 }
 
 .reveal h2 small,
@@ -168,6 +174,7 @@ body {
 }
 
 .reveal code {
+  font-family: var(--code-font-family);
   color: var(--zenika-red);
 }
 
@@ -200,21 +207,21 @@ body {
   padding-left: 0;
 }
 
-.reveal pre code,
+.reveal pre > code,
 .reveal .code {
   color: black;
   max-height: none;
   font-family: var(--code-font-family);
-  font-size: 24px;
+  font-size: 22px;
   line-height: normal;
 }
 
 .slides section > section:not([class^="page-"]) {
-  background-image: url("./assets/zenika-triangles-4.png"),
-    url("./assets/zenika-logo-red-shadow-no-text.png");
-  background-position: left top, right 5% bottom 5%;
+  background-image: url("./assets/zenika-liseret-rouge.png"),
+    url("./assets/zenika-logo-red-no-shadow-no-text.png");
+  background-position: top, right 5% bottom 5%;
   background-repeat: no-repeat, no-repeat;
-  background-size: auto, 100px 100px;
+  background-size: auto, 75px 75px;
 }
 
 /*********************************************
@@ -245,8 +252,11 @@ body {
   margin-top: 620px;
 }
 
-.reveal section.toc-2-columns ul {
-  column-count: 2;
+.reveal section.toc ul {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  max-height: 70%;
 }
 
 .reveal section.page-questions {
@@ -549,6 +559,10 @@ body {
 .reveal .fa {
   font-family: "FontAwesome";
   font-style: normal;
+}
+
+.reveal pre code {
+  padding: 0;
 }
 
 /** contournement bug chrome et ff qui affichent un fond noir lors du passage en fullscreen : cf https://github.com/hakimel/reveal.js/issues/1386#issuecomment-225379825 */
