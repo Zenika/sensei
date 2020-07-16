@@ -137,7 +137,8 @@ body {
 
 .reveal h2,
 .reveal h3 {
-  padding: 50px 0;
+  margin-top: 2em;
+  margin-bottom: 0.5em;
   text-align: left;
   font-size: 40pt;
 }
