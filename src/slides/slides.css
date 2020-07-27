@@ -285,6 +285,10 @@ body {
   text-align: center;
 }
 
+.reveal section.page-tp::after {
+  content: attr(data-label);
+}
+
 .reveal section.page-tp1:after {
   content: "Lab 1";
 }
