@@ -36,7 +36,7 @@ module.exports = (env = {}, argv) => {
           use: [{ loader: MiniCssExtractPlugin.loader }, "css-loader"],
         },
         {
-          test: /reveal\.js[\/\\]js[\/\\]reveal\.js$/,
+          test: /reveal\.js[\/\\]dist[\/\\]reveal\.js$/,
           use: { loader: "expose-loader", options: "Reveal" },
         },
         {
