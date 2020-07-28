@@ -8,6 +8,11 @@
   src: url("./assets/SourceSansPro-Regular.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "Menlo";
+  src: url("./assets/Menlo-Regular.ttf") format("truetype");
+}
+
 /*********************************************
  * GLOBAL STYLES
  *********************************************/
