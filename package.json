@@ -10,17 +10,17 @@
     "start": "webpack-dev-server"
   },
   "dependencies": {
-    "css-loader": "3.5.3",
-    "expose-loader": "0.7.5",
+    "css-loader": "4.2.0",
+    "expose-loader": "1.0.0",
     "file-loader": "6.0.0",
     "html-loader": "1.1.0",
     "html-webpack-plugin": "4.3.0",
-    "marked": "1.1.0",
+    "marked": "1.1.1",
     "mini-css-extract-plugin": "0.9.0",
     "prismjs": "1.20.0",
     "reveal.js": "4.0.2",
-    "webpack": "4.43.0",
-    "webpack-cli": "3.3.11",
+    "webpack": "4.44.1",
+    "webpack-cli": "3.3.12",
     "webpack-dev-server": "3.11.0"
   },
   "devDependencies": {
