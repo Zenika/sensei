@@ -48,6 +48,16 @@ var SCRIPT_END_PLACEHOLDER = "__SCRIPT_END__";
 function slidify(markdown, options) {
   options = getSlidifyOptions(options);
 
+  marked.use({
+    renderer: {
+      paragraph(text) {
+        const elClass =
+          getEmbeddedClasses(text, DEFAULT_ELEMENT_ATTRIBUTES_SEPARATOR) || "";
+        return `<p ${elClass}>${text}</p>`;
+      },
+    },
+  });
+
   var separatorRegex = new RegExp(
       options.separator +
         (options.verticalSeparator ? "|" + options.verticalSeparator : ""),
