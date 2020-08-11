@@ -1,10 +1,9 @@
 const fs = require("fs");
+const path = require("path");
 const puppeteer = require("puppeteer");
 
 async function urlToPdfString(url, options) {
-  const browser = await puppeteer.launch({
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
-  });
+  const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto(url);
   const pdfContent = await page.pdf(options);
@@ -13,6 +12,12 @@ async function urlToPdfString(url, options) {
 }
 
 async function savePdfFile(filepath, url, options) {
+  const pdfDir = path.dirname(filepath);
+  try {
+    await fs.promises.access(pdfDir, fs.constants.F_OK);
+  } catch {
+    await fs.promises.mkdir(pdfDir);
+  }
   const pdfContent = await urlToPdfString(url, options);
   await fs.promises.writeFile(filepath, pdfContent, "base64");
 }
