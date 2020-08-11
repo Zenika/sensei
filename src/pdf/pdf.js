@@ -16,7 +16,7 @@ async function savePdfFile(filepath, url, options) {
   try {
     await fs.promises.access(pdfDir, fs.constants.F_OK);
   } catch {
-    await fs.promises.mkdir(pdfDir);
+    await fs.promises.mkdir(pdfDir, { recursive: true });
   }
   const pdfContent = await urlToPdfString(url, options);
   await fs.promises.writeFile(filepath, pdfContent, "base64");
