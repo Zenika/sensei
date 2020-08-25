@@ -1,6 +1,6 @@
 const marked = require("marked");
 const Prism = require("prismjs");
-require("prismjs/components/prism-clike");
+require("prismjs/components/")();
 
 module.exports = (content) => {
   return slidify(content, {
