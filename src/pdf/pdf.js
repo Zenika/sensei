@@ -13,11 +13,7 @@ async function urlToPdfString(url, options) {
 
 async function savePdfFile(filepath, url, options) {
   const pdfDir = path.dirname(filepath);
-  try {
-    await fs.promises.access(pdfDir, fs.constants.F_OK);
-  } catch {
-    await fs.promises.mkdir(pdfDir, { recursive: true });
-  }
+  await fs.promises.mkdir(pdfDir, { recursive: true });
   const pdfContent = await urlToPdfString(url, options);
   await fs.promises.writeFile(filepath, pdfContent, "base64");
 }
