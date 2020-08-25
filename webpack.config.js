@@ -37,7 +37,7 @@ module.exports = (env = {}, argv) => {
         },
         {
           test: /reveal\.js[\/\\]dist[\/\\]reveal\.js$/,
-          use: { loader: "expose-loader", options: "Reveal" },
+          use: { loader: "expose-loader", options: { exposes: "Reveal" } },
         },
         {
           test: /\.(png|jpe?g|gif|svg|webp|mp3|ttf)$/i,

@@ -6,7 +6,7 @@
     "slides": "decktape --pause 0 reveal http://localhost:8080/slides.html slides.pdf"
   },
   "dependencies": {
-    "decktape": "^3.0.0",
-    "puppeteer": "^3.3.0"
+    "decktape": "3.0.0",
+    "puppeteer": "5.2.1"
   }
 }
