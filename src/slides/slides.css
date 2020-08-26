@@ -207,6 +207,13 @@ body {
   white-space: pre-wrap;
 }
 
+.reveal h2 + pre,
+.reveal h3 + pre {
+  /* Whole-slide code block */
+  border: none;
+  padding-left: 0;
+}
+
 .reveal pre > code,
 .reveal .code {
   color: black;
