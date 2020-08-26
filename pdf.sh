@@ -1,9 +1,15 @@
 #!/bin/sh
 
 docker container run \
-  --interactive \
-  --tty \
   --rm \
-  --volume $(pwd):/slides \
+  --volume $(pwd)/pdf:/app/pdf \
   --net host \
-  astefanutti/decktape http://localhost:8080/slides.html slides.pdf
+  --cap-add=SYS_ADMIN \
+  zenika/sensei-pdf slides
+
+docker container run \
+  --rm \
+  --volume $(pwd)/pdf:/app/pdf \
+  --net host \
+  --cap-add=SYS_ADMIN \
+  zenika/sensei-pdf labs
