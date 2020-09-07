@@ -127,7 +127,7 @@ function slidify(markdown, options) {
   markdownSections = markdownSections.replace(
     /(<!--\s*\.element:(["=\-\w\s]+)-->\s*)<([^>]+)>/g,
     "$1<$3 $2>"
-  )
+  );
 
   return markdownSections;
 }
