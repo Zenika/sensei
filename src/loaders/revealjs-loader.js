@@ -48,16 +48,6 @@ var SCRIPT_END_PLACEHOLDER = "__SCRIPT_END__";
 function slidify(markdown, options) {
   options = getSlidifyOptions(options);
 
-  marked.use({
-    renderer: {
-      paragraph(text) {
-        const elClass =
-          getEmbeddedClasses(text, DEFAULT_ELEMENT_ATTRIBUTES_SEPARATOR) || "";
-        return `<p ${elClass}>${text}</p>`;
-      },
-    },
-  });
-
   var separatorRegex = new RegExp(
       options.separator +
         (options.verticalSeparator ? "|" + options.verticalSeparator : ""),
@@ -132,6 +122,12 @@ function slidify(markdown, options) {
         "</section>";
     }
   }
+
+  // Support for the <!-- .element: --> syntax from Reveal (see https://revealjs.com/markdown/#element-attributes)
+  markdownSections = markdownSections.replace(
+    /(<!--\s*\.element:(["=\-\w\s]+)-->\s*)<([^>]+)>/g,
+    "$1<$3 $2>"
+  )
 
   return markdownSections;
 }
