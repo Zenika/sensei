@@ -1,3 +1,4 @@
+import "prismjs/themes/prism.css";
 import "./labs.css";
 import labs from "training-material/CahierExercices/parts.json";
 
