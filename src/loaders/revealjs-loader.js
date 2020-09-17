@@ -123,6 +123,12 @@ function slidify(markdown, options) {
     }
   }
 
+  // Support for the <!-- .element: --> syntax from Reveal (see https://revealjs.com/markdown/#element-attributes)
+  markdownSections = markdownSections.replace(
+    /(<!--\s*\.element:(["=\-\w\s]+)-->\s*)<([^>]+)>/g,
+    "$1<$3 $2>"
+  );
+
   return markdownSections;
 }
 
