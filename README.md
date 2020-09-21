@@ -34,6 +34,8 @@ using a simpler and newer stack. It's not up-to-par in terms of features, but it
 - `npm run slides` to generate a PDF for the slides
 - `npm run labs` to generate a PDF for the labs
 
+⚠️ Note about slide sizing and PDF rendering: to avoid any layout inconsistencies, the `width` and `height` values present in [src/slides/slides.js](src/slides/slides.js) file must match the values of the `--size` parameter in the `slides` npm script
+
 ## Reveal plugins
 
 The following plugins are enabled: Markdown, Highlight, Zoom, Notes and Math.
