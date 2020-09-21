@@ -152,6 +152,15 @@ body {
   content: ".";
   color: #b51432;
 }
+.reveal h2.question::after {
+  content: "\00a0?";
+}
+.reveal h2.exclamation::after {
+  content: "\00a0!";
+}
+.reveal h2.suspension::after {
+  content: "…";
+}
 
 .reveal h2 small,
 .reveal h3 small {
