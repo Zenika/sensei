@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "labs": "node pdf.js http://localhost:8080/labs.html pdf/labs.pdf",
-    "slides": "decktape reveal http://localhost:8080/slides.html pdf/slides.pdf"
+    "slides": "decktape reveal --size 1420x800 http://localhost:8080/slides.html pdf/slides.pdf"
   },
   "dependencies": {
     "decktape": "3.0.0",
