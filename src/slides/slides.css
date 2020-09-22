@@ -35,6 +35,14 @@ body {
   --footer-vertical-margin: 15px;
   --main-content-horizontal-padding: 85px;
 }
+body:lang(fr) {
+  --question-mark: "\00a0?";
+  --exclamation-mark: "\00a0!";
+}
+body:lang(en) {
+  --question-mark: "?";
+  --exclamation-mark: "!";
+}
 
 .reveal {
   font-family: var(--content-font-family);
@@ -151,6 +159,15 @@ body {
 .reveal h2::after {
   content: ".";
   color: #b51432;
+}
+.reveal h2.question::after {
+  content: var(--question-mark);
+}
+.reveal h2.exclamation::after {
+  content: var(--exclamation-mark);
+}
+.reveal h2.suspension::after {
+  content: "…";
 }
 
 .reveal h2 small,
