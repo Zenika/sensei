@@ -17,7 +17,7 @@ reveal.initialize({
   center: false,
   transition: "fade", // default/cube/page/concave/zoom/linear/fade/none
   backgroundTransition: "fade",
-  slideNumber: false,
+  slideNumber: true,
   mouseWheel: true,
   margin: 0,
   width: 1420,

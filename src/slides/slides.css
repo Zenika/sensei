@@ -541,7 +541,10 @@ body:lang(en) {
 }
 
 .reveal .slide-number {
-  right: 30px;
+  right: 0px;
+  width: 100%;
+  text-align: center;
+  background-color: transparent;
 }
 
 /*********************************************
