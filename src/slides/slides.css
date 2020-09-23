@@ -420,6 +420,12 @@ body:lang(en) {
   transition: color 0.15s ease;
 }
 
+.reveal a[href^="http://"], .reveal a[href^="https://"]
+{
+  text-decoration: underline;
+  text-decoration-style: dotted;
+}
+
 .reveal a:not(.image):hover {
   color: var(--zenika-red);
   text-shadow: none;
