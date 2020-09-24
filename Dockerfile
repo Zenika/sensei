@@ -1,9 +1,13 @@
-FROM node:12-alpine
+FROM zenika/alpine-chrome:with-puppeteer
+
+USER root
 
 WORKDIR /app
 
 COPY package.json package-lock.json ./
-RUN npm ci --production
+COPY src/pdf/package.json src/pdf/package-lock.json ./src/pdf/
+
+RUN npm ci --production --unsafe-perm
 
 COPY ./ ./
 
@@ -11,6 +15,8 @@ VOLUME [ "/training-material" ]
 EXPOSE 8080
 
 WORKDIR /training-material
+
+USER chrome
 
 ENTRYPOINT [ "/app/bin/sensei.js" ]
 CMD ["serve"]

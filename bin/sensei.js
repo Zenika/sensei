@@ -31,7 +31,7 @@ function serve(trainingMaterialFolder = ".") {
   const server = new WebpackDevServer(
     webpack(config({ material: trainingMaterialFolder }))
   );
-  server.listen(8080, "localhost", function (err) {
+  server.listen(8080, "0.0.0.0", function (err) {
     if (err) {
       console.log(err);
     } else {
@@ -57,11 +57,14 @@ function build(trainingMaterialFolder = ".") {
   });
 }
 
-async function pdf(trainingMaterialFolder = ".") {
+async function pdf(trainingMaterialFolder) {
   console.log("Generate pdf slides & labs");
   await build(trainingMaterialFolder);
-  pdfSlides(path.basename(trainingMaterialFolder));
-  pdfLabs(path.basename(trainingMaterialFolder));
+  let trainingName = trainingMaterialFolder
+    ? path.basename(trainingMaterialFolder)
+    : "";
+  pdfSlides(trainingName);
+  pdfLabs(trainingName);
 }
 
 function help() {
@@ -89,7 +92,7 @@ function pdfSlides(trainingName) {
         "0",
         "--size",
         "1420x800",
-        "./dist/slides.html",
+        `file:${path.resolve("./dist/slides.html")}`,
         `./pdf/Zenika-Formation-${trainingName}-Slides.pdf`,
       ]
     );

@@ -37,7 +37,7 @@ PDFs are generated inside PDF folder from webpack bundle (dist folder)
 #### Using Docker
 
 - `cd` into a training material folder (must have `Slides/slides.json` and `CahierExercices/parts.json`)
-- Run `docker run -it --rm -p 8080:8080 -v $(pwd):/training-material zenika/sensei pdf`
+- Run `docker run -it --rm -p 8080:8080 -v $(pwd):/training-material --cap-add SYS_ADMIN zenika/sensei pdf`
 
 ⚠️ Note about slide sizing and PDF rendering: to avoid any layout inconsistencies, the `width` and `height` values present in [src/slides/slides.js](src/slides/slides.js) file must match the values of the `--size` parameter in the `slides` npm script
 
