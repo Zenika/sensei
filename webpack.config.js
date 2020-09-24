@@ -3,13 +3,9 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const DEFAULT_TRAINING_MATERIAL_FOLDER = "training-material";
+const DEFAULT_LANG = "en";
 
 module.exports = (env = {}, argv) => {
-  if (!env.material) {
-    console.warn(
-      `WARNING: '--env.material' option not set. Falling back on the default: '${DEFAULT_TRAINING_MATERIAL_FOLDER}'`
-    );
-  }
   const trainingMaterialFolder = path.resolve(
     env.material || DEFAULT_TRAINING_MATERIAL_FOLDER
   );
@@ -78,6 +74,7 @@ module.exports = (env = {}, argv) => {
     plugins: [
       new HtmlWebpackPlugin({
         template: path.resolve(path.join(__dirname, "src/slides/slides.html")),
+        lang: env.lang || DEFAULT_LANG,
         chunks: ["slides"],
         filename: "slides.html",
       }),

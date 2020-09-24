@@ -46,6 +46,10 @@ PDFs are generated inside PDF folder from webpack bundle (dist folder)
 The following plugins are enabled: Markdown, Highlight, Zoom, Notes and Math.
 Refer to [Reveal's documentation](https://revealjs.com/plugins/#built-in-plugins) for usage.
 
+
+## Changer slides locale
+You can add `--env.lang=fr` when starting sensei to switch to french locale (currently, it only change the punctation behavior)
+
 ## Tip: using a shell alias
 
 You may want to define the following alias to be able to run slides using `slides`:
