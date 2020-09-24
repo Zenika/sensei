@@ -19,30 +19,44 @@ module.exports = (env = {}, argv) => {
   );
   return {
     mode: "development",
-    entry: { slides: "./src/slides/slides.js", labs: "./src/labs/labs.js" },
+    entry: {
+      slides: path.resolve(path.join(__dirname, "src/slides/slides.js")),
+      labs: path.resolve(path.join(__dirname, "src/labs/labs.js")),
+    },
     module: {
       rules: [
         {
           test: [/slides\.json$/, /parts\.json$/],
           type: "javascript/auto",
-          use: "./src/loaders/slides-json-loader",
+          use: path.resolve(
+            path.join(__dirname, "src/loaders/slides-json-loader")
+          ),
         },
         {
           test: /\.md$/,
-          use: ["html-loader", "./src/loaders/revealjs-loader"],
+          use: [
+            require.resolve("html-loader"),
+            path.resolve(path.join(__dirname, "src/loaders/revealjs-loader")),
+          ],
         },
         {
           test: /\.css$/,
-          use: [{ loader: MiniCssExtractPlugin.loader }, "css-loader"],
+          use: [
+            { loader: MiniCssExtractPlugin.loader },
+            require.resolve("css-loader"),
+          ],
         },
         {
           test: /reveal\.js[\/\\]dist[\/\\]reveal\.js$/,
-          use: { loader: "expose-loader", options: { exposes: "Reveal" } },
+          use: {
+            loader: require.resolve("expose-loader"),
+            options: { exposes: "Reveal" },
+          },
         },
         {
           test: /\.(png|jpe?g|gif|svg|webp|mp3|ttf)$/i,
           use: {
-            loader: "file-loader",
+            loader: require.resolve("file-loader"),
             options: {
               name: "[name]-[contenthash].[ext]",
               outputPath: "static-assets",
@@ -55,18 +69,20 @@ module.exports = (env = {}, argv) => {
       alias: {
         "training-material": trainingMaterialFolder,
       },
+      symlinks: false,
+      modules: [path.resolve(__dirname, "node_modules")],
     },
     output: {
       path: path.resolve("./dist"),
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: "src/slides/slides.html",
+        template: path.resolve(path.join(__dirname, "src/slides/slides.html")),
         chunks: ["slides"],
         filename: "slides.html",
       }),
       new HtmlWebpackPlugin({
-        template: "src/labs/labs.html",
+        template: path.resolve(path.join(__dirname, "src/labs/labs.html")),
         chunks: ["labs"],
         filename: "labs.html",
       }),
