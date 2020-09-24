@@ -8,7 +8,7 @@ using a simpler and newer stack. It's not up-to-par in terms of features, but it
 ### Using the published Docker image 🐳
 
 - `cd` into a training material folder (must have `Slides/slides.json` and `CahierExercices/parts.json`)
-- Run `docker run -it --rm -p 8080:8080 -v $(pwd):/training-material zenika/sensei`.
+- Run `docker run -it --rm -p 8080:8080 -v $(pwd):/training-material zenika/sensei serve`.
 - Navigate to `http://localhost:8080/slides.html` for slides and `http://localhost:8080/labs.html` for labs
 
 ### Using a Docker image built from sources 🐳
@@ -21,18 +21,23 @@ using a simpler and newer stack. It's not up-to-par in terms of features, but it
 
 ### Using Node.js
 
-- Clone this repo and `cd` into the created folder
-- `npm install`
-- `npm start -- --env.material=/path/to/training-material-folder`
+- `npm install -g sensei`
+- `sensei serve /path/to/training-material-folder`
 - Navigate to `http://localhost:8080/slides.html` for slides and `http://localhost:8080/labs.html` for labs
 
 ### Generating PDFs
 
-- Run the web server like described above and leave it running
-- `cd` into `src/pdf`
-- `npm install`
-- `npm run slides` to generate a PDF for the slides
-- `npm run labs` to generate a PDF for the labs
+PDFs are generated inside PDF folder from webpack bundle (dist folder)
+
+#### Using Node.js
+
+- `npm install -g sensei`
+- `sensei pdf /path/to/training-material-folder` to generate a PDF for the slides & labs
+
+#### Using Docker
+
+- `cd` into a training material folder (must have `Slides/slides.json` and `CahierExercices/parts.json`)
+- Run `docker run -it --rm -p 8080:8080 -v $(pwd):/training-material zenika/sensei pdf`
 
 ⚠️ Note about slide sizing and PDF rendering: to avoid any layout inconsistencies, the `width` and `height` values present in [src/slides/slides.js](src/slides/slides.js) file must match the values of the `--size` parameter in the `slides` npm script
 

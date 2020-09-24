@@ -10,5 +10,7 @@ COPY ./ ./
 VOLUME [ "/training-material" ]
 EXPOSE 8080
 
-ENTRYPOINT [ "npm",  "start", "--silent", "--" ]
-CMD ["--host", "0.0.0.0", "--env.material=/training-material"]
+WORKDIR /training-material
+
+ENTRYPOINT [ "/app/bin/sensei.js" ]
+CMD ["serve"]
