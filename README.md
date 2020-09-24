@@ -48,7 +48,7 @@ Refer to [Reveal's documentation](https://revealjs.com/plugins/#built-in-plugins
 
 
 ## Changer slides locale
-You can add `--env.lang=fr` when starting sensei to switch to french locale (currently, it only change the punctation behavior)
+You can add `--env.lang=fr` when starting sensei to switch to french locale (currently, it only changes the punctation behavior)
 
 ## Tip: using a shell alias
 
