@@ -1,11 +1,14 @@
+const querystring = require("querystring");
 const marked = require("marked");
 const Prism = require("prismjs");
 require("prismjs/components/")();
 
-module.exports = (content) => {
+module.exports = function (content) {
+  const loaderOptions = querystring.parse(this.resourceQuery.substring(1));
   return slidify(content, {
     verticalSeparator: "^\r?\n\r?\n\r?\n",
     notesSeparator: "^Notes :",
+    chapterIndex: parseInt(loaderOptions.chapterIndex),
   });
 };
 
@@ -102,24 +105,25 @@ function slidify(markdown, options) {
     if (sectionStack[i] instanceof Array) {
       markdownSections += "<section " + options.attributes + ">";
 
-      sectionStack[i].forEach(function (child) {
+      sectionStack[i].forEach(function (child, slideIndex) {
         const classes = getEmbeddedClasses(child);
-        markdownSections +=
-          `<section ${classes}>` +
-          createMarkdownSlide(child, options) +
-          "</section>";
+        markdownSections += `
+          <section ${classes}>
+            ${createMarkdownSlide(child, options)}
+            ${footer(options.chapterIndex, slideIndex)}
+          </section>
+        `;
       });
 
       markdownSections += "</section>";
     } else {
       const classes = getEmbeddedClasses(sectionStack[i]);
-      markdownSections +=
-        "<section " +
-        options.attributes +
-        classes +
-        ">" +
-        createMarkdownSlide(sectionStack[i], options) +
-        "</section>";
+      markdownSections += `
+        <section ${options.attributes} ${classes}>
+          ${createMarkdownSlide(sectionStack[i], options)}
+          ${footer(options.chapterIndex)}
+        </section>
+      `;
     }
   }
 
@@ -130,6 +134,22 @@ function slidify(markdown, options) {
   );
 
   return markdownSections;
+}
+
+function footer(chapterIndex, slideIndex) {
+  return `
+    <footer class="copyright">&copy; Copyright ${new Date().getFullYear()} Zenika. All rights reserved</footer>
+    <footer class="slide-number">${slideNumber(
+      chapterIndex,
+      slideIndex
+    )}</footer>
+  `;
+}
+
+function slideNumber(chapterIndex, slideIndex) {
+  if (chapterIndex === 0) return "";
+  if (slideIndex === 0) return chapterIndex;
+  return `${chapterIndex} - ${slideIndex}`;
 }
 
 function getEmbeddedClasses(

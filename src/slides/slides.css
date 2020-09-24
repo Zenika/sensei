@@ -244,7 +244,8 @@ body:lang(en) {
 .slides section > section:not([class^="page-"]) {
   background-image: url("./assets/zenika-liseret-rouge.png"),
     url("./assets/zenika-logo-red-no-shadow-no-text.png");
-  background-position: top, right 5% bottom 5%;
+  --logo-offset-from-border: 50px;
+  background-position: top, top var(--logo-offset-from-border) right calc(var(--logo-offset-from-border) - 18px /* 18px is the height of the top red bar */);
   background-repeat: no-repeat, no-repeat;
   background-size: auto, 75px 75px;
 }
@@ -523,8 +524,11 @@ body:lang(en) {
 .reveal .slides footer {
   position: absolute;
   bottom: var(--footer-vertical-margin);
-  font-size: 12px;
-  opacity: 0.5;
+  /* unset styles from Reveal */
+  background-color: unset;
+  color: unset;
+  font-family: unset;
+  font-size: unset;
 }
 
 .reveal .master-toc-return {
@@ -534,14 +538,16 @@ body:lang(en) {
   z-index: 1000;
 }
 
-.reveal .copyright {
+.reveal .slides footer.copyright {
   left: 0px;
   width: 100%;
   text-align: center;
+  font-size: 70%;
+  color: var(--grey);
 }
 
-.reveal .slide-number {
-  right: 30px;
+.reveal .slides footer.slide-number {
+  right: 50px;
 }
 
 /*********************************************
