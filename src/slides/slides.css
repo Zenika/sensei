@@ -245,7 +245,12 @@ body:lang(en) {
   background-image: url("./assets/zenika-liseret-rouge.png"),
     url("./assets/zenika-logo-red-no-shadow-no-text.png");
   --logo-offset-from-border: 50px;
-  background-position: top, top var(--logo-offset-from-border) right calc(var(--logo-offset-from-border) - 18px /* 18px is the height of the top red bar */);
+  background-position: top,
+    top var(--logo-offset-from-border) right
+      calc(
+        var(--logo-offset-from-border) - 18px
+          /* 18px is the height of the top red bar */
+      );
   background-repeat: no-repeat, no-repeat;
   background-size: auto, 75px 75px;
 }
