@@ -57,12 +57,10 @@ function build(trainingMaterialFolder = ".") {
   });
 }
 
-async function pdf(trainingMaterialFolder) {
+async function pdf(trainingMaterialFolder = ".") {
   console.log("Generate pdf slides & labs");
   await build(trainingMaterialFolder);
-  let trainingName = trainingMaterialFolder
-    ? path.basename(trainingMaterialFolder)
-    : "";
+  const trainingName = path.basename(path.resolve(trainingMaterialFolder));
   pdfSlides(trainingName);
   pdfLabs(trainingName);
 }
