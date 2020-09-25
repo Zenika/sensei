@@ -91,7 +91,7 @@ function pdfSlides(trainingName) {
         "--size",
         "1420x800",
         `file:${path.resolve("./dist/slides.html")}`,
-        `./pdf/Zenika-Formation-${trainingName}-Slides.pdf`,
+        `./pdf/Zenika-${trainingName}-Slides.pdf`,
       ]
     );
 
@@ -117,7 +117,7 @@ function pdfLabs(trainingName) {
       path.resolve(path.join(__dirname, "../src/pdf/pdf.js")),
       [
         `file:${path.resolve("./dist/labs.html")}`,
-        `./pdf/Zenika-Formation-${trainingName}-CahierExercices.pdf`,
+        `./pdf/Zenika-${trainingName}-Workbook.pdf`,
       ]
     );
 
