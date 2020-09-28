@@ -95,7 +95,7 @@ body:lang(en) {
 }
 
 .reveal .slides table th {
-  font-weight: normal;
+  font-weight: bold;
 }
 
 .reveal .slides table tr td {
