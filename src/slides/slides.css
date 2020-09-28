@@ -535,6 +535,8 @@ body:lang(en) {
   font-family: unset;
   font-size: unset;
   padding: unset;
+  color: var(--grey);
+  font-size: 70%;
 }
 
 .reveal .master-toc-return {
@@ -548,8 +550,6 @@ body:lang(en) {
   left: 0px;
   width: 100%;
   text-align: center;
-  font-size: 70%;
-  color: var(--grey);
 }
 
 .reveal .slides footer.slide-number {
