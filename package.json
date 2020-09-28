@@ -2,12 +2,16 @@
   "name": "@zenika/sensei",
   "version": "1.0.0",
   "scripts": {
+    "postinstall": "npm install --prefix=src/pdf",
     "prettier": "prettier \"{*,**/*}.{yml,html,css,js}\"",
     "prettier:check": "npm run prettier -- --check",
     "prettier:write": "npm run prettier -- --write",
     "test": "tap \"src/**/*.test.js\"",
     "test:watch": "npm run test -- --watch",
     "start": "webpack-dev-server"
+  },
+  "bin": {
+    "sensei": "bin/sensei.js"
   },
   "dependencies": {
     "css-loader": "4.2.0",
