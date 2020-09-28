@@ -552,7 +552,7 @@ body:lang(en) {
 }
 
 .reveal .slides footer.slide-number {
-  right: 50px;
+  left: 50px;
 }
 
 /*********************************************
