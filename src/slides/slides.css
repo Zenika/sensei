@@ -529,14 +529,13 @@ body:lang(en) {
 .reveal .slides footer {
   position: absolute;
   bottom: var(--footer-vertical-margin);
+  color: var(--grey);
+  font-size: 70%;
   /* unset styles from Reveal */
   background-color: unset;
   color: unset;
   font-family: unset;
-  font-size: unset;
   padding: unset;
-  color: var(--grey);
-  font-size: 70%;
 }
 
 .reveal .master-toc-return {
