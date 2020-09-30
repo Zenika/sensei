@@ -35,9 +35,7 @@ module.exports = (env = {}, argv) => {
         },
         {
           test: /\.html$/,
-          use: [
-            require.resolve("html-loader"),
-          ],
+          use: [require.resolve("html-loader")],
         },
         {
           test: /\.md$/,

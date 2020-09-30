@@ -3,11 +3,12 @@
   src: url("./slides/assets/Montserrat-Bold.ttf") format("truetype");
 }
 
-body, html {
+body,
+html {
   height: 100%;
   padding-top: 5%;
   text-align: center;
-  font-family: "Montserrat", "Calibri Light"
+  font-family: "Montserrat", "Calibri Light";
 }
 
 a {
@@ -23,5 +24,4 @@ a {
 .link {
   margin: 50px;
   font-size: 3em;
-
 }
