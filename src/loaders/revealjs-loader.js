@@ -148,6 +148,7 @@ function footer(chapterIndex, slideIndex) {
 
 function slideNumber(chapterIndex, slideIndex) {
   if (chapterIndex === 0) return "";
+  if (slideIndex === undefined) return "";
   if (slideIndex === 0) return chapterIndex;
   return `${chapterIndex} - ${slideIndex}`;
 }
