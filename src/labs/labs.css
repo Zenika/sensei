@@ -397,6 +397,10 @@ span.float-right > span {
   text-align: right;
 }
 
+code[class*="language-"], pre[class*="language-"] {
+  white-space: pre-wrap;
+}
+
 code,
 tt {
   margin: 0 2px;
@@ -410,11 +414,9 @@ tt {
 pre code {
   margin: 0;
   padding: 0;
-  white-space: pre;
   border: none;
   background: transparent;
   overflow-x: auto;
-  white-space: pre-wrap;
   word-wrap: break-word;
 }
 
