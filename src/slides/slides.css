@@ -221,7 +221,6 @@ body:lang(en) {
   border-left: 1px solid var(--zenika-red);
   padding: 10px 15px;
   width: 100%;
-  white-space: pre-wrap;
 }
 
 .reveal h2 + pre,
@@ -239,6 +238,7 @@ body:lang(en) {
   font-size: 22px;
   line-height: normal;
   display: block;
+  white-space: pre-wrap;
 }
 
 .slides section > section:not([class^="page-"]) {
