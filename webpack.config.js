@@ -20,6 +20,7 @@ module.exports = (env = {}, argv) => {
   return {
     mode: "development",
     entry: {
+      index: path.resolve(path.join(__dirname, "src/index.js")),
       slides: path.resolve(path.join(__dirname, "src/slides/slides.js")),
       labs: path.resolve(path.join(__dirname, "src/labs/labs.js")),
     },
@@ -31,6 +32,10 @@ module.exports = (env = {}, argv) => {
           use: path.resolve(
             path.join(__dirname, "src/loaders/slides-json-loader")
           ),
+        },
+        {
+          test: /\.html$/,
+          use: [require.resolve("html-loader")],
         },
         {
           test: /\.md$/,
@@ -76,6 +81,11 @@ module.exports = (env = {}, argv) => {
       path: path.resolve("./dist"),
     },
     plugins: [
+      new HtmlWebpackPlugin({
+        template: path.resolve(path.join(__dirname, "src/index.html")),
+        chunks: ["index"],
+        filename: "index.html",
+      }),
       new HtmlWebpackPlugin({
         template: path.resolve(path.join(__dirname, "src/slides/slides.html")),
         chunks: ["slides"],
