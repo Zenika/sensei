@@ -1,4 +1,5 @@
 #! /usr/bin/env node
+
 const spawn = require("child_process").spawn;
 const fork = require("child_process").fork;
 const path = require("path");
@@ -6,17 +7,17 @@ const WebpackDevServer = require("webpack-dev-server");
 const config = require("../webpack.config");
 const webpack = require("webpack");
 
-function cli(args) {
+async function cli(args) {
   let trainingMaterialFolder = args[3];
   switch (args[2]) {
     case "serve":
       serve(trainingMaterialFolder);
       break;
     case "build":
-      build(trainingMaterialFolder);
+      await build(trainingMaterialFolder);
       break;
     case "pdf":
-      pdf(trainingMaterialFolder);
+      await pdf(trainingMaterialFolder);
       break;
     case "help":
     case "-h":
@@ -150,6 +151,11 @@ process.on("SIGTERM", function onSigterm() {
     new Date().toISOString()
   );
   process.exit();
+});
+
+process.on("unhandledRejection", (err) => {
+  process.exitCode = 1;
+  throw err;
 });
 
 cli(process.argv);
