@@ -80,7 +80,7 @@ module.exports = (env = {}, argv) => {
         // from the project folder
         path.resolve(__dirname, "node_modules"),
         // this is the default and works for most cases
-        "node_modules"
+        "node_modules",
       ],
     },
     output: {
