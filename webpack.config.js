@@ -75,7 +75,7 @@ module.exports = (env = {}, argv) => {
         "training-material": trainingMaterialFolder,
       },
       symlinks: false,
-      modules: [path.resolve(__dirname, "node_modules"), path.resolve("./")],
+      modules: [path.resolve("./")],
     },
     output: {
       path: path.resolve("./dist"),
