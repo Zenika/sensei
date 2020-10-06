@@ -50,7 +50,7 @@ function build(trainingMaterialFolder = ".") {
         return reject(err);
       }
       if (stats.hasErrors()) {
-        return reject(stats);
+        return reject(new Error(stats.toString()));
       }
       console.log("Files generated to dist folder");
       resolve();
