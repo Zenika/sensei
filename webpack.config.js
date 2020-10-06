@@ -70,13 +70,6 @@ module.exports = (env = {}, argv) => {
         },
       ],
     },
-    resolve: {
-      alias: {
-        "training-material": trainingMaterialFolder,
-      },
-      symlinks: false,
-      modules: [path.resolve("./")],
-    },
     output: {
       path: path.resolve("./dist"),
     },
