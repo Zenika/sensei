@@ -44,9 +44,26 @@ module.exports = (env = {}) => {
             path.join(__dirname, "src/loaders/slides-json-loader")
           ),
         },
+        // rule for HtmlWebpackPlugin templates
         {
           test: /\.html$/,
-          use: [require.resolve("html-loader")],
+          use: [
+            // The default loader of HtmlWebpackPlugin won't run if there are
+            // other loaders that apply to the template file (see
+            // https://github.com/jantimon/html-webpack-plugin/blob/master/docs/template-option.md#3-setting-a-loader-using-the-modulerules-syntax),
+            // but we want it to run to render variables (<%= %>) so we force it
+            // to run.
+            {
+              loader: require.resolve("html-webpack-plugin/lib/loader.js"),
+              options: { force: true },
+            },
+            // The loader of HtmlWebpackPlugin outputs a JavaScript module
+            // exporting the HTML as a string while the html-loader expects
+            // HTML, so we use the extract-loader to do the conversion.
+            require.resolve("extract-loader"),
+            // We need this to resolve images found in the templates.
+            require.resolve("html-loader"),
+          ],
         },
         {
           test: /[\/\\]Slides[\/\\].+\.md$/,
