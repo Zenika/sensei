@@ -46,13 +46,14 @@ function build(trainingMaterialFolder = ".") {
   console.log("Build slides & labs");
   return new Promise((resolve, reject) => {
     webpack(config({ material: trainingMaterialFolder }), (err, stats) => {
-      if (err || stats.hasErrors()) {
-        console.error("HTML files generation failed!", err);
-        reject();
-      } else {
-        console.log("Files generated to dist folder");
-        resolve();
+      if (err) {
+        return reject(err);
       }
+      if (stats.hasErrors()) {
+        return reject(stats);
+      }
+      console.log("Files generated to dist folder");
+      resolve();
     });
   });
 }
