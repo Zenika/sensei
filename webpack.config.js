@@ -74,6 +74,14 @@ module.exports = (env = {}, argv) => {
       alias: {
         "training-material": trainingMaterialFolder,
       },
+      symlinks: false,
+      modules: [
+        // this is to support the "npm link" case where imports must be resolved
+        // from the project folder
+        path.resolve(__dirname, "node_modules"),
+        // this is the default and works for most cases
+        "node_modules"
+      ],
     },
     output: {
       path: path.resolve("./dist"),
