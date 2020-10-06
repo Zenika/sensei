@@ -101,7 +101,12 @@ function pdfSlides(trainingName) {
       process.stdout.write(data);
     });
 
-    child.on("exit", function () {
+    child.on("exit", function (code) {
+      if (code !== 0) {
+        return reject(
+          new Error(`spawned process exited with non-zero code '${code}'`)
+        );
+      }
       console.log("PDF slides generated");
       resolve();
     });
@@ -123,7 +128,12 @@ function pdfLabs(trainingName) {
       ]
     );
 
-    child.on("exit", function () {
+    child.on("exit", function (code) {
+      if (code !== 0) {
+        return reject(
+          new Error(`forked process exited with non-zero code '${code}'`)
+        );
+      }
       console.log("PDF labs generated");
       resolve();
     });
