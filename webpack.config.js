@@ -70,6 +70,11 @@ module.exports = (env = {}, argv) => {
         },
       ],
     },
+    resolve: {
+      alias: {
+        "training-material": trainingMaterialFolder,
+      },
+    },
     output: {
       path: path.resolve("./dist"),
     },
