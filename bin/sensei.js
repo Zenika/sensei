@@ -8,16 +8,18 @@ const webpackConfig = require("../webpack.config");
 const webpack = require("webpack");
 
 async function cli(args) {
-  let trainingMaterialFolder = args[3];
+  const trainingMaterialFolder = args[3] || ".";
+  const trainingSlug =
+    args[4] || path.basename(path.resolve(trainingMaterialFolder));
   switch (args[2]) {
     case "serve":
-      serve(trainingMaterialFolder);
+      serve(trainingMaterialFolder, trainingSlug);
       break;
     case "build":
-      await build({ material: trainingMaterialFolder });
+      await build({ material: trainingMaterialFolder, trainingSlug });
       break;
     case "pdf":
-      await pdf(trainingMaterialFolder);
+      await pdf(trainingMaterialFolder, trainingSlug);
       break;
     case "help":
     case "-h":
@@ -27,10 +29,10 @@ async function cli(args) {
   }
 }
 
-function serve(trainingMaterialFolder = ".") {
+function serve(trainingMaterialFolder, trainingSlug) {
   console.log("Start dev server");
   const server = new WebpackDevServer(
-    webpack(webpackConfig({ material: trainingMaterialFolder }))
+    webpack(webpackConfig({ material: trainingMaterialFolder, trainingSlug }))
   );
   server.listen(8080, "0.0.0.0", function (err) {
     if (err) {
@@ -59,12 +61,11 @@ function build(options) {
   });
 }
 
-async function pdf(trainingMaterialFolder = ".") {
+async function pdf(trainingMaterialFolder, trainingSlug) {
   console.log("Generate pdf slides & labs");
-  await build({ material: trainingMaterialFolder, pdf: true });
-  const trainingName = path.basename(path.resolve(trainingMaterialFolder));
-  pdfSlides(trainingName);
-  pdfLabs(trainingName);
+  await build({ material: trainingMaterialFolder, trainingSlug, pdf: true });
+  pdfSlides(trainingSlug);
+  pdfLabs(trainingSlug);
 }
 
 function help() {
