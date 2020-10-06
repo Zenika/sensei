@@ -6,17 +6,18 @@ const webpack = require("webpack");
 const DEFAULT_TRAINING_MATERIAL_FOLDER = "training-material";
 
 module.exports = (env = {}) => {
-  if (!env.material) {
-    console.warn(
-      `WARNING: '--env.material' option not set. Falling back on the default: '${DEFAULT_TRAINING_MATERIAL_FOLDER}'`
-    );
-  }
   const trainingMaterialFolder = path.resolve(
     env.material || DEFAULT_TRAINING_MATERIAL_FOLDER
   );
   console.log(
     `Training material folder: '${trainingMaterialFolder}'.`,
     `This can be changed using '--env.material=<relative path to training material folder>'.`
+  );
+  const trainingSlug =
+    env.trainingSlug || path.basename(trainingMaterialFolder);
+  console.log(
+    `Training slug: '${trainingSlug}'.`,
+    `This can be changed using '--env.trainingSlug=<training slug>'.`
   );
   const date = new Date().toISOString().substring(0, 10);
   const commitHash = childProcess
@@ -108,16 +109,19 @@ module.exports = (env = {}) => {
         template: path.resolve(path.join(__dirname, "src/index.html")),
         chunks: ["index"],
         filename: "index.html",
+        trainingSlug,
       }),
       new HtmlWebpackPlugin({
         template: path.resolve(path.join(__dirname, "src/slides/slides.html")),
         chunks: ["slides"],
         filename: "slides.html",
+        trainingSlug,
       }),
       new HtmlWebpackPlugin({
         template: path.resolve(path.join(__dirname, "src/labs/labs.html")),
         chunks: ["labs"],
         filename: "labs.html",
+        trainingSlug,
       }),
       new MiniCssExtractPlugin(),
       new webpack.DefinePlugin({
