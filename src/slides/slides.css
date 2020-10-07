@@ -533,7 +533,6 @@ body:lang(en) {
   font-size: 70%;
   /* unset styles from Reveal */
   background-color: unset;
-  color: unset;
   font-family: unset;
   padding: unset;
 }
@@ -553,6 +552,7 @@ body:lang(en) {
 
 .reveal .slides footer.slide-number {
   left: 50px;
+  color: unset;
 }
 
 /*********************************************
