@@ -1,4 +1,5 @@
 #! /usr/bin/env node
+
 const spawn = require("child_process").spawn;
 const fork = require("child_process").fork;
 const path = require("path");
@@ -6,17 +7,17 @@ const WebpackDevServer = require("webpack-dev-server");
 const config = require("../webpack.config");
 const webpack = require("webpack");
 
-function cli(args) {
+async function cli(args) {
   let trainingMaterialFolder = args[3];
   switch (args[2]) {
     case "serve":
       serve(trainingMaterialFolder);
       break;
     case "build":
-      build(trainingMaterialFolder);
+      await build(trainingMaterialFolder);
       break;
     case "pdf":
-      pdf(trainingMaterialFolder);
+      await pdf(trainingMaterialFolder);
       break;
     case "help":
     case "-h":
@@ -46,13 +47,14 @@ function build(trainingMaterialFolder = ".") {
   console.log("Build slides & labs");
   return new Promise((resolve, reject) => {
     webpack(config({ material: trainingMaterialFolder }), (err, stats) => {
-      if (err || stats.hasErrors()) {
-        console.error("HTML files generation failed!", err);
-        reject();
-      } else {
-        console.log("Files generated to dist folder");
-        resolve();
+      if (err) {
+        return reject(err);
       }
+      if (stats.hasErrors()) {
+        return reject(new Error(stats.toString()));
+      }
+      console.log("Files generated to dist folder");
+      resolve();
     });
   });
 }
@@ -99,7 +101,12 @@ function pdfSlides(trainingName) {
       process.stdout.write(data);
     });
 
-    child.on("exit", function () {
+    child.on("exit", function (code) {
+      if (code !== 0) {
+        return reject(
+          new Error(`spawned process exited with non-zero code '${code}'`)
+        );
+      }
       console.log("PDF slides generated");
       resolve();
     });
@@ -121,7 +128,12 @@ function pdfLabs(trainingName) {
       ]
     );
 
-    child.on("exit", function () {
+    child.on("exit", function (code) {
+      if (code !== 0) {
+        return reject(
+          new Error(`forked process exited with non-zero code '${code}'`)
+        );
+      }
       console.log("PDF labs generated");
       resolve();
     });
@@ -149,6 +161,11 @@ process.on("SIGTERM", function onSigterm() {
     new Date().toISOString()
   );
   process.exit();
+});
+
+process.on("unhandledRejection", (err) => {
+  process.exitCode = 1;
+  throw err;
 });
 
 cli(process.argv);
