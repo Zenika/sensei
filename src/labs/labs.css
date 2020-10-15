@@ -397,7 +397,8 @@ span.float-right > span {
   text-align: right;
 }
 
-code[class*="language-"], pre[class*="language-"] {
+code[class*="language-"],
+pre[class*="language-"] {
   white-space: pre-wrap;
 }
 
