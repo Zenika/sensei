@@ -2,6 +2,8 @@ FROM zenika/alpine-chrome:with-puppeteer
 
 USER root
 
+RUN apk add --no-cache ttf-liberation
+
 WORKDIR /app
 
 COPY package.json package-lock.json ./
