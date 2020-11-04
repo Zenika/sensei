@@ -21,7 +21,7 @@ using a simpler and newer stack. It's not up-to-par in terms of features, but it
 
 ### Using Node.js
 
-- `npm install -g sensei`
+- `npm install --global https://github.com/Zenika/sensei`
 - `sensei serve /path/to/training-material-folder`
 - Navigate to `http://localhost:8080/slides.html` for slides and `http://localhost:8080/labs.html` for labs
 
@@ -31,7 +31,7 @@ PDFs are generated inside PDF folder from webpack bundle (dist folder)
 
 #### Using Node.js
 
-- `npm install -g sensei`
+- `npm install --global https://github.com/Zenika/sensei`
 - `sensei pdf /path/to/training-material-folder` to generate a PDF for the slides & labs
 
 #### Using Docker
