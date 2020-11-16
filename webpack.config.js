@@ -4,7 +4,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const DEFAULT_TRAINING_MATERIAL_FOLDER = "training-material";
 
-module.exports = (env = {}, argv) => {
+module.exports = (env = {}) => {
   if (!env.material) {
     console.warn(
       `WARNING: '--env.material' option not set. Falling back on the default: '${DEFAULT_TRAINING_MATERIAL_FOLDER}'`
@@ -38,10 +38,17 @@ module.exports = (env = {}, argv) => {
           use: [require.resolve("html-loader")],
         },
         {
-          test: /\.md$/,
+          test: /[\/\\]Slides[\/\\].+\.md$/,
           use: [
             require.resolve("html-loader"),
             path.resolve(path.join(__dirname, "src/loaders/revealjs-loader")),
+          ],
+        },
+        {
+          test: /[\/\\]CahierExercices[\/\\].+\.md$/,
+          use: [
+            require.resolve("html-loader"),
+            require.resolve("markdown-loader"),
           ],
         },
         {
