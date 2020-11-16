@@ -9,7 +9,6 @@ module.exports = function (content) {
     verticalSeparator: "^\r?\n\r?\n\r?\n",
     notesSeparator: "^Notes :",
     chapterIndex: parseInt(loaderOptions.chapterIndex),
-    displayFooter: this.resource.indexOf("/CahierExercices/") < 0,
   });
 };
 
@@ -111,11 +110,7 @@ function slidify(markdown, options) {
         markdownSections += `
           <section ${classes}>
             ${createMarkdownSlide(child, options)}
-            ${
-              options.displayFooter
-                ? footer(options.chapterIndex, slideIndex)
-                : ""
-            }
+            ${footer(options.chapterIndex, slideIndex)}
           </section>
         `;
       });
@@ -126,7 +121,7 @@ function slidify(markdown, options) {
       markdownSections += `
         <section ${options.attributes} ${classes}>
           ${createMarkdownSlide(sectionStack[i], options)}
-          ${options.displayFooter ? footer(options.chapterIndex) : ""}
+          ${footer(options.chapterIndex)}
         </section>
       `;
     }
