@@ -143,6 +143,7 @@ function footer(chapterIndex, slideIndex) {
       chapterIndex,
       slideIndex
     )}</footer>
+    <footer class="version"/>
   `;
 }
 

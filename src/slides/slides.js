@@ -10,6 +10,10 @@ import slidesContent from "training-material/Slides/slides.json";
 const slideContainer = document.querySelector(".slides");
 slideContainer.innerHTML = slidesContent.join("\n");
 
+for (let versionContainer of slideContainer.getElementsByClassName('version')) {
+  versionContainer.innerHTML = MATERIAL_VERSION;
+}
+
 reveal.initialize({
   controls: true,
   progress: true,
