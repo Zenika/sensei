@@ -547,9 +547,11 @@ body:lang(en) {
 }
 
 .reveal .slides section section .version {
-  color: var(--grey);
   right: 50px;
-  font-size: 13px;
+  visibility: hidden;
+}
+
+.reveal .slides section section:first-child .version {
   visibility: visible;
 }
 

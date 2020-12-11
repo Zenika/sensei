@@ -1,3 +1,4 @@
+const childProcess = require('child_process');
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -17,8 +18,8 @@ module.exports = (env = {}) => {
     `Training material folder: '${trainingMaterialFolder}'.`,
     `This can be changed using '--env.material=<relative path to training material folder>'.`
   );
-  const date = new Date().toISOString().replace(/T.*$/, '');
-  const commitHash = require('child_process')
+  const date = new Date().toISOString().substring(0, 10);
+  const commitHash = childProcess
     .execSync('git rev-parse --short HEAD', {cwd: trainingMaterialFolder})
     .toString();
   return {
