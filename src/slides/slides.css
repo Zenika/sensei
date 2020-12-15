@@ -259,15 +259,6 @@ body:lang(en) {
  * SPECIALS PAGES
  *********************************************/
 
-.slides section:first-child::after {
-  color: white;
-  font-size: 13px;
-  content: "2017-09-01#b550551";
-  position: absolute;
-  bottom: 5mm;
-  right: 5mm;
-}
-
 .reveal section.page-title h1 {
   height: 90%;
   display: flex;
@@ -553,6 +544,15 @@ body:lang(en) {
 .reveal .slides footer.slide-number {
   left: 50px;
   color: unset;
+}
+
+.reveal .slides section section .version {
+  right: 50px;
+  visibility: hidden;
+}
+
+.reveal .slides section section:first-child .version {
+  visibility: visible;
 }
 
 /*********************************************
