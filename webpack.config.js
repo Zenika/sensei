@@ -1,4 +1,4 @@
-const childProcess = require('child_process');
+const childProcess = require("child_process");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -20,7 +20,7 @@ module.exports = (env = {}) => {
   );
   const date = new Date().toISOString().substring(0, 10);
   const commitHash = childProcess
-    .execSync('git rev-parse --short HEAD', {cwd: trainingMaterialFolder})
+    .execSync("git rev-parse --short HEAD", { cwd: trainingMaterialFolder })
     .toString();
   return {
     mode: "development",
@@ -116,7 +116,7 @@ module.exports = (env = {}) => {
       }),
       new MiniCssExtractPlugin(),
       new webpack.DefinePlugin({
-        MATERIAL_VERSION : JSON.stringify(`${date}#${commitHash}`),
+        MATERIAL_VERSION: JSON.stringify(`${date}#${commitHash}`),
       }),
     ],
     devServer: {
