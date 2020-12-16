@@ -25,9 +25,11 @@ using a simpler and newer stack. It's not up-to-par in terms of features, but it
 - `sensei serve /path/to/training-material-folder`
 - Navigate to `http://localhost:8080/slides.html` for slides and `http://localhost:8080/labs.html` for labs
 
+
 ### Generating PDFs
 
-PDFs are generated inside PDF folder from webpack bundle (dist folder)
+- PDFs are generated inside PDF folder from webpack bundle (dist folder)
+- Use this url `http://localhost:8080/slides.html?print-pdf`to print Slides from your Chrome browser.
 
 #### Using Node.js
 
