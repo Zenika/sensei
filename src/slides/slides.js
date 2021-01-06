@@ -10,6 +10,9 @@ import slidesContent from "training-material/Slides/slides.json";
 const slideContainer = document.querySelector(".slides");
 slideContainer.innerHTML = slidesContent.join("\n");
 
+const trainingTitle = slideContainer.querySelector("section h1:first-of-type").textContent;
+document.title = trainingTitle + " - Slides 👩‍🏫";
+
 for (let versionContainer of slideContainer.getElementsByClassName("version")) {
   versionContainer.innerHTML = MATERIAL_VERSION;
 }
