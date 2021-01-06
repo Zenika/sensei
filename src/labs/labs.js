@@ -17,8 +17,12 @@ coverPageContainer.appendChild(versionSpan);
 const convertTextToHtml = document.createElement("div");
 convertTextToHtml.innerHTML = slidesContent[0];
 
-const trainingTitle = convertTextToHtml.querySelector("section h1:first-of-type").textContent;
+const trainingTitle = convertTextToHtml.querySelector(
+  "section h1:first-of-type"
+).textContent;
 
 document.title = trainingTitle + " - Labs 👩‍🔬";
-const coverPageTitle = labsContainer.querySelector(":root div:first-of-type h1:first-of-type");
+const coverPageTitle = labsContainer.querySelector(
+  ":root div:first-of-type h1:first-of-type"
+);
 coverPageTitle.textContent = trainingTitle;
