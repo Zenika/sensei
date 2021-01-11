@@ -397,6 +397,13 @@ span.float-right > span {
   text-align: right;
 }
 
+span.version {
+  color: #a0a0a0;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+}
+
 code[class*="language-"],
 pre[class*="language-"] {
   white-space: pre-wrap;
