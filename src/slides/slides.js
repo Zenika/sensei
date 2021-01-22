@@ -6,12 +6,11 @@ import "reveal.js/dist/reveal.css";
 import "prismjs/themes/prism.css";
 import "./slides.css";
 import slidesContent from "training-material/Slides/slides.json";
+import { trainingTitle } from "../title.js";
 
 const slideContainer = document.querySelector(".slides");
 slideContainer.innerHTML = slidesContent.join("\n");
 
-const trainingTitle = slideContainer.querySelector("section h1:first-of-type")
-  .textContent;
 document.title = trainingTitle + " - Slides 👩‍🏫";
 
 for (let versionContainer of slideContainer.getElementsByClassName("version")) {
