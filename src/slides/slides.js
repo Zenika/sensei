@@ -30,4 +30,7 @@ reveal.initialize({
   width: 1420,
   height: 800,
   plugins: [revealPluginMathJax, revealPluginNotes, revealPluginZoom],
+  math: {
+    tex2jax: { inlineMath: [["\\(", "\\)"]] },
+  },
 });
