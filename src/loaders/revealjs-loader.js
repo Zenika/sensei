@@ -194,12 +194,25 @@ function createMarkdownSlide(content, options) {
   // with parsing
   content = content.replace(/<\/script>/g, SCRIPT_END_PLACEHOLDER);
 
-  return marked(content, {
+  marked.use({
+    renderer: {
+      html(_html) {
+        return _html.replace(/^(\s*<[^>]+>)(.*)(<\/[^>]+>\s*)$/ims, function (
+          match,
+          opening,
+          inner,
+          closing
+        ) {
+          return opening + marked.parseInline(inner) + closing;
+        });
+      },
+    },
     highlight(code, lang) {
       const prismLang = Prism.languages[lang] || Prism.languages.clike;
       return Prism.highlight(code, prismLang);
     },
-  }); //'<script type="text/template">' + marked(content) + "</script>";
+  });
+  return marked(content); //'<script type="text/template">' + marked(content) + "</script>";
 }
 
 function getSlidifyOptions(options) {
