@@ -1,0 +1,5 @@
+.reveal .slides section,
+.reveal .slides section section {
+  /* Remove slides box shadows */
+  box-shadow: none;
+}

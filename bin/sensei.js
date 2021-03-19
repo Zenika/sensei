@@ -43,25 +43,28 @@ function serve(trainingMaterialFolder = ".") {
   });
 }
 
-function build(trainingMaterialFolder = ".") {
+function build(trainingMaterialFolder = ".", forPDF = False) {
   console.log("Build slides & labs");
   return new Promise((resolve, reject) => {
-    webpack(config({ material: trainingMaterialFolder }), (err, stats) => {
-      if (err) {
-        return reject(err);
+    webpack(
+      config({ material: trainingMaterialFolder, forPDF: forPDF }),
+      (err, stats) => {
+        if (err) {
+          return reject(err);
+        }
+        if (stats.hasErrors()) {
+          return reject(new Error(stats.toString()));
+        }
+        console.log("Files generated to dist folder");
+        resolve();
       }
-      if (stats.hasErrors()) {
-        return reject(new Error(stats.toString()));
-      }
-      console.log("Files generated to dist folder");
-      resolve();
-    });
+    );
   });
 }
 
 async function pdf(trainingMaterialFolder = ".") {
   console.log("Generate pdf slides & labs");
-  await build(trainingMaterialFolder);
+  await build(trainingMaterialFolder, true);
   const trainingName = path.basename(path.resolve(trainingMaterialFolder));
   pdfSlides(trainingName);
   pdfLabs(trainingName);

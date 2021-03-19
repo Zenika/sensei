@@ -26,7 +26,13 @@ module.exports = (env = {}) => {
     mode: "development",
     entry: {
       index: path.resolve(path.join(__dirname, "src/index.js")),
-      slides: path.resolve(path.join(__dirname, "src/slides/slides.js")),
+      slides: path.resolve(
+        path.join(
+          __dirname,
+          "src/slides/slides" + (env.forPDF ? "-pdf" : "") + ".js"
+        )
+      ),
+
       labs: path.resolve(path.join(__dirname, "src/labs/labs.js")),
     },
     module: {
