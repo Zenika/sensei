@@ -22,15 +22,14 @@ module.exports = (env = {}) => {
   const commitHash = childProcess
     .execSync("git rev-parse --short HEAD", { cwd: trainingMaterialFolder })
     .toString();
+  const slidesEntry =
+    env.pdf === true || env.pdf === "true" ? "slides-pdf" : "slides";
   return {
     mode: "development",
     entry: {
       index: path.resolve(path.join(__dirname, "src/index.js")),
       slides: path.resolve(
-        path.join(
-          __dirname,
-          "src/slides/slides" + (env.forPDF ? "-pdf" : "") + ".js"
-        )
+        path.join(__dirname, `src/slides/${slidesEntry}.js`)
       ),
 
       labs: path.resolve(path.join(__dirname, "src/labs/labs.js")),

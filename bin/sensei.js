@@ -4,7 +4,7 @@ const spawn = require("child_process").spawn;
 const fork = require("child_process").fork;
 const path = require("path");
 const WebpackDevServer = require("webpack-dev-server");
-const config = require("../webpack.config");
+const webpackConfig = require("../webpack.config");
 const webpack = require("webpack");
 
 async function cli(args) {
@@ -14,7 +14,7 @@ async function cli(args) {
       serve(trainingMaterialFolder);
       break;
     case "build":
-      await build(trainingMaterialFolder);
+      await build({ material: trainingMaterialFolder });
       break;
     case "pdf":
       await pdf(trainingMaterialFolder);
@@ -30,7 +30,7 @@ async function cli(args) {
 function serve(trainingMaterialFolder = ".") {
   console.log("Start dev server");
   const server = new WebpackDevServer(
-    webpack(config({ material: trainingMaterialFolder }))
+    webpack(webpackConfig({ material: trainingMaterialFolder }))
   );
   server.listen(8080, "0.0.0.0", function (err) {
     if (err) {
@@ -43,28 +43,25 @@ function serve(trainingMaterialFolder = ".") {
   });
 }
 
-function build(trainingMaterialFolder = ".", forPDF = False) {
+function build(options) {
   console.log("Build slides & labs");
   return new Promise((resolve, reject) => {
-    webpack(
-      config({ material: trainingMaterialFolder, forPDF: forPDF }),
-      (err, stats) => {
-        if (err) {
-          return reject(err);
-        }
-        if (stats.hasErrors()) {
-          return reject(new Error(stats.toString()));
-        }
-        console.log("Files generated to dist folder");
-        resolve();
+    webpack(webpackConfig(options), (err, stats) => {
+      if (err) {
+        return reject(err);
       }
-    );
+      if (stats.hasErrors()) {
+        return reject(new Error(stats.toString()));
+      }
+      console.log("Files generated to dist folder");
+      resolve();
+    });
   });
 }
 
 async function pdf(trainingMaterialFolder = ".") {
   console.log("Generate pdf slides & labs");
-  await build(trainingMaterialFolder, true);
+  await build({ material: trainingMaterialFolder, pdf: true });
   const trainingName = path.basename(path.resolve(trainingMaterialFolder));
   pdfSlides(trainingName);
   pdfLabs(trainingName);
