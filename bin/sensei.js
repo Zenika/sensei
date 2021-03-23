@@ -82,21 +82,18 @@ function help() {
 
 function pdfSlides(trainingName) {
   return new Promise((resolve, reject) => {
-    const child = spawn(
-      "node",
-      [
-        path.resolve(
-          path.join(__dirname, "../src/pdf/node_modules/decktape/decktape.js")
-        ),
-        "reveal",
-        "-p",
-        "0",
-        "--size",
-        "1420x800",
-        `file:${path.resolve("./dist/slides.html")}`,
-        `./pdf/Zenika-${trainingName}-Slides.pdf`,
-      ]
-    );
+    const child = spawn("node", [
+      path.resolve(
+        path.join(__dirname, "../src/pdf/node_modules/decktape/decktape.js")
+      ),
+      "reveal",
+      "-p",
+      "0",
+      "--size",
+      "1420x800",
+      `file:${path.resolve("./dist/slides.html")}`,
+      `./pdf/Zenika-${trainingName}-Slides.pdf`,
+    ]);
 
     child.stdout.on("data", function (data) {
       process.stdout.write(data);
