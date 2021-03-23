@@ -83,10 +83,11 @@ function help() {
 function pdfSlides(trainingName) {
   return new Promise((resolve, reject) => {
     const child = spawn(
-      path.resolve(
-        path.join(__dirname, "../src/pdf/node_modules/.bin/decktape")
-      ),
+      "node",
       [
+        path.resolve(
+          path.join(__dirname, "../src/pdf/node_modules/decktape/decktape.js")
+        ),
         "reveal",
         "-p",
         "0",
