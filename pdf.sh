@@ -1,15 +1,10 @@
 #!/bin/sh
 
-docker container run \
-  --rm \
-  --volume $(pwd)/pdf:/app/pdf \
-  --net host \
-  --cap-add=SYS_ADMIN \
-  zenika/sensei-pdf slides
+TRAINING_NAME=$(basename $(pwd))
 
 docker container run \
   --rm \
-  --volume $(pwd)/pdf:/app/pdf \
-  --net host \
+  --volume $(pwd):/${TRAINING_NAME} \
+  --workdir /${TRAINING_NAME} \
   --cap-add=SYS_ADMIN \
-  zenika/sensei-pdf labs
+  zenika/sensei pdf
