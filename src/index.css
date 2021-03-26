@@ -24,4 +24,10 @@ a {
 .link {
   margin: 50px;
   font-size: 3em;
+  display: flex;
+  flex-direction: column;
+}
+
+.link-pdf {
+  font-size: 40%;
 }

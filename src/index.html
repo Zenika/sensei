@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Zenika Formation</title>
+    <title><%= htmlWebpackPlugin.options.trainingSlug %></title>
   </head>
 
   <body>
@@ -14,8 +14,22 @@
       <h1>{Titre de la Formation}</h1>
     </div>
     <div class="links">
-      <div class="link"><a href="slides.html#/">👩‍🏫 Slides</a></div>
-      <div class="link"><a href="labs.html">👩‍🔬 Labs</a></div>
+      <div class="link">
+        <a href="slides.html#/">👩‍🏫 Slides</a>
+        <a
+          href="pdf/Zenika-<%= htmlWebpackPlugin.options.trainingSlug %>-Slides.pdf"
+          class="link-pdf"
+          >📄 PDF</a
+        >
+      </div>
+      <div class="link">
+        <a href="labs.html">👩‍🔬 Labs</a>
+        <a
+          href="pdf/Zenika-<%= htmlWebpackPlugin.options.trainingSlug %>-Workbook.pdf"
+          class="link-pdf"
+          >📄 PDF</a
+        >
+      </div>
     </div>
   </body>
 </html>

@@ -6,17 +6,18 @@ const webpack = require("webpack");
 const DEFAULT_TRAINING_MATERIAL_FOLDER = "training-material";
 
 module.exports = (env = {}) => {
-  if (!env.material) {
-    console.warn(
-      `WARNING: '--env.material' option not set. Falling back on the default: '${DEFAULT_TRAINING_MATERIAL_FOLDER}'`
-    );
-  }
   const trainingMaterialFolder = path.resolve(
     env.material || DEFAULT_TRAINING_MATERIAL_FOLDER
   );
   console.log(
     `Training material folder: '${trainingMaterialFolder}'.`,
     `This can be changed using '--env.material=<relative path to training material folder>'.`
+  );
+  const trainingSlug =
+    env.trainingSlug || path.basename(trainingMaterialFolder);
+  console.log(
+    `Training slug: '${trainingSlug}'.`,
+    `This can be changed using '--env.trainingSlug=<training slug>'.`
   );
   const date = new Date().toISOString().substring(0, 10);
   const commitHash = childProcess
@@ -43,9 +44,26 @@ module.exports = (env = {}) => {
             path.join(__dirname, "src/loaders/slides-json-loader")
           ),
         },
+        // rule for HtmlWebpackPlugin templates
         {
           test: /\.html$/,
-          use: [require.resolve("html-loader")],
+          use: [
+            // The default loader of HtmlWebpackPlugin won't run if there are
+            // other loaders that apply to the template file (see
+            // https://github.com/jantimon/html-webpack-plugin/blob/master/docs/template-option.md#3-setting-a-loader-using-the-modulerules-syntax),
+            // but we want it to run to render variables (<%= %>) so we force it
+            // to run.
+            {
+              loader: require.resolve("html-webpack-plugin/lib/loader.js"),
+              options: { force: true },
+            },
+            // The loader of HtmlWebpackPlugin outputs a JavaScript module
+            // exporting the HTML as a string while the html-loader expects
+            // HTML, so we use the extract-loader to do the conversion.
+            require.resolve("extract-loader"),
+            // We need this to resolve images found in the templates.
+            require.resolve("html-loader"),
+          ],
         },
         {
           test: /[\/\\]Slides[\/\\].+\.md$/,
@@ -108,16 +126,19 @@ module.exports = (env = {}) => {
         template: path.resolve(path.join(__dirname, "src/index.html")),
         chunks: ["index"],
         filename: "index.html",
+        trainingSlug,
       }),
       new HtmlWebpackPlugin({
         template: path.resolve(path.join(__dirname, "src/slides/slides.html")),
         chunks: ["slides"],
         filename: "slides.html",
+        trainingSlug,
       }),
       new HtmlWebpackPlugin({
         template: path.resolve(path.join(__dirname, "src/labs/labs.html")),
         chunks: ["labs"],
         filename: "labs.html",
+        trainingSlug,
       }),
       new MiniCssExtractPlugin(),
       new webpack.DefinePlugin({
