@@ -3,59 +3,58 @@
 Sensei is meant to be a replacement of [zenika-formation-framework](https://github.com/Zenika/zenika-formation-framework/),
 using a simpler and newer stack. It's not up-to-par in terms of features, but it's ready for test drives.
 
-## Usage
+## Installation
 
 ### Using the published Docker image 🐳
 
-- `cd` into a training material folder (must have `Slides/slides.json` and `CahierExercices/parts.json`)
-- Run `docker run -it --rm -p 8080:8080 -v $(pwd):/training-material zenika/sensei`.
-- Navigate to `http://localhost:8080/slides.html` for slides and `http://localhost:8080/labs.html` for labs
+- Pull the image with `docker image pull zenika/sensei`
+- Create an alias `sensei`
+
+    ```shell
+    alias sensei='docker container run \
+      --interactive \
+      --tty \
+      --rm \
+      --volume $(pwd):/$(basename $(pwd)) \
+      --workdir /$(basename $(pwd)) \
+      --publish 8080:8080 \
+      --cap-add=SYS_ADMIN \
+      zenika/sensei'
+    ```
 
 ### Using a Docker image built from sources 🐳
 
 - Clone this repo and `cd` into the created folder
-- `sh build.sh`
-- `cd` into a training material folder (must have `Slides/slides.json` and `CahierExercices/parts.json`)
-- `sh ../path/to/sensei/run.sh`
-- Navigate to `http://localhost:8080/slides.html` for slides and `http://localhost:8080/labs.html` for labs
+- Build the image with `sh build.sh`
+- Create the same alias as for the published Docker image
 
 ### Using Node.js
 
-- `npm install --global https://github.com/Zenika/sensei`
-- `sensei serve /path/to/training-material-folder`
-- Navigate to `http://localhost:8080/slides.html` for slides and `http://localhost:8080/labs.html` for labs
+- Install with `npm install --global https://github.com/Zenika/sensei`
+
+## Usage
 
 ### Generating PDFs
 
-PDFs are generated inside PDF folder from webpack bundle (dist folder)
-
-#### Using Node.js
-
-- `npm install --global https://github.com/Zenika/sensei`
-- `sensei pdf /path/to/training-material-folder` to generate a PDF for the slides & labs
-
-#### Using Docker
-
 - `cd` into a training material folder (must have `Slides/slides.json` and `CahierExercices/parts.json`)
-- Run `docker run -it --rm -p 8080:8080 -v $(pwd):/training-material --cap-add SYS_ADMIN zenika/sensei pdf`
+- Run `sensei pdf`
+- PDFs are generated inside `pdf` folder
 
 ⚠️ Note about slide sizing and PDF rendering: to avoid any layout inconsistencies, the `width` and `height` values present in [src/slides/slides.js](src/slides/slides.js) file must match the values of the `--size` parameter in the `slides` npm script
 
+### Serving the slides and labs
+
+- `cd` into a training material folder (must have `Slides/slides.json` and `CahierExercices/parts.json`)
+- Run `sensei serve`
+- Navigate to `http://localhost:8080/`
+
 ## Reveal plugins
 
-The following plugins are enabled: Markdown, Highlight, Zoom, Notes and Math.
+The following plugins are enabled:
+ - Markdown
+ - Highlight
+ - Zoom
+ - Notes
+ - Math
+
 Refer to [Reveal's documentation](https://revealjs.com/plugins/#built-in-plugins) for usage.
-
-## Tip: using a shell alias
-
-You may want to define the following alias to be able to run slides using `slides`:
-
-```
-alias slides='docker container run \
-  --interactive \
-  --tty \
-  --rm \
-  --volume $(pwd):/training-material \
-  --publish 8080:8080 \
-  zenika/sensei'
-```
