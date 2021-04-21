@@ -61,23 +61,21 @@ function hasRemoteQueryParameter() {
 }
 
 function isRemoteMode() {
-  return Reveal.isOverview()
-    ? false
-    : hasRemoteQueryParameter();
+  return Reveal.isOverview() ? false : hasRemoteQueryParameter();
 }
 
 function enableRemoteMode() {
   window.location.search += window.location.search.match(/[?]/)
-    ? '&remote'
-    : '?remote';
+    ? "&remote"
+    : "?remote";
 }
 
 function disableRemoteMode() {
   window.location.search = window.location.search
-    .replace(/[?]remote[&]/i, '?')
-    .replace(/[?]remote/i, '')
-    .replace(/[&]remote[&]/i, '&')
-    .replace(/[&]remote$/i, '');
+    .replace(/[?]remote[&]/i, "?")
+    .replace(/[?]remote/i, "")
+    .replace(/[&]remote[&]/i, "&")
+    .replace(/[&]remote$/i, "");
 }
 
 function toggleRemoteMode() {
