@@ -12,6 +12,7 @@ using a simpler and newer stack. It's not up-to-par in terms of features, but it
 
     ```shell
     alias sensei='docker container run \
+      --pull always \
       --interactive \
       --tty \
       --rm \
@@ -26,7 +27,7 @@ using a simpler and newer stack. It's not up-to-par in terms of features, but it
 
 - Clone this repo and `cd` into the created folder
 - Build the image with `sh build.sh`
-- Create the same alias as for the published Docker image
+- Create the same alias as for the published Docker image but without the `--pull always`
 
 ### Using Node.js
 
