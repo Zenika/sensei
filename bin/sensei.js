@@ -6,20 +6,27 @@ const path = require("path");
 const WebpackDevServer = require("webpack-dev-server");
 const webpackConfig = require("../webpack.config");
 const webpack = require("webpack");
+const yargs = require("yargs/yargs");
 
 async function cli(args) {
-  const trainingMaterialFolder = args[3] || ".";
-  const trainingSlug =
-    args[4] || path.basename(path.resolve(trainingMaterialFolder));
-  switch (args[2]) {
+  const parsedArgs = yargs(args.slice(2)).argv;
+  const material = parsedArgs.material || ".";
+  const slug = parsedArgs.slug || path.basename(path.resolve(material));
+  const options = {
+    material,
+    trainingSlug: slug,
+    ...parsedArgs,
+  };
+
+  switch (parsedArgs._[0]) {
     case "serve":
-      serve(trainingMaterialFolder, trainingSlug);
+      serve(options);
       break;
     case "build":
-      await build({ material: trainingMaterialFolder, trainingSlug });
+      await build(options);
       break;
     case "pdf":
-      await pdf(trainingMaterialFolder, trainingSlug);
+      await pdf(options);
       break;
     case "help":
     case "-h":
@@ -29,17 +36,15 @@ async function cli(args) {
   }
 }
 
-function serve(trainingMaterialFolder, trainingSlug) {
+function serve(options) {
   console.log("Start dev server");
-  const server = new WebpackDevServer(
-    webpack(webpackConfig({ material: trainingMaterialFolder, trainingSlug }))
-  );
-  server.listen(8080, "0.0.0.0", function (err) {
+  const server = new WebpackDevServer(webpack(webpackConfig(options)));
+  server.listen(options.port, "0.0.0.0", function (err) {
     if (err) {
       console.log(err);
     } else {
       console.log(
-        "Navigate to http://localhost:8080/slides.html or http://localhost:8080/labs.html"
+        `Navigate to http://localhost:${options.port}/slides.html or http://localhost:${options.port}/labs.html`
       );
     }
   });
@@ -61,9 +66,9 @@ function build(options) {
   });
 }
 
-async function pdf(trainingMaterialFolder, trainingSlug) {
+async function pdf(options) {
   console.log("Generate pdf slides & labs");
-  await build({ material: trainingMaterialFolder, trainingSlug, pdf: true });
+  await build({ ...options, pdf: true });
   pdfSlides(trainingSlug);
   pdfLabs(trainingSlug);
 }
