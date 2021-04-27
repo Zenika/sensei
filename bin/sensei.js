@@ -9,16 +9,21 @@ const webpack = require("webpack");
 const yargs = require("yargs/yargs");
 
 async function cli(args) {
-  const parsedArgs = yargs(args.slice(2)).argv;
-  const material = parsedArgs.material || ".";
-  const slug = parsedArgs.slug || path.basename(path.resolve(material));
+  const {
+    _: [command],
+    material = ".",
+    slug = path.basename(path.resolve(material)),
+    port = 8080,
+    ...otherArgs
+  } = yargs(args.slice(2)).argv;
   const options = {
     material,
     trainingSlug: slug,
-    ...parsedArgs,
+    port,
+    ...otherArgs,
   };
 
-  switch (parsedArgs._[0]) {
+  switch (command) {
     case "serve":
       serve(options);
       break;
