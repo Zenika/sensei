@@ -69,8 +69,8 @@ function build(options) {
 async function pdf(options) {
   console.log("Generate pdf slides & labs");
   await build({ ...options, pdf: true });
-  pdfSlides(trainingSlug);
-  pdfLabs(trainingSlug);
+  pdfSlides(options);
+  pdfLabs(options);
 }
 
 function help() {
@@ -86,7 +86,7 @@ function help() {
   );
 }
 
-function pdfSlides(trainingName) {
+function pdfSlides({ trainingSlug, slideWidth, slideHeight }) {
   return new Promise((resolve, reject) => {
     const child = spawn("node", [
       path.resolve(
@@ -96,9 +96,9 @@ function pdfSlides(trainingName) {
       "-p",
       "0",
       "--size",
-      "1420x800",
+      `${slideWidth || 1420}x${slideHeight || 800}`,
       `file:${path.resolve("./dist/slides.html")}`,
-      `./pdf/Zenika-${trainingName}-Slides.pdf`,
+      `./pdf/Zenika-${trainingSlug}-Slides.pdf`,
     ]);
 
     child.stdout.on("data", function (data) {
@@ -122,13 +122,13 @@ function pdfSlides(trainingName) {
   });
 }
 
-function pdfLabs(trainingName) {
+function pdfLabs({ trainingSlug }) {
   return new Promise((resolve, reject) => {
     const child = fork(
       path.resolve(path.join(__dirname, "../src/pdf/pdf.js")),
       [
         `file:${path.resolve("./dist/labs.html")}`,
-        `./pdf/Zenika-${trainingName}-Workbook.pdf`,
+        `./pdf/Zenika-${trainingSlug}-Workbook.pdf`,
       ]
     );
 
