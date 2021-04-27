@@ -48,8 +48,8 @@ reveal.initialize({
     },
   },
   margin: 0,
-  width: 1420,
-  height: 800,
+  width: SLIDE_WIDTH,
+  height: SLIDE_HEIGHT,
   plugins: [revealPluginMathJax, revealPluginNotes, revealPluginZoom],
   math: {
     tex2jax: { inlineMath: [["\\(", "\\)"]] },
