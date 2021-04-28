@@ -14,12 +14,16 @@ async function cli(args) {
     material = ".",
     slug = path.basename(path.resolve(material)),
     port = 8080,
+    slideWidth = 1420,
+    slideHeight = 800,
     ...otherArgs
-  } = yargs(args.slice(2)).argv;
+  } = args;
   const options = {
     material,
     trainingSlug: slug,
     port,
+    slideWidth,
+    slideHeight,
     ...otherArgs,
   };
 
@@ -101,7 +105,7 @@ function pdfSlides({ trainingSlug, slideWidth, slideHeight }) {
       "-p",
       "0",
       "--size",
-      `${slideWidth || 1420}x${slideHeight || 800}`,
+      `${slideWidth}x${slideHeight}`,
       `file:${path.resolve("./dist/slides.html")}`,
       `./pdf/Zenika-${trainingSlug}-Slides.pdf`,
     ]);
@@ -177,4 +181,4 @@ process.on("unhandledRejection", (err) => {
   throw err;
 });
 
-cli(process.argv);
+cli(yargs(process.argv.slice(2)).argv);
