@@ -47,9 +47,7 @@ function serve(options) {
     if (err) {
       console.log(err);
     } else {
-      console.log(
-        `Navigate to http://localhost:8080/slides.html or http://localhost:8080/labs.html`
-      );
+      console.log("Navigate to http://localhost:8080/");
     }
   });
 }
