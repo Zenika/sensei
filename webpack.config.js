@@ -25,17 +25,7 @@ module.exports = (env = {}) => {
   );
 
   const slideWitdh = env.slideWidth || DEFAULT_SLIDE_WIDTH;
-  if (slideWitdh !== DEFAULT_SLIDE_WIDTH) {
-    console.warn(
-      `Slide width: '${slideWitdh}'. This can be changed using '--env.slideWidth=<slide width>'. The default is '${DEFAULT_SLIDE_WIDTH}'.`
-    );
-  }
   const slideHeight = env.slideHeight || DEFAULT_SLIDE_HEIGHT;
-  if (slideHeight !== DEFAULT_SLIDE_HEIGHT) {
-    console.warn(
-      `Slide height: '${slideHeight}'. This can be changed using '--env.slideWidth=<slide height>'. The default is '${DEFAULT_SLIDE_HEIGHT}'.`
-    );
-  }
 
   const date = new Date().toISOString().substring(0, 10);
   const commitHash = childProcess
