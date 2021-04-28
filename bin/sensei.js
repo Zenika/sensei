@@ -13,7 +13,6 @@ async function cli(args) {
     _: [command],
     material = ".",
     slug = path.basename(path.resolve(material)),
-    port = 8080,
     slideWidth = 1420,
     slideHeight = 800,
     ...otherArgs
@@ -21,7 +20,6 @@ async function cli(args) {
   const options = {
     material,
     trainingSlug: slug,
-    port,
     slideWidth,
     slideHeight,
     ...otherArgs,
@@ -45,15 +43,15 @@ async function cli(args) {
   }
 }
 
-function serve({ port, ...buildOptions }) {
+function serve(options) {
   console.log("Start dev server");
-  const server = new WebpackDevServer(webpack(webpackConfig(buildOptions)));
-  server.listen(port, "0.0.0.0", function (err) {
+  const server = new WebpackDevServer(webpack(webpackConfig(options)));
+  server.listen(8080, "0.0.0.0", function (err) {
     if (err) {
       console.log(err);
     } else {
       console.log(
-        `Navigate to http://localhost:${port}/slides.html or http://localhost:${port}/labs.html`
+        `Navigate to http://localhost:8080/slides.html or http://localhost:8080/labs.html`
       );
     }
   });
