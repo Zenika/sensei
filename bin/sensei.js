@@ -19,7 +19,7 @@ async function cli(args) {
   } = args;
   const options = {
     material,
-    trainingSlug: slug,
+    slug,
     slideWidth,
     slideHeight,
     ...otherArgs,
@@ -53,7 +53,6 @@ function serve(options) {
     }
   });
 }
-
 function build(options) {
   console.log("Build slides & labs");
   return new Promise((resolve, reject) => {
@@ -77,8 +76,7 @@ async function pdf(options) {
   pdfLabs(options);
 }
 
-
-function pdfSlides({ trainingSlug, slideWidth, slideHeight }) {
+function pdfSlides({ slug, slideWidth, slideHeight }) {
   return new Promise((resolve, reject) => {
     const child = spawn("node", [
       path.resolve(
@@ -90,7 +88,7 @@ function pdfSlides({ trainingSlug, slideWidth, slideHeight }) {
       "--size",
       `${slideWidth}x${slideHeight}`,
       `file:${path.resolve("./dist/slides.html")}`,
-      `./pdf/Zenika-${trainingSlug}-Slides.pdf`,
+      `./pdf/Zenika-${slug}-Slides.pdf`,
     ]);
 
     child.stdout.on("data", function (data) {
@@ -114,13 +112,13 @@ function pdfSlides({ trainingSlug, slideWidth, slideHeight }) {
   });
 }
 
-function pdfLabs({ trainingSlug }) {
+function pdfLabs({ slug }) {
   return new Promise((resolve, reject) => {
     const child = fork(
       path.resolve(path.join(__dirname, "../src/pdf/pdf.js")),
       [
         `file:${path.resolve("./dist/labs.html")}`,
-        `./pdf/Zenika-${trainingSlug}-Workbook.pdf`,
+        `./pdf/Zenika-${slug}-Workbook.pdf`,
       ]
     );
 

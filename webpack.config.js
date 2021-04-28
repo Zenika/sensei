@@ -18,7 +18,7 @@ module.exports = (env = {}) => {
   );
 
   const trainingSlug =
-    env.trainingSlug || path.basename(trainingMaterialFolder);
+    env.slug || path.basename(trainingMaterialFolder);
   console.log(
     `Training slug: '${trainingSlug}'.`,
     `This can be changed using '--env.trainingSlug=<training slug>'.`
