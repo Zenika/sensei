@@ -34,6 +34,10 @@ using a simpler and newer stack. It's not up-to-par in terms of features, but it
 
 ## Usage
 
+### Help
+
+Run `sensei --help` for available commands and options.
+
 ### Generating PDFs
 
 - `cd` into a training material folder (must have `Slides/slides.json` and `CahierExercices/parts.json`)

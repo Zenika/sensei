@@ -179,4 +179,30 @@ process.on("unhandledRejection", (err) => {
   throw err;
 });
 
-cli(yargs(process.argv.slice(2)).argv);
+cli(
+  yargs(process.argv.slice(2))
+    .command("serve")
+    .command("pdf")
+    .option("material", {
+      type: "string",
+      description: "Path to the folder containing the training material.",
+      default: "current working directory",
+    })
+    .option("slug", {
+      type: "string",
+      description: "Training name used in PDF files and HTML page titles.",
+      default: "name of current working directory",
+    })
+    .option("slideWidth", {
+      type: "number",
+      description:
+        "Forwarded to Reveal.js. See https://revealjs.com/presentation-size/.",
+      default: 1420,
+    })
+    .option("slideHeight", {
+      type: "number",
+      description:
+        "Forwarded to Reveal.js. See https://revealjs.com/presentation-size/.",
+      default: 800,
+    }).argv
+);
