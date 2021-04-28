@@ -35,11 +35,8 @@ async function cli(args) {
     case "pdf":
       await pdf(options);
       break;
-    case "help":
-    case "-h":
     default:
-      help();
-      break;
+      throw new Error(`unknown command: '${command}'`);
   }
 }
 
@@ -80,18 +77,6 @@ async function pdf(options) {
   pdfLabs(options);
 }
 
-function help() {
-  console.log(
-    `Sensei training material build tool
-
-    Commands:
-      help | -h        display help
-      serve <path>     serve slides & labs for path [default: current directory]
-      build <path>     build slides & labs for path [default: current directory]
-      pdf <path>       generate pdf slides & labs for path [default: current directory]
-  `
-  );
-}
 
 function pdfSlides({ trainingSlug, slideWidth, slideHeight }) {
   return new Promise((resolve, reject) => {
@@ -204,5 +189,8 @@ cli(
       description:
         "Forwarded to Reveal.js. See https://revealjs.com/presentation-size/.",
       default: 800,
-    }).argv
+    })
+    .demandCommand(1, 1, "One command must be specified")
+    .strict()
+    .help().argv
 );
