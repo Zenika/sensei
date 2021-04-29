@@ -160,20 +160,33 @@ process.on("unhandledRejection", (err) => {
   throw err;
 });
 
-cli(
-  yargs(process.argv.slice(2))
-    .command("serve")
-    .command("pdf")
-    .option("material", {
+function describePositionalArguments(yargs) {
+  yargs
+    .positional("material", {
       type: "string",
-      description: "Path to the folder containing the training material.",
+      describe: "Path to the folder containing the training material.",
       default: "current working directory",
     })
-    .option("slug", {
+    .positional("slug", {
       type: "string",
-      description: "Training name used in PDF files and HTML page titles.",
+      describe: "Training name used in PDF files and HTML page titles.",
       default: "name of current working directory",
-    })
+    });
+}
+
+cli(
+  yargs(process.argv.slice(2))
+    .command(
+      "serve [material] [slug]",
+      "serve locally, with live-reloading",
+      describePositionalArguments
+    )
+    .command("pdf [material] [slug]", "build PDFs", describePositionalArguments)
+    .command(
+      "build [material] [slug]",
+      "build the static web site",
+      describePositionalArguments
+    )
     .option("slideWidth", {
       type: "number",
       description:
