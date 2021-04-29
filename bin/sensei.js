@@ -164,13 +164,15 @@ function describePositionalArguments(yargs) {
   yargs
     .positional("material", {
       type: "string",
-      describe: "Path to the folder containing the training material.",
-      default: "current working directory",
+      describe:
+        "Path to the folder containing the training material. Defaults to the current working directory. Takes precedence over the option of the same name. DEPRECATED: will be removed in a future version, use the option of the same name instead.",
+      default: ".",
     })
     .positional("slug", {
       type: "string",
-      describe: "Training name used in PDF files and HTML page titles.",
-      default: "name of current working directory",
+      describe:
+        "Training name used in PDF files and HTML page titles. Defaults to the name of the current working directory. Takes precedence over the option of the same name. DEPRECATED: will be removed in a future version, use the option of the same name instead.",
+      default: path.basename(path.resolve(".")),
     });
 }
 
@@ -189,13 +191,15 @@ cli(
     )
     .option("material", {
       type: "string",
-      describe: "Path to the folder containing the training material.",
-      default: "current working directory",
+      describe:
+        "Path to the folder containing the training material. Defaults to the current working directory.",
+      default: ".",
     })
     .option("slug", {
       type: "string",
-      describe: "Training name used in PDF files and HTML page titles.",
-      default: "name of current working directory",
+      describe:
+        "Training name used in PDF files and HTML page titles. Defaults to the name of the current working directory.",
+      default: path.basename(path.resolve(".")),
     })
     .option("slideWidth", {
       type: "number",
