@@ -187,15 +187,25 @@ cli(
       "build the static web site",
       describePositionalArguments
     )
+    .option("material", {
+      type: "string",
+      describe: "Path to the folder containing the training material.",
+      default: "current working directory",
+    })
+    .option("slug", {
+      type: "string",
+      describe: "Training name used in PDF files and HTML page titles.",
+      default: "name of current working directory",
+    })
     .option("slideWidth", {
       type: "number",
-      description:
+      describe:
         "Forwarded to Reveal.js. See https://revealjs.com/presentation-size/.",
       default: 1420,
     })
     .option("slideHeight", {
       type: "number",
-      description:
+      describe:
         "Forwarded to Reveal.js. See https://revealjs.com/presentation-size/.",
       default: 800,
     })
