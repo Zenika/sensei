@@ -6,45 +6,51 @@ const path = require("path");
 const WebpackDevServer = require("webpack-dev-server");
 const webpackConfig = require("../webpack.config");
 const webpack = require("webpack");
+const yargs = require("yargs/yargs");
 
 async function cli(args) {
-  const trainingMaterialFolder = args[3] || ".";
-  const trainingSlug =
-    args[4] || path.basename(path.resolve(trainingMaterialFolder));
-  switch (args[2]) {
+  const {
+    _: [command],
+    material = ".",
+    slug = path.basename(path.resolve(material)),
+    slideWidth = 1420,
+    slideHeight = 800,
+    ...otherArgs
+  } = args;
+  const options = {
+    material,
+    slug,
+    slideWidth,
+    slideHeight,
+    ...otherArgs,
+  };
+
+  switch (command) {
     case "serve":
-      serve(trainingMaterialFolder, trainingSlug);
+      serve(options);
       break;
     case "build":
-      await build({ material: trainingMaterialFolder, trainingSlug });
+      await build(options);
       break;
     case "pdf":
-      await pdf(trainingMaterialFolder, trainingSlug);
+      await pdf(options);
       break;
-    case "help":
-    case "-h":
     default:
-      help();
-      break;
+      throw new Error(`unknown command: '${command}'`);
   }
 }
 
-function serve(trainingMaterialFolder, trainingSlug) {
+function serve(options) {
   console.log("Start dev server");
-  const server = new WebpackDevServer(
-    webpack(webpackConfig({ material: trainingMaterialFolder, trainingSlug }))
-  );
+  const server = new WebpackDevServer(webpack(webpackConfig(options)));
   server.listen(8080, "0.0.0.0", function (err) {
     if (err) {
       console.log(err);
     } else {
-      console.log(
-        "Navigate to http://localhost:8080/slides.html or http://localhost:8080/labs.html"
-      );
+      console.log("Navigate to http://localhost:8080/");
     }
   });
 }
-
 function build(options) {
   console.log("Build slides & labs");
   return new Promise((resolve, reject) => {
@@ -61,27 +67,14 @@ function build(options) {
   });
 }
 
-async function pdf(trainingMaterialFolder, trainingSlug) {
+async function pdf(options) {
   console.log("Generate pdf slides & labs");
-  await build({ material: trainingMaterialFolder, trainingSlug, pdf: true });
-  pdfSlides(trainingSlug);
-  pdfLabs(trainingSlug);
+  await build({ ...options, pdf: true });
+  pdfSlides(options);
+  pdfLabs(options);
 }
 
-function help() {
-  console.log(
-    `Sensei training material build tool
-
-    Commands:
-      help | -h        display help
-      serve <path>     serve slides & labs for path [default: current directory]
-      build <path>     build slides & labs for path [default: current directory]
-      pdf <path>       generate pdf slides & labs for path [default: current directory]
-  `
-  );
-}
-
-function pdfSlides(trainingName) {
+function pdfSlides({ slug, slideWidth, slideHeight }) {
   return new Promise((resolve, reject) => {
     const child = spawn("node", [
       path.resolve(
@@ -91,9 +84,9 @@ function pdfSlides(trainingName) {
       "-p",
       "0",
       "--size",
-      "1420x800",
+      `${slideWidth}x${slideHeight}`,
       `file:${path.resolve("./dist/slides.html")}`,
-      `./pdf/Zenika-${trainingName}-Slides.pdf`,
+      `./pdf/Zenika-${slug}-Slides.pdf`,
     ]);
 
     child.stdout.on("data", function (data) {
@@ -117,13 +110,13 @@ function pdfSlides(trainingName) {
   });
 }
 
-function pdfLabs(trainingName) {
+function pdfLabs({ slug }) {
   return new Promise((resolve, reject) => {
     const child = fork(
       path.resolve(path.join(__dirname, "../src/pdf/pdf.js")),
       [
         `file:${path.resolve("./dist/labs.html")}`,
-        `./pdf/Zenika-${trainingName}-Workbook.pdf`,
+        `./pdf/Zenika-${slug}-Workbook.pdf`,
       ]
     );
 
@@ -167,4 +160,60 @@ process.on("unhandledRejection", (err) => {
   throw err;
 });
 
-cli(process.argv);
+function describePositionalArguments(yargs) {
+  yargs
+    .positional("material", {
+      type: "string",
+      describe:
+        "Path to the folder containing the training material. Defaults to the current working directory. Takes precedence over the option of the same name. DEPRECATED: will be removed in a future version, use the option of the same name instead.",
+      default: ".",
+    })
+    .positional("slug", {
+      type: "string",
+      describe:
+        "Training name used in PDF files and HTML page titles. Defaults to the name of the current working directory. Takes precedence over the option of the same name. DEPRECATED: will be removed in a future version, use the option of the same name instead.",
+      default: path.basename(path.resolve(".")),
+    });
+}
+
+cli(
+  yargs(process.argv.slice(2))
+    .command(
+      "serve [material] [slug]",
+      "serve locally, with live-reloading",
+      describePositionalArguments
+    )
+    .command("pdf [material] [slug]", "build PDFs", describePositionalArguments)
+    .command(
+      "build [material] [slug]",
+      "build the static web site",
+      describePositionalArguments
+    )
+    .option("material", {
+      type: "string",
+      describe:
+        "Path to the folder containing the training material. Defaults to the current working directory.",
+      default: ".",
+    })
+    .option("slug", {
+      type: "string",
+      describe:
+        "Training name used in PDF files and HTML page titles. Defaults to the name of the current working directory.",
+      default: path.basename(path.resolve(".")),
+    })
+    .option("slideWidth", {
+      type: "number",
+      describe:
+        "Forwarded to Reveal.js. See https://revealjs.com/presentation-size/.",
+      default: 1420,
+    })
+    .option("slideHeight", {
+      type: "number",
+      describe:
+        "Forwarded to Reveal.js. See https://revealjs.com/presentation-size/.",
+      default: 800,
+    })
+    .demandCommand(1, 1, "One command must be specified")
+    .strict()
+    .help().argv
+);

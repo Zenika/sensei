@@ -3,7 +3,10 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpack = require("webpack");
+
 const DEFAULT_TRAINING_MATERIAL_FOLDER = "training-material";
+const DEFAULT_SLIDE_WIDTH = 1420;
+const DEFAULT_SLIDE_HEIGHT = 800;
 
 module.exports = (env = {}) => {
   const trainingMaterialFolder = path.resolve(
@@ -13,18 +16,24 @@ module.exports = (env = {}) => {
     `Training material folder: '${trainingMaterialFolder}'.`,
     `This can be changed using '--env.material=<relative path to training material folder>'.`
   );
-  const trainingSlug =
-    env.trainingSlug || path.basename(trainingMaterialFolder);
+
+  const trainingSlug = env.slug || path.basename(trainingMaterialFolder);
   console.log(
     `Training slug: '${trainingSlug}'.`,
     `This can be changed using '--env.trainingSlug=<training slug>'.`
   );
+
+  const slideWitdh = env.slideWidth || DEFAULT_SLIDE_WIDTH;
+  const slideHeight = env.slideHeight || DEFAULT_SLIDE_HEIGHT;
+
   const date = new Date().toISOString().substring(0, 10);
   const commitHash = childProcess
     .execSync("git rev-parse --short HEAD", { cwd: trainingMaterialFolder })
     .toString();
+
   const slidesEntry =
     env.pdf === true || env.pdf === "true" ? "slides-pdf" : "slides";
+
   return {
     mode: "development",
     entry: {
@@ -142,6 +151,8 @@ module.exports = (env = {}) => {
       }),
       new MiniCssExtractPlugin(),
       new webpack.DefinePlugin({
+        SLIDE_WIDTH: String(slideWitdh),
+        SLIDE_HEIGHT: String(slideHeight),
         MATERIAL_VERSION: JSON.stringify(`${date}#${commitHash}`),
       }),
     ],
