@@ -2,12 +2,11 @@
   "name": "@zenika/sensei",
   "version": "1.0.0",
   "scripts": {
-    "postinstall": "npm install --prefix=src/pdf",
     "prettier": "prettier \"{*,**/*}.{yml,html,css,js}\"",
     "prettier:check": "npm run prettier -- --check",
     "prettier:write": "npm run prettier -- --write",
-    "test": "tap \"src/**/*.test.js\"",
-    "test:watch": "npm run test -- --watch",
+    "test": "node test.js",
+    "test:watch": "nodemon test.js --ignore dist",
     "start": "webpack-dev-server"
   },
   "bin": {
@@ -31,7 +30,7 @@
     "yargs": "16.2.0"
   },
   "devDependencies": {
-    "prettier": "2.0.5",
-    "tap": "14.10.7"
+    "nodemon": "2.0.7",
+    "prettier": "2.0.5"
   }
 }

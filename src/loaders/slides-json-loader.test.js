@@ -1,4 +1,7 @@
-const tap = require("tap");
+const assert = require("assert");
 const slidesJsonLoader = require("./slides-json-loader");
 
-tap.equal(slidesJsonLoader(JSON.stringify([])), "export default []");
+assert.deepStrictEqual(
+  slidesJsonLoader(JSON.stringify([])),
+  "export default []"
+);

@@ -27,9 +27,19 @@ module.exports = (env = {}) => {
   const slideHeight = env.slideHeight || DEFAULT_SLIDE_HEIGHT;
 
   const date = new Date().toISOString().substring(0, 10);
-  const commitHash = childProcess
-    .execSync("git rev-parse --short HEAD", { cwd: trainingMaterialFolder })
-    .toString();
+
+  let commitHash = "";
+  try {
+    commitHash = childProcess
+      .execSync("git rev-parse --short HEAD", { cwd: trainingMaterialFolder })
+      .toString();
+  } catch (err) {
+    if (err.message.match(/not a git repository/i)) {
+      commitHash = "nogit";
+    } else {
+      throw err;
+    }
+  }
 
   const slidesEntry =
     env.pdf === true || env.pdf === "true" ? "slides-pdf" : "slides";
@@ -41,7 +51,6 @@ module.exports = (env = {}) => {
       slides: path.resolve(
         path.join(__dirname, `src/slides/${slidesEntry}.js`)
       ),
-
       labs: path.resolve(path.join(__dirname, "src/labs/labs.js")),
     },
     module: {
