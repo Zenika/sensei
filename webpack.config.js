@@ -125,6 +125,7 @@ module.exports = (env = {}) => {
             options: {
               name: "[name]-[contenthash].[ext]",
               outputPath: "static-assets",
+              esModule: false,
             },
           },
           // this prevents default asset processing
