@@ -93,6 +93,10 @@ function pdfSlides({ slug, slideWidth, slideHeight }) {
       process.stdout.write(data);
     });
 
+    child.stderr.on("data", function (data) {
+      process.stderr.write(data);
+    });
+
     child.on("exit", function (code) {
       if (code !== 0) {
         return reject(
