@@ -14,13 +14,13 @@ module.exports = (env = {}) => {
   );
   console.log(
     `Training material folder: '${trainingMaterialFolder}'.`,
-    `This can be changed using '--env.material=<relative path to training material folder>'.`
+    `This can be changed using '--env material=<relative path to training material folder>'.`
   );
 
   const trainingSlug = env.slug || path.basename(trainingMaterialFolder);
   console.log(
     `Training slug: '${trainingSlug}'.`,
-    `This can be changed using '--env.trainingSlug=<training slug>'.`
+    `This can be changed using '--env trainingSlug=<training slug>'.`
   );
 
   const slideWitdh = env.slideWidth || DEFAULT_SLIDE_WIDTH;
