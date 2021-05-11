@@ -4,6 +4,9 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpack = require("webpack");
 
+const Prism = require("prismjs");
+require("prismjs/components/")();
+
 const DEFAULT_TRAINING_MATERIAL_FOLDER = "training-material";
 const DEFAULT_SLIDE_WIDTH = 1420;
 const DEFAULT_SLIDE_HEIGHT = 800;
@@ -94,7 +97,16 @@ module.exports = (env = {}) => {
           test: /[\/\\]CahierExercices[\/\\].+\.md$/,
           use: [
             require.resolve("html-loader"),
-            require.resolve("markdown-loader"),
+            {
+              loader: require.resolve("markdown-loader"),
+              options: {
+                highlight(code, lang) {
+                  const prismLang =
+                    Prism.languages[lang] || Prism.languages.clike;
+                  return Prism.highlight(code, prismLang);
+                },
+              },
+            },
           ],
         },
         {
