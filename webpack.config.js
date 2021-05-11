@@ -17,13 +17,13 @@ module.exports = (env = {}) => {
   );
   console.log(
     `Training material folder: '${trainingMaterialFolder}'.`,
-    `This can be changed using '--env.material=<relative path to training material folder>'.`
+    `This can be changed using '--env material=<relative path to training material folder>'.`
   );
 
   const trainingSlug = env.slug || path.basename(trainingMaterialFolder);
   console.log(
     `Training slug: '${trainingSlug}'.`,
-    `This can be changed using '--env.trainingSlug=<training slug>'.`
+    `This can be changed using '--env trainingSlug=<training slug>'.`
   );
 
   const slideWitdh = env.slideWidth || DEFAULT_SLIDE_WIDTH;
@@ -78,12 +78,19 @@ module.exports = (env = {}) => {
               loader: require.resolve("html-webpack-plugin/lib/loader.js"),
               options: { force: true },
             },
-            // The loader of HtmlWebpackPlugin outputs a JavaScript module
-            // exporting the HTML as a string while the html-loader expects
-            // HTML, so we use the extract-loader to do the conversion.
+            // html-loader outputs a JavaScript module exporting the HTML as a
+            // string while the HtmlWebpackPlugin loader expects HTML, so we use
+            // the extract-loader to handle the conversion.
             require.resolve("extract-loader"),
             // We need this to resolve images found in the templates.
-            require.resolve("html-loader"),
+            {
+              loader: require.resolve("html-loader"),
+              options: {
+                // extract-loader (which handles the output of this loader) does
+                // not support ES modules
+                esModule: false,
+              },
+            },
           ],
         },
         {
@@ -130,8 +137,12 @@ module.exports = (env = {}) => {
             options: {
               name: "[name]-[contenthash].[ext]",
               outputPath: "static-assets",
+              esModule: false,
             },
           },
+          // this prevents default asset processing
+          // see https://webpack.js.org/guides/asset-modules/
+          type: "javascript/auto",
         },
       ],
     },
