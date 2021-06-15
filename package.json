@@ -8,7 +8,7 @@
     "prettier:write": "npm run prettier -- --write",
     "test": "node test.js",
     "test:watch": "nodemon test.js --ignore dist",
-    "start": "webpack serve"
+    "start": "node bin/sensei.js"
   },
   "bin": {
     "sensei": "bin/sensei.js"

@@ -1,3 +1,5 @@
+//@ts-check
+
 const childProcess = require("child_process");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -7,34 +9,15 @@ const webpack = require("webpack");
 const Prism = require("prismjs");
 require("prismjs/components/")();
 
-const DEFAULT_TRAINING_MATERIAL_FOLDER = "training-material";
-const DEFAULT_SLIDE_WIDTH = 1420;
-const DEFAULT_SLIDE_HEIGHT = 800;
-
 module.exports = (env = {}) => {
-  const trainingMaterialFolder = path.resolve(
-    env.material || DEFAULT_TRAINING_MATERIAL_FOLDER
-  );
-  console.log(
-    `Training material folder: '${trainingMaterialFolder}'.`,
-    `This can be changed using '--env material=<relative path to training material folder>'.`
-  );
-
-  const trainingSlug = env.slug || path.basename(trainingMaterialFolder);
-  console.log(
-    `Training slug: '${trainingSlug}'.`,
-    `This can be changed using '--env trainingSlug=<training slug>'.`
-  );
-
-  const slideWitdh = env.slideWidth || DEFAULT_SLIDE_WIDTH;
-  const slideHeight = env.slideHeight || DEFAULT_SLIDE_HEIGHT;
+  assertRequiredOptionsArePresent(env);
 
   const date = new Date().toISOString().substring(0, 10);
 
   let commitHash = "";
   try {
     commitHash = childProcess
-      .execSync("git rev-parse --short HEAD", { cwd: trainingMaterialFolder })
+      .execSync("git rev-parse --short HEAD", { cwd: env.material })
       .toString();
   } catch (err) {
     if (err.message.match(/not a git repository/i)) {
@@ -50,20 +33,16 @@ module.exports = (env = {}) => {
   return {
     mode: "development",
     entry: {
-      index: path.resolve(path.join(__dirname, "src/index.js")),
-      slides: path.resolve(
-        path.join(__dirname, `src/slides/${slidesEntry}.js`)
-      ),
-      labs: path.resolve(path.join(__dirname, "src/labs/labs.js")),
+      index: path.resolve(__dirname, "../src/index.js"),
+      slides: path.resolve(__dirname, `../src/slides/${slidesEntry}.js`),
+      labs: path.resolve(__dirname, "../src/labs/labs.js"),
     },
     module: {
       rules: [
         {
           test: [/slides\.json$/, /parts\.json$/],
           type: "javascript/auto",
-          use: path.resolve(
-            path.join(__dirname, "src/loaders/slides-json-loader")
-          ),
+          use: path.resolve(__dirname, "../src/loaders/slides-json-loader"),
         },
         // rule for HtmlWebpackPlugin templates
         {
@@ -97,7 +76,9 @@ module.exports = (env = {}) => {
           test: /[\/\\]Slides[\/\\].+\.md$/,
           use: [
             require.resolve("html-loader"),
-            path.resolve(path.join(__dirname, "src/loaders/revealjs-loader")),
+            path.resolve(
+              path.join(__dirname, "../src/loaders/revealjs-loader")
+            ),
           ],
         },
         {
@@ -110,7 +91,7 @@ module.exports = (env = {}) => {
                 highlight(code, lang) {
                   const prismLang =
                     Prism.languages[lang] || Prism.languages.clike;
-                  return Prism.highlight(code, prismLang);
+                  return Prism.highlight(code, prismLang, undefined);
                 },
               },
             },
@@ -148,13 +129,13 @@ module.exports = (env = {}) => {
     },
     resolve: {
       alias: {
-        "training-material": trainingMaterialFolder,
+        "training-material": env.material,
       },
       symlinks: false,
       modules: [
         // this is to support the "npm link" case where imports must be resolved
         // from the project folder
-        path.resolve(__dirname, "node_modules"),
+        path.resolve(__dirname, "../node_modules"),
         // this is the default and works for most cases
         "node_modules",
       ],
@@ -164,27 +145,27 @@ module.exports = (env = {}) => {
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: path.resolve(path.join(__dirname, "src/index.html")),
+        template: path.resolve(__dirname, "../src/index.html"),
         chunks: ["index"],
         filename: "index.html",
-        trainingSlug,
+        trainingSlug: env.slug,
       }),
       new HtmlWebpackPlugin({
-        template: path.resolve(path.join(__dirname, "src/slides/slides.html")),
+        template: path.resolve(__dirname, "../src/slides/slides.html"),
         chunks: ["slides"],
         filename: "slides.html",
-        trainingSlug,
+        trainingSlug: env.slug,
       }),
       new HtmlWebpackPlugin({
-        template: path.resolve(path.join(__dirname, "src/labs/labs.html")),
+        template: path.resolve(__dirname, "../src/labs/labs.html"),
         chunks: ["labs"],
         filename: "labs.html",
-        trainingSlug,
+        trainingSlug: env.slug,
       }),
       new MiniCssExtractPlugin(),
       new webpack.DefinePlugin({
-        SLIDE_WIDTH: String(slideWitdh),
-        SLIDE_HEIGHT: String(slideHeight),
+        SLIDE_WIDTH: String(env.slideWitdh),
+        SLIDE_HEIGHT: String(env.slideHeight),
         MATERIAL_VERSION: JSON.stringify(`${date}#${commitHash}`),
       }),
     ],
@@ -193,3 +174,18 @@ module.exports = (env = {}) => {
     },
   };
 };
+
+function assertRequiredOptionsArePresent(env) {
+  if (!env.material) {
+    throw new Error("'material' option is required but was not found");
+  }
+  if (!env.slug) {
+    throw new Error("'slug' option is required but was not found");
+  }
+  if (!env.slideWidth) {
+    throw new Error("'slideWidth' option is required but was not found");
+  }
+  if (!env.slideHeight) {
+    throw new Error("'slideHeight' option is required but was not found");
+  }
+}
