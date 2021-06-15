@@ -11,17 +11,11 @@ const yargs = require("yargs/yargs");
 async function cli(args) {
   const {
     _: [command],
-    material = ".",
     slug = path.basename(path.resolve(material)),
-    slideWidth = 1420,
-    slideHeight = 800,
     ...otherArgs
   } = args;
   const options = {
-    material,
     slug,
-    slideWidth,
-    slideHeight,
     ...otherArgs,
   };
 
@@ -40,14 +34,11 @@ async function cli(args) {
   }
 }
 
-function serve(options) {
-  console.log("Start dev server");
+function serve({ port, ...options }) {
   const server = new WebpackDevServer(webpack(webpackConfig(options)));
-  server.listen(8080, "0.0.0.0", function (err) {
+  server.listen(port, "0.0.0.0", (err) => {
     if (err) {
       console.log(err);
-    } else {
-      console.log("Navigate to http://localhost:8080/");
     }
   });
 }
@@ -164,6 +155,12 @@ process.on("unhandledRejection", (err) => {
   throw err;
 });
 
+/**
+ * DEPRECATED
+ * DO NOT ADD POSITIONAL ARGUMENTS/
+ * These are for backward compatibility only.
+ * If adding new arguments, use named arguments (aka options) below.
+ */
 function describePositionalArguments(yargs) {
   yargs
     .positional("material", {
@@ -185,7 +182,14 @@ cli(
     .command(
       "serve [material] [slug]",
       "serve locally, with live-reloading",
-      describePositionalArguments
+      (yargs) => {
+        describePositionalArguments(yargs);
+        yargs.option("port", {
+          type: "number",
+          describe: "Port on which the server should listen.",
+          default: 8080,
+        });
+      }
     )
     .command("pdf [material] [slug]", "build PDFs", describePositionalArguments)
     .command(
