@@ -8,40 +8,41 @@ const webpackConfig = require("../webpack.config");
 const webpack = require("webpack");
 const yargs = require("yargs/yargs");
 
-async function cli(args) {
+async function cli(args, env) {
   const {
     _: [command],
     slug = path.basename(path.resolve(material)),
     ...otherArgs
   } = args;
-  const options = {
+  const buildOptions = {
     slug,
     ...otherArgs,
   };
 
   switch (command) {
     case "serve":
-      serve(options);
+      serve(buildOptions, { port: env.port });
       break;
     case "build":
-      await build(options);
+      await build(buildOptions);
       break;
     case "pdf":
-      await pdf(options);
+      await pdf(buildOptions);
       break;
     default:
       throw new Error(`unknown command: '${command}'`);
   }
 }
 
-function serve({ port, ...options }) {
-  const server = new WebpackDevServer(webpack(webpackConfig(options)));
-  server.listen(port, "0.0.0.0", (err) => {
+function serve(buildOptions, serveOptions) {
+  const server = new WebpackDevServer(webpack(webpackConfig(buildOptions)));
+  server.listen(serveOptions.port, "0.0.0.0", (err) => {
     if (err) {
       console.log(err);
     }
   });
 }
+
 function build(options) {
   console.log("Build slides & labs");
   return new Promise((resolve, reject) => {
@@ -182,14 +183,7 @@ cli(
     .command(
       "serve [material] [slug]",
       "serve locally, with live-reloading",
-      (yargs) => {
-        describePositionalArguments(yargs);
-        yargs.option("port", {
-          type: "number",
-          describe: "Port on which the server should listen.",
-          default: 8080,
-        });
-      }
+      describePositionalArguments
     )
     .command("pdf [material] [slug]", "build PDFs", describePositionalArguments)
     .command(
@@ -223,5 +217,8 @@ cli(
     })
     .demandCommand(1, 1, "One command must be specified")
     .strict()
-    .help().argv
+    .help().argv,
+  {
+    port: process.env.SENSEI_PORT || 8080,
+  }
 );
