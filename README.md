@@ -19,7 +19,7 @@ using a simpler and newer stack. It's not up-to-par in terms of features, but it
       --volume $(pwd):/$(basename $(pwd)) \
       --workdir /$(basename $(pwd)) \
       --publish ${SENSEI_PORT:-8080}:${SENSEI_PORT:-8080} \
-      --env SENSEI_PORT
+      --env SENSEI_PORT \
       --cap-add=SYS_ADMIN \
       zenika/sensei'
     ```
