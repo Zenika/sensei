@@ -3,8 +3,12 @@ import slidesContent from "training-material/Slides/slides.json";
 const convertTextToHtml = document.createElement("div");
 convertTextToHtml.innerHTML = slidesContent[0];
 
-const trainingTitle = convertTextToHtml.querySelector(
+const trainingTitleElement = convertTextToHtml.querySelector(
   "section h1:first-of-type"
-).textContent;
+);
+
+const trainingTitle =
+  (trainingTitleElement && trainingTitleElement.textContent) ||
+  "{Training Title}";
 
 export { trainingTitle };
