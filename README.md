@@ -18,16 +18,23 @@ using a simpler and newer stack. It's not up-to-par in terms of features, but it
       --rm \
       --volume $(pwd):/$(basename $(pwd)) \
       --workdir /$(basename $(pwd)) \
-      --publish 8080:8080 \
+      --publish ${SENSEI_PORT:-8080}:${SENSEI_PORT:-8080} \
+      --env SENSEI_PORT \
       --cap-add=SYS_ADMIN \
       zenika/sensei'
     ```
+
+> ⚠ When running sensei inside a Docker container, the `--material` is limited
+> to descendants of the working directory.
 
 ### Using a Docker image built from sources 🐳
 
 - Clone this repo and `cd` into the created folder
 - Build the image with `sh build.sh`
 - Create the same alias as for the published Docker image but without the `--pull always`
+
+> ⚠ When running sensei inside a Docker container, the `--material` is limited
+> to descendants of the working directory.
 
 ### Using Node.js
 

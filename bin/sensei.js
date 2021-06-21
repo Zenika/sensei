@@ -8,49 +8,41 @@ const webpackConfig = require("../webpack.config");
 const webpack = require("webpack");
 const yargs = require("yargs/yargs");
 
-async function cli(args) {
+async function cli(args, env) {
   const {
     _: [command],
-    material = ".",
     slug = path.basename(path.resolve(material)),
-    slideWidth = 1420,
-    slideHeight = 800,
     ...otherArgs
   } = args;
-  const options = {
-    material,
+  const buildOptions = {
     slug,
-    slideWidth,
-    slideHeight,
     ...otherArgs,
   };
 
   switch (command) {
     case "serve":
-      serve(options);
+      serve(buildOptions, { port: env.port });
       break;
     case "build":
-      await build(options);
+      await build(buildOptions);
       break;
     case "pdf":
-      await pdf(options);
+      await pdf(buildOptions);
       break;
     default:
       throw new Error(`unknown command: '${command}'`);
   }
 }
 
-function serve(options) {
-  console.log("Start dev server");
-  const server = new WebpackDevServer(webpack(webpackConfig(options)));
-  server.listen(8080, "0.0.0.0", function (err) {
+function serve(buildOptions, serveOptions) {
+  const server = new WebpackDevServer(webpack(webpackConfig(buildOptions)));
+  server.listen(serveOptions.port, "0.0.0.0", (err) => {
     if (err) {
       console.log(err);
-    } else {
-      console.log("Navigate to http://localhost:8080/");
     }
   });
 }
+
 function build(options) {
   console.log("Build slides & labs");
   return new Promise((resolve, reject) => {
@@ -164,6 +156,12 @@ process.on("unhandledRejection", (err) => {
   throw err;
 });
 
+/**
+ * DEPRECATED
+ * DO NOT ADD POSITIONAL ARGUMENTS/
+ * These are for backward compatibility only.
+ * If adding new arguments, use named arguments (aka options) below.
+ */
 function describePositionalArguments(yargs) {
   yargs
     .positional("material", {
@@ -219,5 +217,8 @@ cli(
     })
     .demandCommand(1, 1, "One command must be specified")
     .strict()
-    .help().argv
+    .help().argv,
+  {
+    port: process.env.SENSEI_PORT || 8080,
+  }
 );
