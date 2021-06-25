@@ -91,7 +91,7 @@ module.exports = (env = {}) => {
                 highlight(code, lang) {
                   const prismLang =
                     Prism.languages[lang] || Prism.languages.clike;
-                  return Prism.highlight(code, prismLang, undefined);
+                  return Prism.highlight(code, prismLang, lang);
                 },
               },
             },
