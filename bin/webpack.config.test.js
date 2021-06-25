@@ -72,7 +72,12 @@ function testCompilation(caseName, fakeMaterialConfig) {
   );
   webpack(
     {
-      ...webpackConfig({ material: input }),
+      ...webpackConfig({
+        material: input,
+        slug: "slug",
+        slideWidth: 1000,
+        slideHeight: 1000,
+      }),
       output: {
         path: output,
       },
