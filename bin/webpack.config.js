@@ -164,7 +164,7 @@ module.exports = (env = {}) => {
       }),
       new MiniCssExtractPlugin(),
       new webpack.DefinePlugin({
-        SLIDE_WIDTH: String(env.slideWitdh),
+        SLIDE_WIDTH: String(env.slideWidth),
         SLIDE_HEIGHT: String(env.slideHeight),
         MATERIAL_VERSION: JSON.stringify(`${date}#${commitHash}`),
       }),
