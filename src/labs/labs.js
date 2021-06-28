@@ -1,6 +1,6 @@
 import "prismjs/themes/prism.css";
 import "./labs.css";
-import labs from "training-material/CahierExercices/parts.json";
+import labs from "training-material/Workbook/parts.json";
 import { trainingTitle } from "../title.js";
 
 const labsContainer = document.querySelector(".labs");
