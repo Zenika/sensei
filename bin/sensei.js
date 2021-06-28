@@ -25,7 +25,7 @@ async function cli(args, env) {
 
   switch (command) {
     case "serve":
-      serve(buildOptions, { port: env.port });
+      serve(buildOptions, { host: env.host, port: env.port });
       break;
     case "build":
       await build(buildOptions);
@@ -40,7 +40,7 @@ async function cli(args, env) {
 
 function serve(buildOptions, serveOptions) {
   const server = new WebpackDevServer(webpack(webpackConfig(buildOptions)));
-  server.listen(serveOptions.port, "0.0.0.0", (err) => {
+  server.listen(serveOptions.port, serveOptions.host, (err) => {
     if (err) {
       console.log(err);
     }
@@ -221,6 +221,7 @@ cli(
     .strict()
     .help().argv,
   {
+    host: process.env.SENSEI_HOST || "127.0.0.1",
     port: process.env.SENSEI_PORT || 8080,
   }
 );
