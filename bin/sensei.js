@@ -4,20 +4,24 @@ const spawn = require("child_process").spawn;
 const fork = require("child_process").fork;
 const path = require("path");
 const WebpackDevServer = require("webpack-dev-server");
-const webpackConfig = require("../webpack.config");
+const webpackConfig = require("./webpack.config");
 const webpack = require("webpack");
 const yargs = require("yargs/yargs");
 
 async function cli(args, env) {
   const {
     _: [command],
-    slug = path.basename(path.resolve(material)),
-    ...otherArgs
+    ...cliOptions
   } = args;
+  const material = path.resolve(cliOptions.material);
+  const slug = cliOptions.slug || path.basename(material);
   const buildOptions = {
+    ...cliOptions,
+    material,
     slug,
-    ...otherArgs,
   };
+
+  console.info(`Processing folder '${material}' as '${slug}'`);
 
   switch (command) {
     case "serve":
@@ -174,7 +178,6 @@ function describePositionalArguments(yargs) {
       type: "string",
       describe:
         "Training name used in PDF files and HTML page titles. Defaults to the name of the current working directory. Takes precedence over the option of the same name. DEPRECATED: will be removed in a future version, use the option of the same name instead.",
-      default: path.basename(path.resolve(".")),
     });
 }
 
@@ -201,7 +204,6 @@ cli(
       type: "string",
       describe:
         "Training name used in PDF files and HTML page titles. Defaults to the name of the current working directory.",
-      default: path.basename(path.resolve(".")),
     })
     .option("slideWidth", {
       type: "number",
