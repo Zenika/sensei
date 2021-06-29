@@ -5,6 +5,7 @@ import revealPluginMathJax from "reveal.js/plugin/math/math.js";
 import "reveal.js/dist/reveal.css";
 import "prismjs/themes/prism.css";
 import "./slides.css";
+import "training-material/Slides/ressources/custom.css";
 import slidesContent from "training-material/Slides/slides.json";
 import { trainingTitle } from "../title.js";
 
