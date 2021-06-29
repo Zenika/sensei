@@ -14,6 +14,7 @@ RUN npm ci --production --unsafe-perm
 COPY ./ ./
 
 VOLUME [ "/training-material" ]
+ENV SENSEI_HOST=0.0.0.0
 EXPOSE 8080
 
 WORKDIR /training-material
