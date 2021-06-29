@@ -117,7 +117,7 @@ function setupFakeMaterial(
   slides.forEach(({ file, content = "" }) =>
     fs.writeFileSync(path.join(slidesFolder, file), content)
   );
-  const workbookFolder = path.join(input, "CahierExercices");
+  const workbookFolder = path.join(input, "Workbook");
   fs.mkdirSync(workbookFolder, { recursive: true });
   fs.writeFileSync(
     path.join(workbookFolder, "parts.json"),

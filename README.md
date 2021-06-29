@@ -48,7 +48,7 @@ Run `sensei --help` for available commands and options.
 
 ### Generating PDFs
 
-- `cd` into a training material folder (must have `Slides/slides.json` and `CahierExercices/parts.json`)
+- `cd` into a training material folder (must have `Slides/slides.json` and `Workbook/parts.json`)
 - Run `sensei pdf`
 - PDFs are generated inside `pdf` folder
 
@@ -56,7 +56,7 @@ Run `sensei --help` for available commands and options.
 
 ### Serving the slides and labs
 
-- `cd` into a training material folder (must have `Slides/slides.json` and `CahierExercices/parts.json`)
+- `cd` into a training material folder (must have `Slides/slides.json` and `Workbook/parts.json`)
 - Run `sensei serve`
 - Navigate to `http://localhost:8080/`
 

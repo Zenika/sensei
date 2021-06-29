@@ -82,7 +82,7 @@ module.exports = (env = {}) => {
           ],
         },
         {
-          test: /[\/\\]CahierExercices[\/\\].+\.md$/,
+          test: /[\/\\](Workbook|CahierExercices)[\/\\].+\.md$/,
           use: [
             require.resolve("html-loader"),
             {
@@ -139,6 +139,10 @@ module.exports = (env = {}) => {
         // this is the default and works for most cases
         "node_modules",
       ],
+      fallback: {
+        "training-material/Workbook/parts.json":
+          "training-material/CahierExercices/parts.json",
+      },
     },
     output: {
       path: path.resolve("./dist"),
