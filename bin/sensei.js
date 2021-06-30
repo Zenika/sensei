@@ -2,6 +2,7 @@
 
 const spawn = require("child_process").spawn;
 const fork = require("child_process").fork;
+const fs = require("fs");
 const path = require("path");
 const WebpackDevServer = require("webpack-dev-server");
 const webpackConfig = require("./webpack.config");
@@ -193,6 +194,11 @@ cli(
       "build [material] [slug]",
       "build the static web site",
       describePositionalArguments
+    )
+    .config(
+      fs.existsSync(".sensei.json")
+        ? JSON.parse(fs.readFileSync(".sensei.json", "utf-8"))
+        : {}
     )
     .option("material", {
       type: "string",
