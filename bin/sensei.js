@@ -194,7 +194,8 @@ cli(
     .option("config", {
       type: "string",
       describe:
-        "Path to JSON config file. If not absolute path, then relative to 'material' directory",
+        "Path to JSON config file. If not absolute path, then relative to 'material' directory.\n\
+        Config file is a simple JSON to define CLI options, e.g '{\"slideWidth\": 1024, \"slideHeight\": 768}'",
       default: ".sensei.json",
     })
     .option("material", {
