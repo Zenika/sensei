@@ -12,6 +12,7 @@ const yargs = require("yargs/yargs");
 async function cli(args, env) {
   const {
     _: [command],
+    $0: _,
     ...options
   } = args;
 
@@ -266,6 +267,9 @@ cli(
         return argv;
       },
     ])
+    .parserConfiguration({
+      "strip-dashed": true,
+    })
     .help().argv,
   {
     host: process.env.SENSEI_HOST || "127.0.0.1",
