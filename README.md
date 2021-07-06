@@ -29,7 +29,8 @@ using a simpler and newer stack. It's not up-to-par in terms of features, but it
 
 > ⚠ If you expect to use this alias within Git Bash for Windows, you might need
 > to set `MSYS_NO_PATHCONV` to `1` to disable path conversion on the volume paths.
-> This avoids the `C:/Program Files/Git/...: no such or directory` type of errors. 
+> This avoids the `C:/Program Files/Git/...: no such file or directory` type of 
+> errors. 
 
 ### Using a Docker image built from sources 🐳
 
