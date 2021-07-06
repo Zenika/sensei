@@ -27,6 +27,10 @@ using a simpler and newer stack. It's not up-to-par in terms of features, but it
 > ⚠ When running sensei inside a Docker container, the `--material` is limited
 > to descendants of the working directory.
 
+> ⚠ If you expect to use this alias within Git Bash for Windows, you might need
+> to set `MSYS_NO_PATHCONV` to `1` to disable path conversion on the volume paths.
+> This avoids the `C:/Program Files/Git/...: no such or directory` type of errors. 
+
 ### Using a Docker image built from sources 🐳
 
 - Clone this repo and `cd` into the created folder
