@@ -12,27 +12,23 @@ const yargs = require("yargs/yargs");
 async function cli(args, env) {
   const {
     _: [command],
-    ...cliOptions
+    $0: _,
+    ...options
   } = args;
-  const material = path.resolve(cliOptions.material);
-  const slug = cliOptions.slug || path.basename(material);
-  const buildOptions = {
-    ...cliOptions,
-    material,
-    slug,
-  };
 
-  console.info(`Processing folder '${material}' as '${slug}'`);
+  console.info(
+    `Processing folder '${options.material}' as '${options.slug}' using slide size ${options.slideWidth}x${options.slideHeight}`
+  );
 
   switch (command) {
     case "serve":
-      serve(buildOptions, { host: env.host, port: env.port });
+      serve(options, { host: env.host, port: env.port });
       break;
     case "build":
-      await build(buildOptions);
+      await build(options);
       break;
     case "pdf":
-      await pdf(buildOptions);
+      await pdf(options);
       break;
     default:
       throw new Error(`unknown command: '${command}'`);
@@ -195,21 +191,26 @@ cli(
       "build the static web site",
       describePositionalArguments
     )
-    .config(
-      fs.existsSync(".sensei.json")
-        ? JSON.parse(fs.readFileSync(".sensei.json", "utf-8"))
-        : {}
-    )
+    .option("config", {
+      type: "string",
+      describe:
+        "Path to JSON config file. If not absolute path, then relative to 'material' directory.\n\
+        Config file is a simple JSON to define CLI options, e.g '{\"slideWidth\": 1024, \"slideHeight\": 768}'",
+      default: ".sensei.json",
+    })
     .option("material", {
       type: "string",
       describe:
         "Path to the folder containing the training material. Defaults to the current working directory.",
       default: ".",
+      coerce(arg) {
+        return path.resolve(arg);
+      },
     })
     .option("slug", {
       type: "string",
       describe:
-        "Training name used in PDF files and HTML page titles. Defaults to the name of the current working directory.",
+        "Training name used in PDF files and HTML page titles. Defaults to the name of the 'material' directory.",
     })
     .option("slideWidth", {
       type: "number",
@@ -225,6 +226,51 @@ cli(
     })
     .demandCommand(1, 1, "One command must be specified")
     .strict()
+    .middleware([
+      function handleConfig(argv, yargs) {
+        let configFilePath = argv.config;
+        if (!path.isAbsolute(configFilePath)) {
+          configFilePath = path.join(argv.material, configFilePath);
+        }
+        let rawConfig = "{}";
+        try {
+          rawConfig = fs.readFileSync(configFilePath).toString();
+          console.info(`Read config from file '${configFilePath}'`);
+        } catch (err) {
+          if (!yargs.parsed.defaulted?.config) {
+            throw Object.assign(
+              new Error(
+                `Cannot read config file '${configFilePath}': ${err.message}`
+              ),
+              err
+            );
+          }
+        }
+        let config = {};
+        try {
+          config = JSON.parse(rawConfig);
+        } catch (err) {
+          throw new Error(
+            `Cannot parse the content of config file '${configFilePath}' as JSON: ${err.message}`
+          );
+        }
+        for (const [name, value] of Object.entries(argv)) {
+          const isDefinedOnCli = !(name in yargs.parsed.defaulted);
+          const isDefinedInConfig = name in config;
+          if (isDefinedOnCli || !isDefinedInConfig) {
+            config[name] = value;
+          }
+        }
+        return config;
+      },
+      function defaultsSlug(argv) {
+        argv.slug = argv.slug || path.basename(argv.material);
+        return argv;
+      },
+    ])
+    .parserConfiguration({
+      "strip-dashed": true,
+    })
     .help().argv,
   {
     host: process.env.SENSEI_HOST || "127.0.0.1",
