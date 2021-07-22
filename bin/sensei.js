@@ -226,12 +226,32 @@ cli(
     .strict()
     .middleware([
       function handleConfig(argv, yargs) {
-        if (!path.isAbsolute(argv.config)) {
-          argv.config = path.join(argv.material, argv.config);
+        let configFilePath = argv.config;
+        if (!path.isAbsolute(configFilePath)) {
+          configFilePath = path.join(argv.material, configFilePath);
         }
-        const config = fs.existsSync(argv.config)
-          ? JSON.parse(fs.readFileSync(argv.config, "utf-8"))
-          : {};
+        let rawConfig = "{}";
+        try {
+          rawConfig = fs.readFileSync(configFilePath).toString();
+          console.info(`Read config from file '${configFilePath}'`);
+        } catch (err) {
+          if (!yargs.parsed.defaulted?.config) {
+            throw Object.assign(
+              new Error(
+                `Cannot read config file '${configFilePath}': ${err.message}`
+              ),
+              err
+            );
+          }
+        }
+        let config = {};
+        try {
+          config = JSON.parse(rawConfig);
+        } catch (err) {
+          throw new Error(
+            `Cannot parse the content of config file '${configFilePath}' as JSON: ${err.message}`
+          );
+        }
         for (const [name, value] of Object.entries(argv)) {
           const isDefinedOnCli = !(name in yargs.parsed.defaulted);
           const isDefinedInConfig = name in config;
