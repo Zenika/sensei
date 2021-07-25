@@ -17,7 +17,7 @@ async function cli(args, env) {
   } = args;
 
   console.info(
-    `Processing folder '${options.material}' as '${options.slug}' using slide size ${options.slideWidth}x${options.slideHeight}`
+    `Processing folder '${options.material}' as '${options.slug}' using slide size ${options.slideWidth}x${options.slideHeight} and language ${options.language}`
   );
 
   switch (command) {
@@ -211,6 +211,11 @@ cli(
       type: "string",
       describe:
         "Training name used in PDF files and HTML page titles. Defaults to the name of the 'material' directory.",
+    })
+    .option("language", {
+      type: "string",
+      describe: "Language used for typographic rules. Defaults to 'en'.",
+      default: "en",
     })
     .option("slideWidth", {
       type: "number",
