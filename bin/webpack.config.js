@@ -30,6 +30,11 @@ module.exports = (env = {}) => {
   const slidesEntry =
     env.pdf === true || env.pdf === "true" ? "slides-pdf" : "slides";
 
+  const commonPluginOptions = {
+    trainingSlug: env.slug,
+    lang: env.language,
+  };
+
   return {
     mode: "development",
     entry: {
@@ -153,19 +158,19 @@ module.exports = (env = {}) => {
         template: path.resolve(__dirname, "../src/index.html"),
         chunks: ["index"],
         filename: "index.html",
-        trainingSlug: env.slug,
+        ...commonPluginOptions,
       }),
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, "../src/slides/slides.html"),
         chunks: ["slides"],
         filename: "slides.html",
-        trainingSlug: env.slug,
+        ...commonPluginOptions,
       }),
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, "../src/labs/labs.html"),
         chunks: ["labs"],
         filename: "labs.html",
-        trainingSlug: env.slug,
+        ...commonPluginOptions,
       }),
       new MiniCssExtractPlugin(),
       new webpack.DefinePlugin({
