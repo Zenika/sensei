@@ -32,7 +32,7 @@ module.exports = (env = {}) => {
 
   const commonPluginOptions = {
     trainingSlug: env.slug,
-    lang: env.language,
+    language: env.language,
   };
 
   return {
