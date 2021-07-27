@@ -6,9 +6,15 @@ jobs:
       - image: circleci/node:14
     steps:
       - checkout
-      - run: npm ci
-      - run: npm run prettier:check
-      - run: npm test
+      - run:
+          name: Install Sensei
+          command: npm ci
+      - run:
+          name: Check code formatting
+          command: npm run prettier:check
+      - run:
+          name: Launch tests
+          command: npm test
 
   build-docker-image:
     docker:
