@@ -1,27 +1,50 @@
 version: 2.1
 
-jobs:
-  build-docker-image:
-    docker:
-      - image: docker
-    steps:
-      - setup_remote_docker
-      - checkout
-      - run: sh build.sh
+orbs:
+  docker: circleci/docker@1.6.0
 
+jobs:
   quality-checks:
     docker:
       - image: circleci/node:14
     steps:
       - checkout
-      - run: npm ci
-      - run: npm run prettier:check
-      - run: npm test
+      - run:
+          name: Install Sensei
+          command: npm ci
+      - run:
+          name: Check code formatting
+          command: npm run prettier:check
+      - run:
+          name: Launch tests
+          command: npm test
+      - docker/dockerlint
 
 workflows:
   version: 2.0
 
   build:
     jobs:
-      - build-docker-image
       - quality-checks
+      - docker/publish: &docker-build-params
+          name: build-docker-image
+          executor: docker/docker
+          use-remote-docker: yes
+          remote-docker-dlc: yes
+          image: zenika/sensei
+          deploy: no
+          filters:
+            branches:
+              ignore: master
+      - docker/publish:
+          <<: *docker-build-params
+          name: build-and-publish-docker-image
+          tag: latest
+          deploy: yes
+          update-description: yes
+          docker-username: DOCKERHUB_USERNAME
+          docker-password: DOCKERHUB_PASS
+          filters:
+            branches:
+              only: master
+          context: docker-hub-zenika
