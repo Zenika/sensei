@@ -23,7 +23,8 @@ if (require.main === module) {
     console.error("Usage: node pdf.js <url> <output file path>");
     return;
   }
-  savePdfFile(process.argv[3], process.argv[2], { format: "A4" }).then(() =>
-    console.log("Done!")
-  );
+  savePdfFile(process.argv[3], process.argv[2], {
+    format: "A4",
+    margin: { top: "1cm", right: "1cm", bottom: "1cm", left: "1cm" },
+  }).then(() => console.log("Done!"));
 }
