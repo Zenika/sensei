@@ -1,11 +1,11 @@
 @font-face {
-  font-family: "Montserrat";
-  src: url("./assets/Montserrat-Bold.ttf") format("truetype");
+  font-family: "Nunito";
+  src: url("./assets/Nunito-Bold.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "Source Sans Pro";
-  src: url("./assets/SourceSansPro-Regular.ttf") format("truetype");
+  font-family: "Open Sans";
+  src: url("./assets/OpenSans-Regular.ttf") format("truetype");
 }
 
 @font-face {
@@ -19,13 +19,13 @@
 
 body {
   background: white;
-  --content-font-family: "Source Sans Pro", "Calibri", sans-serif;
-  --header-font-family: "Montserrat", "Calibri Light",
+  --content-font-family: "Open Sans", "Calibri", sans-serif;
+  --header-font-family: "Nunito", "Calibri Light",
     var(--content-font-family);
-  --table-font-family: "Source Sans Pro", "Calibri Light",
+  --table-font-family: "Open Sans", "Calibri Light",
     var(--content-font-family);
   --code-font-family: "Menlo", "Monaco", "Courier New", monospace;
-  --zenika-red: #b30c37;
+  --zenika-red: #ee2238;
   --grey: #aaaaaa;
   --default-border-size: 1px;
   --default-border: var(--default-border-size) solid var(--zenika-red);
@@ -140,12 +140,12 @@ body:lang(en) {
 }
 
 .reveal h1::before {
-  background-image: url("./assets/zenika-logo-red-no-shadow-no-text.png");
+  background-image: url("./assets/zenika-logo-monogram.png");
   background-size: cover;
   width: 180px;
   height: 180px;
   content: "";
-  margin-bottom: 20px;
+  margin: 1em;
 }
 
 .reveal h2,
@@ -156,10 +156,6 @@ body:lang(en) {
   font-size: 35pt;
 }
 
-.reveal h2::after {
-  content: ".";
-  color: #b51432;
-}
 .reveal h2.question::after {
   content: var(--question-mark);
 }
@@ -242,14 +238,14 @@ body:lang(en) {
 }
 
 .slides section > section:not([class^="page-"]) {
-  background-image: url("./assets/zenika-liseret-rouge.png"),
-    url("./assets/zenika-logo-red-no-shadow-no-text.png");
+  background-image: url("./assets/zenika-gradient-bar.png"),
+    url("./assets/zenika-logo-monogram.png");
   --logo-offset-from-border: 50px;
   background-position: top,
     top var(--logo-offset-from-border) right
       calc(
         var(--logo-offset-from-border) - 18px
-          /* 18px is the height of the top red bar */
+          /* 18px is the height of the top gradient bar */
       );
   background-repeat: no-repeat, no-repeat;
   background-size: auto, 75px 75px;

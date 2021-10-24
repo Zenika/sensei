@@ -1,6 +1,6 @@
 @font-face {
-  font-family: "Montserrat";
-  src: url("./slides/assets/Montserrat-Bold.ttf") format("truetype");
+  font-family: "Nunito";
+  src: url("./slides/assets/Nunito-Bold.ttf") format("truetype");
 }
 
 body,
@@ -8,7 +8,7 @@ html {
   height: 100%;
   padding-top: 5%;
   text-align: center;
-  font-family: "Montserrat", "Calibri Light";
+  font-family: "Nunito", "Calibri Light";
 }
 
 a {
