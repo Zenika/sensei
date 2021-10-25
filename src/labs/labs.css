@@ -1,23 +1,6 @@
-@font-face {
-  font-family: "Nunito";
-  src: url("../slides/assets/Nunito-Bold.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Open Sans";
-  src: url("../slides/assets/OpenSans-Regular.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Menlo";
-  src: url("../slides/assets/Menlo-Regular.ttf") format("truetype");
-}
+@import url("../global.css");
 
 body {
-  --content-font-family: "Open Sans", "Calibri", sans-serif;
-  --header-font-family: "Nunito", "Calibri Light",
-    var(--content-font-family);
-  --code-font-family: "Menlo", "Monaco", "Courier New", monospace;
   font-family: var(--content-font-family);
   font-size: 14px;
   line-height: 1.6;
@@ -40,11 +23,11 @@ div.pb {
 }
 
 a {
-  color: #4ca8e7;
+  color: var(--zenika-blue);
 }
 
 a.absent {
-  color: #ee2238;
+  color: var(--zenika-red);
 }
 
 a.anchor {

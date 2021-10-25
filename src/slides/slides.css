@@ -1,17 +1,4 @@
-@font-face {
-  font-family: "Nunito";
-  src: url("./assets/Nunito-Bold.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Open Sans";
-  src: url("./assets/OpenSans-Regular.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Menlo";
-  src: url("./assets/Menlo-Regular.ttf") format("truetype");
-}
+@import url("../global.css");
 
 /*********************************************
  * GLOBAL STYLES
@@ -19,13 +6,6 @@
 
 body {
   background: white;
-  --content-font-family: "Open Sans", "Calibri", sans-serif;
-  --header-font-family: "Nunito", "Calibri Light",
-    var(--content-font-family);
-  --table-font-family: "Open Sans", "Calibri Light",
-    var(--content-font-family);
-  --code-font-family: "Menlo", "Monaco", "Courier New", monospace;
-  --zenika-red: #ee2238;
   --grey: #aaaaaa;
   --default-border-size: 1px;
   --default-border: var(--default-border-size) solid var(--zenika-red);
@@ -140,7 +120,7 @@ body:lang(en) {
 }
 
 .reveal h1::before {
-  background-image: url("./assets/zenika-logo-monogram.png");
+  background-image: var(--zenika-logo-monogram);
   background-size: cover;
   width: 180px;
   height: 180px;
@@ -239,7 +219,7 @@ body:lang(en) {
 
 .slides section > section:not([class^="page-"]) {
   background-image: url("./assets/zenika-gradient-bar.png"),
-    url("./assets/zenika-logo-monogram.png");
+    var(--zenika-logo-monogram);
   --logo-offset-from-border: 50px;
   background-position: top,
     top var(--logo-offset-from-border) right
