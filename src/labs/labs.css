@@ -456,3 +456,15 @@ pre tt {
   background-color: transparent;
   border: none;
 }
+
+.zenika-logo {
+  background-image: var(--zenika-logo-vertical);
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  content: "";
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  height: 150px;
+  width: 186px;
+}

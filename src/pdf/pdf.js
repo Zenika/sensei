@@ -26,5 +26,6 @@ if (require.main === module) {
   savePdfFile(process.argv[3], process.argv[2], {
     format: "A4",
     margin: { top: "1cm", right: "1cm", bottom: "1cm", left: "1cm" },
+    printBackground: true,
   }).then(() => console.log("Done!"));
 }
