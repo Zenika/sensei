@@ -258,8 +258,8 @@ body:lang(en) {
 }
 
 .reveal section.page-questions {
-  background: white center center no-repeat url("./assets/questions.svg");
-  background-size: 60%;
+  background: white center center no-repeat url("./assets/Questions-pana.svg");
+  background-size: 55%;
 }
 
 .reveal section [class^="page-tp"]:before {
@@ -269,8 +269,8 @@ body:lang(en) {
   height: 80%;
 }
 .reveal section [class^="page-tp"] {
-  background: white center center no-repeat url("./assets/tp.svg");
-  background-size: 60%;
+  background: white top center no-repeat url("./assets/Programming-pana.svg");
+  background-size: 48%;
 }
 .reveal section [class^="page-tp"]:after {
   display: block;
@@ -379,8 +379,33 @@ body:lang(en) {
 }
 
 .reveal section.page-demo {
-  background: transparent center center no-repeat url("./assets/demo.png");
-  background-size: 50%;
+  background: transparent top center no-repeat url("./assets/Webinar-pana.svg");
+  background-size: 70%;
+}
+.reveal section.page-demo:before {
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  height: 80%;
+}
+.reveal section.page-demo:after {
+  display: block;
+  color: var(--zenika-red);
+  font-size: 50px;
+  font-weight: bold;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  text-align: center;
+}
+body:lang(fr) .reveal section.page-demo:after {
+  content: "Démo";
+}
+body:lang(en) .reveal section.page-demo:after {
+  content: "Demo";
+}
+.reveal section.page-demo[data-label]:after {
+  content: attr(data-label) !important;
 }
 
 /*********************************************
