@@ -147,6 +147,8 @@ module.exports = (env = {}) => {
       fallback: {
         "training-material/Workbook/parts.json":
           "training-material/CahierExercices/parts.json",
+        "training-material/Slides/resources/custom.css":
+          "training-material/Slides/ressources/custom.css",
         "training-material/Slides/ressources/custom.css": false,
       },
     },
