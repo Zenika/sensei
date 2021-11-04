@@ -35,7 +35,7 @@ workflows:
           deploy: no
           filters:
             branches:
-              ignore: master
+              ignore: main
       - docker/publish:
           <<: *docker-build-params
           name: build-and-publish-docker-image
@@ -46,5 +46,5 @@ workflows:
           docker-password: DOCKERHUB_PASS
           filters:
             branches:
-              only: master
+              only: main
           context: docker-hub-zenika
