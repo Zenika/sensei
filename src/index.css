@@ -1,14 +1,11 @@
-@font-face {
-  font-family: "Montserrat";
-  src: url("./slides/assets/Montserrat-Bold.ttf") format("truetype");
-}
+@import url("./global.css");
 
 body,
 html {
   height: 100%;
   padding-top: 5%;
   text-align: center;
-  font-family: "Montserrat", "Calibri Light";
+  font-family: var(--header-font-family);
 }
 
 a {

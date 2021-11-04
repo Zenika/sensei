@@ -1,5 +1,7 @@
+@import url("../global.css");
+
 body {
-  font-family: arial, sans-serif;
+  font-family: var(--content-font-family);
   font-size: 14px;
   line-height: 1.6;
   padding-top: 10px;
@@ -21,11 +23,11 @@ div.pb {
 }
 
 a {
-  color: #4183c4;
+  color: var(--zenika-blue);
 }
 
 a.absent {
-  color: #cc0000;
+  color: var(--zenika-red);
 }
 
 a.anchor {
@@ -45,6 +47,7 @@ h3,
 h4,
 h5,
 h6 {
+  font-family: var(--header-font-family);
   margin: 20px 0 10px;
   padding: 0;
   font-weight: bold;
@@ -404,11 +407,13 @@ span.version {
 
 code[class*="language-"],
 pre[class*="language-"] {
+  font-family: var(--code-font-family);
   white-space: pre-wrap;
 }
 
 code,
 tt {
+  font-family: var(--code-font-family);
   margin: 0 2px;
   padding: 0 5px;
   white-space: nowrap;
@@ -450,4 +455,16 @@ pre code,
 pre tt {
   background-color: transparent;
   border: none;
+}
+
+.zenika-logo {
+  background-image: var(--zenika-logo-vertical);
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  content: "";
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  height: 150px;
+  width: 186px;
 }
