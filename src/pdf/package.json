@@ -7,6 +7,6 @@
   },
   "dependencies": {
     "decktape": "3.3.0",
-    "puppeteer": "^11.0.0"
+    "puppeteer": "11.0.0"
   }
 }
