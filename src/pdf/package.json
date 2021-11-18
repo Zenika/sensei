@@ -6,7 +6,7 @@
     "slides": "decktape reveal --size 1420x800 http://localhost:8080/slides.html pdf/slides.pdf"
   },
   "dependencies": {
-    "decktape": "3.0.0",
-    "puppeteer": "5.2.1"
+    "decktape": "3.3.0",
+    "puppeteer": "11.0.0"
   }
 }
