@@ -7,7 +7,6 @@ RUN apk add --no-cache ttf-liberation
 WORKDIR /app
 
 COPY package.json package-lock.json ./
-COPY src/pdf/package.json src/pdf/package-lock.json ./src/pdf/
 
 RUN npm ci --production --unsafe-perm
 

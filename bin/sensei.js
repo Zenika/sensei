@@ -71,7 +71,7 @@ function pdfSlides({ slug, slideWidth, slideHeight }) {
   return new Promise((resolve, reject) => {
     const child = spawn("node", [
       path.resolve(
-        path.join(__dirname, "../src/pdf/node_modules/decktape/decktape.js")
+        path.join(__dirname, "../node_modules/decktape/decktape.js")
       ),
       "reveal",
       "-p",

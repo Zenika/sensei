@@ -1,7 +1,5 @@
 **
 !src
 !bin
-src/pdf/node_modules
 !package.json
 !package-lock.json
-!webpack.config.js

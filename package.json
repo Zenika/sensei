@@ -2,7 +2,6 @@
   "name": "@zenika/sensei",
   "version": "1.0.0",
   "scripts": {
-    "postinstall": "npm install --prefix=src/pdf",
     "prettier": "prettier \"{*,**/*}.{yml,html,css,js}\"",
     "prettier:check": "npm run prettier -- --check",
     "prettier:write": "npm run prettier -- --write",
@@ -15,6 +14,7 @@
   },
   "dependencies": {
     "css-loader": "4.2.0",
+    "decktape": "https://github.com/Zenika/decktape#upgrade_shrinkwrap",
     "expose-loader": "2.0.0",
     "extract-loader": "5.1.0",
     "file-loader": "6.2.0",
@@ -24,6 +24,7 @@
     "marked": "2.0.0",
     "mini-css-extract-plugin": "1.5.1",
     "prismjs": "1.25.0",
+    "puppeteer": "10.4.0",
     "reveal.js": "4.0.2",
     "webpack": "5.36.0",
     "webpack-cli": "4.6.0",
