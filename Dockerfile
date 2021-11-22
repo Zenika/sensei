@@ -2,7 +2,7 @@ FROM zenika/alpine-chrome:with-puppeteer
 
 USER root
 
-RUN apk add --no-cache ttf-liberation
+RUN apk add --no-cache ttf-liberation openssh
 
 WORKDIR /app
 
