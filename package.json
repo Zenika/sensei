@@ -28,7 +28,7 @@
     "reveal.js": "4.0.2",
     "webpack": "5.64.2",
     "webpack-dev-server": "4.5.0",
-    "yargs": "16.2.0"
+    "yargs": "17.2.1"
   },
   "devDependencies": {
     "nodemon": "2.0.7",
