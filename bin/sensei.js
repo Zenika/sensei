@@ -22,7 +22,7 @@ async function cli(args, env) {
 
   switch (command) {
     case "serve":
-      serve(options, { host: env.host, port: env.port });
+      await serve(options, { host: env.host, port: env.port });
       break;
     case "build":
       await build(options);
@@ -35,13 +35,13 @@ async function cli(args, env) {
   }
 }
 
-function serve(buildOptions, serveOptions) {
-  const server = new WebpackDevServer(webpack(webpackConfig(buildOptions)));
-  server.listen(serveOptions.port, serveOptions.host, (err) => {
-    if (err) {
-      console.log(err);
-    }
-  });
+async function serve(buildOptions, serveOptions) {
+  const server = new WebpackDevServer({}, webpack(webpackConfig(buildOptions)));
+  try {
+    await server.start(serveOptions.port, serveOptions.host);
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 function build(options) {
