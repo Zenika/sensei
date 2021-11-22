@@ -1,5 +1,5 @@
 const querystring = require("querystring");
-const marked = require("marked");
+const { marked } = require("marked");
 const Prism = require("prismjs");
 require("prismjs/components/")();
 
@@ -186,7 +186,7 @@ function createMarkdownSlide(content, options) {
     content =
       notesMatch[0] +
       '<aside class="notes">' +
-      marked(notesMatch[1].trim()) +
+      marked.parse(notesMatch[1].trim()) +
       "</aside>";
   }
 
