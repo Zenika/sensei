@@ -49,34 +49,6 @@ module.exports = (env = {}) => {
           type: "javascript/auto",
           use: path.resolve(__dirname, "../src/loaders/slides-json-loader"),
         },
-        // rule for HtmlWebpackPlugin templates
-        {
-          test: /\.html$/,
-          use: [
-            // The default loader of HtmlWebpackPlugin won't run if there are
-            // other loaders that apply to the template file (see
-            // https://github.com/jantimon/html-webpack-plugin/blob/master/docs/template-option.md#3-setting-a-loader-using-the-modulerules-syntax),
-            // but we want it to run to render variables (<%= %>) so we force it
-            // to run.
-            {
-              loader: require.resolve("html-webpack-plugin/lib/loader.js"),
-              options: { force: true },
-            },
-            // html-loader outputs a JavaScript module exporting the HTML as a
-            // string while the HtmlWebpackPlugin loader expects HTML, so we use
-            // the extract-loader to handle the conversion.
-            require.resolve("extract-loader"),
-            // We need this to resolve images found in the templates.
-            {
-              loader: require.resolve("html-loader"),
-              options: {
-                // extract-loader (which handles the output of this loader) does
-                // not support ES modules
-                esModule: false,
-              },
-            },
-          ],
-        },
         {
           test: /[\/\\]Slides[\/\\].+\.md$/,
           use: [
@@ -118,17 +90,7 @@ module.exports = (env = {}) => {
         },
         {
           test: /\.(png|jpe?g|gif|svg|webp|mp3|ttf)$/i,
-          use: {
-            loader: require.resolve("file-loader"),
-            options: {
-              name: "[name]-[contenthash].[ext]",
-              outputPath: "static-assets",
-              esModule: false,
-            },
-          },
-          // this prevents default asset processing
-          // see https://webpack.js.org/guides/asset-modules/
-          type: "javascript/auto",
+          type: "asset/resource",
         },
       ],
     },
@@ -154,6 +116,7 @@ module.exports = (env = {}) => {
     },
     output: {
       path: path.resolve("./dist"),
+      assetModuleFilename: "static-assets/[name]-[contenthash].[ext]",
     },
     plugins: [
       new HtmlWebpackPlugin({
