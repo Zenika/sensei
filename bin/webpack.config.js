@@ -9,7 +9,7 @@ const webpack = require("webpack");
 const Prism = require("prismjs");
 require("prismjs/components/")();
 
-module.exports = (env = {}) => {
+module.exports = (env = {}, argv = {}) => {
   assertRequiredOptionsArePresent(env);
 
   const date = new Date().toISOString().substring(0, 10);
@@ -36,7 +36,7 @@ module.exports = (env = {}) => {
   };
 
   return {
-    mode: "development",
+    mode: argv.mode || "development",
     entry: {
       index: path.resolve(__dirname, "../src/index.js"),
       slides: path.resolve(__dirname, `../src/slides/${slidesEntry}.js`),
