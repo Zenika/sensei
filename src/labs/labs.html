@@ -2,9 +2,16 @@
 <html lang="<%= htmlWebpackPlugin.options.language %>">
   <head>
     <meta charset="UTF-8" />
-    <title>Zenika Formation</title>
+    <title><%= require('./content.js').title %> - Labs 👩‍🔬</title>
   </head>
   <body>
-    <div class="labs"></div>
+    <div
+      id="labs-container"
+      class="labs"
+      data-title="<%= require('./content.js').title %>"
+      data-version="<%= htmlWebpackPlugin.options.materialVersion %>"
+    >
+      <%= require('./content.js').content %>
+    </div>
   </body>
 </html>

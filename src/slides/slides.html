@@ -2,11 +2,11 @@
 <html lang="<%= htmlWebpackPlugin.options.language %>">
   <head>
     <meta charset="UTF-8" />
-    <title>Zenika Formation</title>
+    <title><%= require('./content.js').title %> - Slides 👩‍🏫</title>
   </head>
   <body>
     <div class="reveal">
-      <div class="slides"></div>
+      <div class="slides"><%= require('./content.js').content %></div>
     </div>
   </body>
 </html>
