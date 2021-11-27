@@ -5,6 +5,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpack = require("webpack");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 const Prism = require("prismjs");
 require("prismjs/components/")();
@@ -142,6 +143,10 @@ module.exports = (env = {}) => {
         SLIDE_WIDTH: String(env.slideWidth),
         SLIDE_HEIGHT: String(env.slideHeight),
         MATERIAL_VERSION: JSON.stringify(`${date}#${commitHash}`),
+      }),
+      new BundleAnalyzerPlugin({
+        analyzerMode: env.analyzeBundle ? "server" : "disabled",
+        openAnalyzer: false,
       }),
     ],
     devServer: {

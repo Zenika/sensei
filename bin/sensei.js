@@ -17,7 +17,7 @@ async function cli(args, env) {
   } = args;
 
   console.info(
-    `Processing folder '${options.material}' as '${options.slug}' using slide size ${options.slideWidth}x${options.slideHeight} and language ${options.language}`
+    `Processing folder '${options.material}' as '${options.slug}' using slide size ${options.slideWidth}x${options.slideHeight} and language '${options.language}'`
   );
 
   switch (command) {
@@ -228,6 +228,12 @@ cli(
       describe:
         "Forwarded to Reveal.js. See https://revealjs.com/presentation-size/.",
       default: 800,
+    })
+    .option("analyzeBundle", {
+      type: "boolean",
+      describe:
+        "Enables webpack-bundle-analyzer in server mode. Useful to examine the contents of the bundles built by sensei. See https://www.npmjs.com/package/webpack-bundle-analyzer.",
+      defaults: false,
     })
     .demandCommand(1, 1, "One command must be specified")
     .strict()
