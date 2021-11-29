@@ -6,7 +6,7 @@ module.exports = function (content) {
   const resourceQuery = new URLSearchParams(this.resourceQuery.substring(1));
   const options = this.getOptions();
   if (resourceQuery.has("titleOnly")) {
-    return content.match(/^[^\S\r\n]*#[^\S\r\n]*([^#\r\n]+)$/m)?.[1];
+    return content.match(/^[^\S\r\n]*#[^\S\r\n]*([^#\r\n]+)$/m)?.[1] || "";
   }
   return slidify(content, {
     verticalSeparator: "^\r?\n\r?\n\r?\n",
