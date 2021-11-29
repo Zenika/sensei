@@ -6,7 +6,15 @@ module.exports = function (content) {
   const resourceQuery = new URLSearchParams(this.resourceQuery.substring(1));
   const options = this.getOptions();
   if (resourceQuery.has("titleOnly")) {
-    return content.match(/^[^\S\r\n]*#[^\S\r\n]*([^#\r\n]+)$/m)?.[1] || "";
+    const title = content.match(/^[^\S\r\n]*#[^\S\r\n]*([^#\r\n]+)$/m)?.[1];
+    if (!title) {
+      this.emitWarning(
+        new Error(
+          "The title of the training was not found. Please ensure that the slides include a first level title (e.g. '# My title') in the first file referenced in 'Slides/slides.json'."
+        )
+      );
+    }
+    return title || "⚠ TITLE NOT FOUND";
   }
   return slidify(content, {
     verticalSeparator: "^\r?\n\r?\n\r?\n",
