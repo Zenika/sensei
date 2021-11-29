@@ -47,7 +47,7 @@ async function serve(buildOptions, serveOptions) {
 function build(options) {
   console.log("Build slides & labs");
   return new Promise((resolve, reject) => {
-    webpack(webpackConfig(options), (err, stats) => {
+    webpack(webpackConfig(options, { mode: "production" }), (err, stats) => {
       if (err) {
         return reject(err);
       }
