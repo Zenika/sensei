@@ -15,14 +15,13 @@ module.exports = function (content) {
         `{ index: ${index}, title: title${index}, content: content${index} }`
     )
     .join(",");
-  const fullContent = json
-    .map((filename, index) => `content${index}`)
-    .join(" + ");
+  const fullContent =
+    json.map((filename, index) => `content${index}`).join(" + ") || '""';
   return `
-      ${imports}
+    ${imports}
 
-      export const chapters = [${chapters}];
-      export const title = chapters[0].title;
-      export const content = ${fullContent};
-    `;
+    export const chapters = [${chapters}];
+    export const title = chapters[0]?.title || "";
+    export const content = ${fullContent};
+  `;
 };
