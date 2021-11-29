@@ -162,7 +162,8 @@ function composeMaterialVersion(material) {
   try {
     commitHash = childProcess
       .execSync("git rev-parse --short HEAD", { cwd: material })
-      .toString();
+      .toString()
+      .trim();
   } catch (err) {
     if (err.message.match(/not a git repository/i)) {
       commitHash = "nogit";
