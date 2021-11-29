@@ -20,12 +20,13 @@ async function cli(args, env) {
     `Processing folder '${options.material}' as '${options.slug}' using slide size ${options.slideWidth}x${options.slideHeight} and language '${options.language}'`
   );
 
+  const { host, port, bundleAnalyzer } = env;
   switch (command) {
     case "serve":
-      await serve(options, { host: env.host, port: env.port });
+      await serve({ ...options, bundleAnalyzer }, { host, port });
       break;
     case "build":
-      await build(options);
+      await build({ ...options, bundleAnalyzer });
       break;
     case "pdf":
       await pdf(options);
@@ -157,6 +158,37 @@ process.on("unhandledRejection", (err) => {
   throw err;
 });
 
+function composeEnv() {
+  const {
+    SENSEI_HOST,
+    SENSEI_PORT,
+    SENSEI_BUNDLE_ANALYZER_ENABLED,
+    SENSEI_BUNDLE_ANALYZER_MODE,
+    SENSEI_BUNDLE_ANALYZER_HOST,
+    SENSEI_BUNDLE_ANALYZER_PORT,
+  } = process.env;
+  const bundleAnalyzerExplicitlyEnabled =
+    SENSEI_BUNDLE_ANALYZER_ENABLED === "true";
+  const bundleAnalyzerExplicitlyDisabled =
+    SENSEI_BUNDLE_ANALYZER_ENABLED === "false";
+  const bundleAnalyzerImplicitlyEnabled =
+    SENSEI_BUNDLE_ANALYZER_MODE ||
+    SENSEI_BUNDLE_ANALYZER_HOST ||
+    SENSEI_BUNDLE_ANALYZER_PORT;
+  return {
+    host: SENSEI_HOST || "127.0.0.1",
+    port: SENSEI_PORT || 8080,
+    bundleAnalyzer: {
+      enabled:
+        bundleAnalyzerExplicitlyEnabled ||
+        (!bundleAnalyzerExplicitlyDisabled && bundleAnalyzerImplicitlyEnabled),
+      mode: SENSEI_BUNDLE_ANALYZER_MODE,
+      host: SENSEI_BUNDLE_ANALYZER_HOST,
+      port: SENSEI_BUNDLE_ANALYZER_PORT,
+    },
+  };
+}
+
 /**
  * DEPRECATED
  * DO NOT ADD POSITIONAL ARGUMENTS/
@@ -283,8 +315,5 @@ cli(
       "strip-dashed": true,
     })
     .help().argv,
-  {
-    host: process.env.SENSEI_HOST || "127.0.0.1",
-    port: process.env.SENSEI_PORT || 8080,
-  }
+  composeEnv()
 );

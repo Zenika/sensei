@@ -145,8 +145,12 @@ module.exports = (env = {}) => {
         MATERIAL_VERSION: JSON.stringify(`${date}#${commitHash}`),
       }),
       new BundleAnalyzerPlugin({
-        analyzerMode: env.analyzeBundle ? "server" : "disabled",
         openAnalyzer: false,
+        analyzerMode: env.bundleAnalyzer?.enabled
+          ? env.bundleAnalyzer?.mode || "server"
+          : "disabled",
+        analyzerHost: env.bundleAnalyzer?.host,
+        analyzerPort: env.bundleAnalyzer?.port,
       }),
     ],
     devServer: {
