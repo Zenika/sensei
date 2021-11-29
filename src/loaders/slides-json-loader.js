@@ -12,11 +12,10 @@ module.exports = function (content) {
     .join(",");
   const fullContent =
     json.map((filename, index) => `content${index}`).join(" + ") || '""';
-  const lines = [
-    ...imports,
+  const exports = [
     `export const chapters = [${chapters}];`,
     `export const title = chapters[0]?.title || "";`,
     `export const content = ${fullContent};`,
   ];
-  return lines.join("\n");
+  return imports.concat(exports).join("\n");
 };
