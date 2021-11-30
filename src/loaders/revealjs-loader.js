@@ -10,7 +10,7 @@ module.exports = function (content) {
     if (!title) {
       this.emitWarning(
         new Error(
-          "The title of the training was not found. Please ensure that the slides include a first level title (e.g. '# My title') in the first file referenced in 'Slides/slides.json'."
+          "The title of the training was not found. Please ensure that the slides include a first level title (e.g. '# My title') in all files referenced in 'Slides/slides.json'."
         )
       );
     }
