@@ -261,12 +261,6 @@ cli(
         "Forwarded to Reveal.js. See https://revealjs.com/presentation-size/.",
       default: 800,
     })
-    .option("analyzeBundle", {
-      type: "boolean",
-      describe:
-        "Enables webpack-bundle-analyzer in server mode. Useful to examine the contents of the bundles built by sensei. See https://www.npmjs.com/package/webpack-bundle-analyzer.",
-      defaults: false,
-    })
     .demandCommand(1, 1, "One command must be specified")
     .strict()
     .middleware([
