@@ -27,8 +27,7 @@ assert.deepStrictEqual(
     `import content0 from "./1.md?chapterIndex=0";`,
     `import title0 from "./1.md?titleOnly";`,
     `import content1 from "./2.md?chapterIndex=1";`,
-    `import title1 from "./2.md?titleOnly";`,
-    `export const chapters = [{ index: 0, title: title0, content: content0 },{ index: 1, title: title1, content: content1 }];`,
+    `export const chapters = [{ index: 0, title: title0, content: content0 }, { index: 1, content: content1 }];`,
     `export const title = chapters[0]?.title || "";`,
     `export const content = content0 + content1;`,
   ].join("\n")

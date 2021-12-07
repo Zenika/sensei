@@ -1,15 +1,23 @@
 module.exports = function (content) {
   const json = JSON.parse(content);
-  const imports = json.flatMap((filename, index) => [
-    `import content${index} from "./${filename}?chapterIndex=${index}";`,
-    `import title${index} from "./${filename}?titleOnly";`,
-  ]);
+  const imports = json.flatMap((filename, index) => {
+    const chapterImports = [
+      `import content${index} from "./${filename}?chapterIndex=${index}";`,
+    ];
+    if (index === 0) {
+      chapterImports.push(
+        `import title${index} from "./${filename}?titleOnly";`
+      );
+    }
+    return chapterImports;
+  });
   const chapters = json
-    .map(
-      (filename, index) =>
-        `{ index: ${index}, title: title${index}, content: content${index} }`
+    .map((filename, index) =>
+      index === 0
+        ? `{ index: ${index}, title: title${index}, content: content${index} }`
+        : `{ index: ${index}, content: content${index} }`
     )
-    .join(",");
+    .join(", ");
   const fullContent =
     json.map((filename, index) => `content${index}`).join(" + ") || '""';
   const exports = [
