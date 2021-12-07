@@ -13,20 +13,7 @@ require("prismjs/components/")();
 module.exports = (env = {}, argv = {}) => {
   assertRequiredOptionsArePresent(env);
 
-  const date = new Date().toISOString().substring(0, 10);
-
-  let commitHash = "";
-  try {
-    commitHash = childProcess
-      .execSync("git rev-parse --short HEAD", { cwd: env.material })
-      .toString();
-  } catch (err) {
-    if (err.message.match(/not a git repository/i)) {
-      commitHash = "nogit";
-    } else {
-      throw err;
-    }
-  }
+  const materialVersion = composeMaterialVersion(env.material);
 
   const slidesEntry =
     env.pdf === true || env.pdf === "true" ? "slides-pdf" : "slides";
@@ -34,6 +21,7 @@ module.exports = (env = {}, argv = {}) => {
   const commonPluginOptions = {
     trainingSlug: env.slug,
     language: env.language,
+    materialVersion,
   };
 
   return {
@@ -54,9 +42,12 @@ module.exports = (env = {}, argv = {}) => {
           test: /[\/\\]Slides[\/\\].+\.md$/,
           use: [
             require.resolve("html-loader"),
-            path.resolve(
-              path.join(__dirname, "../src/loaders/revealjs-loader")
-            ),
+            {
+              loader: path.resolve(
+                path.join(__dirname, "../src/loaders/revealjs-loader")
+              ),
+              options: { materialVersion },
+            },
           ],
         },
         {
@@ -142,7 +133,6 @@ module.exports = (env = {}, argv = {}) => {
       new webpack.DefinePlugin({
         SLIDE_WIDTH: String(env.slideWidth),
         SLIDE_HEIGHT: String(env.slideHeight),
-        MATERIAL_VERSION: JSON.stringify(`${date}#${commitHash}`),
       }),
       new BundleAnalyzerPlugin({
         openAnalyzer: false,
@@ -172,4 +162,24 @@ function assertRequiredOptionsArePresent(env) {
   if (!env.slideHeight) {
     throw new Error("'slideHeight' option is required but was not found");
   }
+}
+
+function composeMaterialVersion(material) {
+  const date = new Date().toISOString().substring(0, 10);
+
+  let commitHash = "";
+  try {
+    commitHash = childProcess
+      .execSync("git rev-parse --short HEAD", { cwd: material })
+      .toString()
+      .trim();
+  } catch (err) {
+    if (err.message.match(/not a git repository/i)) {
+      commitHash = "nogit";
+    } else {
+      throw err;
+    }
+  }
+
+  return `${date}#${commitHash}`;
 }

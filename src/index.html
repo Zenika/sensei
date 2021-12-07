@@ -2,7 +2,7 @@
 <html lang="<%= htmlWebpackPlugin.options.language %>">
   <head>
     <meta charset="UTF-8" />
-    <title><%= htmlWebpackPlugin.options.trainingSlug %></title>
+    <title><%= require('./content.js').title %> 🎓</title>
   </head>
 
   <body>
@@ -11,7 +11,7 @@
         width="180px"
         src="<%= require('./assets/zenika-logo-monogram.png') %>"
       />
-      <h1>{Titre de la Formation}</h1>
+      <h1><%= require('./content.js').title %></h1>
     </div>
     <div class="links">
       <div class="link">

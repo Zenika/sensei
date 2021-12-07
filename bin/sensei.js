@@ -37,7 +37,14 @@ async function cli(args, env) {
 }
 
 async function serve(buildOptions, serveOptions) {
-  const server = new WebpackDevServer({}, webpack(webpackConfig(buildOptions)));
+  const server = new WebpackDevServer(
+    {
+      devMiddleware: {
+        stats: { children: true, warnings: true, errors: true },
+      },
+    },
+    webpack(webpackConfig(buildOptions))
+  );
   try {
     await server.start(serveOptions.port, serveOptions.host);
   } catch (err) {

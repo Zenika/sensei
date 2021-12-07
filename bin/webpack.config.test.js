@@ -7,18 +7,30 @@ const webpackConfig = require("./webpack.config.js");
 
 testCompilation("empty", {});
 
-testCompilation("one slide file but no content", {
-  slides: [{ file: "1.md" }],
-});
+testCompilation(
+  "one slide file but no content",
+  {
+    slides: [{ file: "1.md" }],
+  },
+  ignoreTitleNotFound()
+);
 
-testCompilation("multiple slide files but no content", {
-  slides: [{ file: "1.md" }, { file: "2.md" }],
-});
+testCompilation(
+  "multiple slide files but no content",
+  {
+    slides: [{ file: "1.md" }, { file: "2.md" }],
+  },
+  ignoreTitleNotFound()
+);
 
-testCompilation("one slide file with markdown linking an image", {
-  slides: [{ file: "img.md", content: '<img src="../assets/img.png">' }],
-  assets: [{ file: "img.png" }],
-});
+testCompilation(
+  "one slide file with markdown linking an image",
+  {
+    slides: [{ file: "img.md", content: '<img src="../assets/img.png">' }],
+    assets: [{ file: "img.png" }],
+  },
+  ignoreTitleNotFound()
+);
 
 testCompilation("first chapter of training material template", {
   slides: [
@@ -65,7 +77,7 @@ testCompilation("multiple workbook files but no content", {
   workbook: [{ file: "1.md" }, { file: "2.md" }],
 });
 
-function testCompilation(caseName, fakeMaterialConfig) {
+function testCompilation(caseName, fakeMaterialConfig, configOverrides = {}) {
   const { input, output, cleanUp } = setupFakeMaterial(
     caseName,
     fakeMaterialConfig
@@ -81,9 +93,7 @@ function testCompilation(caseName, fakeMaterialConfig) {
       output: {
         path: output,
       },
-      stats: {
-        errorDetails: true,
-      },
+      ...configOverrides,
     },
     (err, stats) => {
       cleanUp();
@@ -92,9 +102,13 @@ function testCompilation(caseName, fakeMaterialConfig) {
         !stats.hasErrors(),
         `compilation of material '${caseName}' fails: ${stats.toString()}`
       );
-      assert(
-        !stats.hasWarnings(),
-        `compilation of material '${caseName}' emits warnings: ${stats.toString()}`
+      assert.strictEqual(
+        // Can't use 'stats.hasWarnings' because it's 'true' even if said warnings are ignored by the config.
+        stats.toJson().warningsCount,
+        0,
+        `compilation of material '${caseName}' emits warnings: ${stats.toString(
+          { children: true, warnings: true, errorDetails: true }
+        )}`
       );
     }
   );
@@ -138,5 +152,15 @@ function setupFakeMaterial(
     cleanUp() {
       fs.rmSync(sandbox, { force: true, recursive: true });
     },
+  };
+}
+
+function ignoreTitleNotFound() {
+  return {
+    ignoreWarnings: [
+      {
+        message: /The title of the training was not found/,
+      },
+    ],
   };
 }

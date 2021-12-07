@@ -1,14 +1,26 @@
-const querystring = require("querystring");
 const { marked } = require("marked");
 const Prism = require("prismjs");
 require("prismjs/components/")();
 
 module.exports = function (content) {
-  const loaderOptions = querystring.parse(this.resourceQuery.substring(1));
+  const resourceQuery = new URLSearchParams(this.resourceQuery.substring(1));
+  const options = this.getOptions();
+  if (resourceQuery.has("titleOnly")) {
+    const title = content.match(/^[^\S\r\n]*#[^\S\r\n]*([^#\r\n]+)$/m)?.[1];
+    if (!title) {
+      this.emitWarning(
+        new Error(
+          `The title of the training was not found. Please ensure that the slides include a first level title (e.g. '# My title') in '${this.resourcePath}'`
+        )
+      );
+    }
+    return title || "⚠ TITLE NOT FOUND";
+  }
   return slidify(content, {
     verticalSeparator: "^\r?\n\r?\n\r?\n",
     notesSeparator: "^Notes :",
-    chapterIndex: parseInt(loaderOptions.chapterIndex),
+    chapterIndex: parseInt(resourceQuery.get("chapterIndex")),
+    materialVersion: options.materialVersion,
   });
 };
 
@@ -110,7 +122,11 @@ function slidify(markdown, options) {
         markdownSections += `
           <section ${classes}>
             ${createMarkdownSlide(child, options)}
-            ${footer(options.chapterIndex, slideIndex)}
+            ${footer({
+              chapterIndex: options.chapterIndex,
+              slideIndex: slideIndex,
+              materialVersion: options.materialVersion,
+            })}
           </section>
         `;
       });
@@ -121,7 +137,10 @@ function slidify(markdown, options) {
       markdownSections += `
         <section ${options.attributes} ${classes}>
           ${createMarkdownSlide(sectionStack[i], options)}
-          ${footer(options.chapterIndex)}
+          ${footer({
+            chapterIndex: options.chapterIndex,
+            materialVersion: options.materialVersion,
+          })}
         </section>
       `;
     }
@@ -136,14 +155,14 @@ function slidify(markdown, options) {
   return markdownSections;
 }
 
-function footer(chapterIndex, slideIndex) {
+function footer({ chapterIndex, slideIndex, materialVersion }) {
   return `
     <footer class="copyright">&copy; Copyright ${new Date().getFullYear()} Zenika. All rights reserved</footer>
     <footer class="slide-number">${slideNumber(
       chapterIndex,
       slideIndex
     )}</footer>
-    <footer class="version"/>
+    <footer class="version">${materialVersion}</footer>
   `;
 }
 
