@@ -154,8 +154,8 @@ function slidify(markdown, options) {
 
 function handleDotElementRevealSyntax(markdownSections) {
   return markdownSections.replace(
-    /(<!--\s*\.element:?(["\w \t=:;%-]+)-->\s*)<([^>\/]+)/g,
-    "$1<$3 $2"
+    /(?<comment><!--\s*\.element:?(?<injectedAttrs>["\w \t=:;%-]+)-->\s*?)<(?<targetTagName>[\w\-]+)/g,
+    "$<comment><$<targetTagName> $<injectedAttrs>"
   );
 }
 
