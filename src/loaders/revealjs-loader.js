@@ -147,12 +147,16 @@ function slidify(markdown, options) {
   }
 
   // Support for the <!-- .element: --> syntax from Reveal (see https://revealjs.com/markdown/#element-attributes)
-  markdownSections = markdownSections.replace(
-    /(<!--\s*\.element:?(["\w \t=:;%-]+)-->\s*)<([^>]+)>/g,
-    "$1<$3 $2>"
-  );
+  markdownSections = handleDotElementRevealSyntax(markdownSections);
 
   return markdownSections;
+}
+
+function handleDotElementRevealSyntax(markdownSections) {
+  return markdownSections.replace(
+    /(<!--\s*\.element:?(["\w \t=:;%-]+)-->\s*)<([^>\/]+)/g,
+    "$1<$3 $2"
+  );
 }
 
 function footer({ chapterIndex, slideIndex, materialVersion }) {
@@ -242,3 +246,5 @@ function getSlidifyOptions(options) {
 
   return options;
 }
+
+module.exports.handleDotElementRevealSyntax = handleDotElementRevealSyntax;
