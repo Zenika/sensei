@@ -62,7 +62,7 @@ const { handleDotElementRevealSyntax } = require("./revealjs-loader");
   assert.match(
     actual,
     expected,
-    "dot element reveal syntax handler does not support original self-closing tag with an attribute value containing '/'"
+    "dot element reveal syntax handler does not support original tag with an attribute value containing '/'"
   );
 }
 
@@ -75,6 +75,6 @@ const { handleDotElementRevealSyntax } = require("./revealjs-loader");
   assert.match(
     actual,
     expected,
-    "dot element reveal syntax handler does not support original self-closing tag with an attribute value containing '>'"
+    "dot element reveal syntax handler does not support original tag with an attribute value containing '>'"
   );
 }
