@@ -5,14 +5,16 @@ const path = require("path");
 const webpack = require("webpack");
 const webpackConfig = require("./webpack.config.js");
 
-testCompilation("empty", {});
+const TITLE_NOT_FOUND_WARNING = /The title of the training was not found/;
+
+testCompilation("empty", {}, { ignoreWarnings: [TITLE_NOT_FOUND_WARNING] });
 
 testCompilation(
   "one slide file but no content",
   {
     slides: [{ file: "1.md" }],
   },
-  ignoreTitleNotFound()
+  { ignoreWarnings: [TITLE_NOT_FOUND_WARNING] }
 );
 
 testCompilation(
@@ -20,7 +22,7 @@ testCompilation(
   {
     slides: [{ file: "1.md" }, { file: "2.md" }],
   },
-  ignoreTitleNotFound()
+  { ignoreWarnings: [TITLE_NOT_FOUND_WARNING] }
 );
 
 testCompilation(
@@ -29,7 +31,20 @@ testCompilation(
     slides: [{ file: "img.md", content: '<img src="../assets/img.png">' }],
     assets: [{ file: "img.png" }],
   },
-  ignoreTitleNotFound()
+  { ignoreWarnings: [TITLE_NOT_FOUND_WARNING] }
+);
+
+testCompilation(
+  "one slide including a self-closing img tag decorated with .element",
+  {
+    slides: [
+      {
+        file: "img.md",
+        content: `<!-- .element: attr="value"--><img/>`,
+      },
+    ],
+  },
+  { ignoreWarnings: [TITLE_NOT_FOUND_WARNING] }
 );
 
 testCompilation("first chapter of training material template", {
@@ -77,7 +92,11 @@ testCompilation("multiple workbook files but no content", {
   workbook: [{ file: "1.md" }, { file: "2.md" }],
 });
 
-function testCompilation(caseName, fakeMaterialConfig, configOverrides = {}) {
+function testCompilation(
+  caseName,
+  fakeMaterialConfig,
+  { ignoreWarnings = [] } = {}
+) {
   const { input, output, cleanUp } = setupFakeMaterial(
     caseName,
     fakeMaterialConfig
@@ -93,7 +112,11 @@ function testCompilation(caseName, fakeMaterialConfig, configOverrides = {}) {
       output: {
         path: output,
       },
-      ...configOverrides,
+      mode: "production",
+      performance: {
+        hints: false,
+      },
+      ignoreWarnings,
     },
     (err, stats) => {
       cleanUp();
@@ -152,15 +175,5 @@ function setupFakeMaterial(
     cleanUp() {
       fs.rmSync(sandbox, { force: true, recursive: true });
     },
-  };
-}
-
-function ignoreTitleNotFound() {
-  return {
-    ignoreWarnings: [
-      {
-        message: /The title of the training was not found/,
-      },
-    ],
   };
 }
