@@ -71,11 +71,29 @@ function build(options) {
 async function pdf(options) {
   console.log("Generate pdf slides & labs");
   await build({ ...options, pdf: true });
-  pdfSlides(options);
-  pdfLabs(options);
+  const serveHandler = require("serve-handler");
+  const http = require("http");
+  const server = http.createServer((request, response) => {
+    return serveHandler(request, response, {
+      public: path.resolve("./dist"),
+    });
+  });
+  const result = new Promise((resolve, reject) => {
+    server.on("close", resolve);
+    server.on("error", reject);
+  });
+  // get-port is an ESM so need to load it using import
+  const { default: getPort } = await import("get-port");
+  const port = await getPort();
+  server.listen(port, async () => {
+    await pdfSlides({ ...options, port });
+    await pdfLabs({ ...options, port });
+    server.close();
+  });
+  return result;
 }
 
-function pdfSlides({ slug, slideWidth, slideHeight }) {
+function pdfSlides({ slug, slideWidth, slideHeight, port }) {
   return new Promise((resolve, reject) => {
     const child = spawn("node", [
       path.resolve(
@@ -86,7 +104,7 @@ function pdfSlides({ slug, slideWidth, slideHeight }) {
       "0",
       "--size",
       `${slideWidth}x${slideHeight}`,
-      `file:${path.resolve("./dist/slides.html")}`,
+      `http://localhost:${port}/slides.html`,
       `./pdf/Zenika-${slug}-Slides.pdf`,
     ]);
 
@@ -115,12 +133,12 @@ function pdfSlides({ slug, slideWidth, slideHeight }) {
   });
 }
 
-function pdfLabs({ slug }) {
+function pdfLabs({ slug, port }) {
   return new Promise((resolve, reject) => {
     const child = fork(
       path.resolve(path.join(__dirname, "../src/pdf/pdf.js")),
       [
-        `file:${path.resolve("./dist/labs.html")}`,
+        `http://localhost:${port}/labs.html`,
         `./pdf/Zenika-${slug}-Workbook.pdf`,
       ]
     );
