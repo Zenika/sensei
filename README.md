@@ -45,6 +45,8 @@ using a simpler and newer stack. It's not up-to-par in terms of features, but it
 
 - Install with `npm install --global https://github.com/Zenika/sensei`
 
+> ⚠ You may use Yarn, however it's been to known to have cache issues when installing packages from GitHub, resulting in failures to update sensei correctly.
+
 ## Usage
 
 ### Help
