@@ -5,7 +5,7 @@ const puppeteer = require("puppeteer");
 async function urlToPdfString(url, options) {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  await page.goto(url);
+  await page.goto(url, { waitUntil: "networkidle0" });
   const pdfContent = await page.pdf(options);
   browser.close();
   return pdfContent.toString("base64");
