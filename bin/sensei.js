@@ -42,6 +42,8 @@ async function serve(buildOptions, serveOptions) {
       devMiddleware: {
         stats: { children: true, warnings: true, errors: true },
       },
+      // Disables HMR, enables live reload, see https://webpack.js.org/configuration/dev-server/#devserverhot
+      hot: false,
     },
     webpack(webpackConfig(buildOptions))
   );
