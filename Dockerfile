@@ -4,11 +4,6 @@ USER root
 
 RUN apk add --no-cache ttf-liberation
 
-# Force git to use HTTPS instead of SSH, which is simpler because there is no
-# key setup. This is only useful if package.json has dependencies that are
-# pulled using git.
-RUN git config --global url."https://".insteadOf ssh://
-
 WORKDIR /app
 
 COPY package.json package-lock.json ./
