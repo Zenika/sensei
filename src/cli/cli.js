@@ -5,7 +5,7 @@ const fork = require("child_process").fork;
 const fs = require("fs");
 const path = require("path");
 const WebpackDevServer = require("webpack-dev-server");
-const webpackConfig = require("./webpack.config");
+const webpackConfig = require("../build/webpack.config");
 const webpack = require("webpack");
 const yargs = require("yargs/yargs");
 
