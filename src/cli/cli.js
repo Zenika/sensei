@@ -9,6 +9,11 @@ const webpackConfig = require("../build/webpack.config");
 const webpack = require("webpack");
 const yargs = require("yargs/yargs");
 
+/**
+ *
+ * @param {*} args
+ * @param {ReturnType<typeof composeEnv>} env
+ */
 async function cli(args, env) {
   const {
     _: [command],
@@ -20,10 +25,10 @@ async function cli(args, env) {
     `Processing folder '${options.material}' as '${options.slug}' using slide size ${options.slideWidth}x${options.slideHeight} and language '${options.language}'`
   );
 
-  const { host, port, bundleAnalyzer } = env;
+  const { host, port, bundleAnalyzer, watch } = env;
   switch (command) {
     case "serve":
-      await serve({ ...options, bundleAnalyzer }, { host, port });
+      await serve({ ...options, bundleAnalyzer, watch }, { host, port });
       break;
     case "build":
       await build({ ...options, bundleAnalyzer });
@@ -190,6 +195,7 @@ function composeEnv() {
     SENSEI_BUNDLE_ANALYZER_MODE,
     SENSEI_BUNDLE_ANALYZER_HOST,
     SENSEI_BUNDLE_ANALYZER_PORT,
+    SENSEI_WATCH_POLL,
   } = process.env;
   const bundleAnalyzerExplicitlyEnabled =
     SENSEI_BUNDLE_ANALYZER_ENABLED === "true";
@@ -210,6 +216,7 @@ function composeEnv() {
       host: SENSEI_BUNDLE_ANALYZER_HOST,
       port: SENSEI_BUNDLE_ANALYZER_PORT,
     },
+    watch: { poll: SENSEI_WATCH_POLL === "true" },
   };
 }
 

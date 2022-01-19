@@ -20,6 +20,7 @@ The compiler for our training material. Sensei is a replacement for
       --workdir /$(basename $(pwd)) \
       --publish ${SENSEI_PORT:-8080}:${SENSEI_PORT:-8080} \
       --env SENSEI_PORT \
+      --env SENSEI_WATCH_POLL \
       --cap-add=SYS_ADMIN \
       zenika/sensei'
     ```
@@ -49,6 +50,11 @@ Therefore it is recommended to clone the training repository in the Linux filesy
 > (i.e. `--volume /$(pwd):/$(basename $(pwd)) --workdir //$(basename $(pwd)`).
 > See [known issues of Git for Windows](https://github.com/git-for-windows/build-extra/blob/main/ReleaseNotes.md#known-issues).
 > This avoids the `C:/Program Files/Git/...: no such file or directory` kind of errors.
+
+> ⚠ If sensei fails to recompile on changes, try setting `SENSEI_WATCH_POLL` to
+> `true`. This is required if running sensei inside a Docker container backed by
+> WSL2 while the compiled files are located outside of the WSL2 file system (see
+> [#117](https://github.com/Zenika/sensei/issues/117)).
 
 ### Using a Docker image built from sources 🐳
 

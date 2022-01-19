@@ -10,6 +10,12 @@ const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const Prism = require("prismjs");
 require("prismjs/components/")();
 
+/**
+ *
+ * @param {*} env
+ * @param {*} argv
+ * @returns {import("webpack").Configuration}
+ */
 module.exports = (env = {}, argv = {}) => {
   assertRequiredOptionsArePresent(env);
 
@@ -157,8 +163,9 @@ module.exports = (env = {}, argv = {}) => {
         analyzerPort: env.bundleAnalyzer?.port,
       }),
     ],
-    devServer: {
-      contentBase: false,
+    watchOptions: {
+      poll: env.watch?.poll,
+      aggregateTimeout: 300,
     },
   };
 };
