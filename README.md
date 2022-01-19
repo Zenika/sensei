@@ -20,6 +20,7 @@ using a simpler and newer stack. It's not up-to-par in terms of features, but it
       --workdir /$(basename $(pwd)) \
       --publish ${SENSEI_PORT:-8080}:${SENSEI_PORT:-8080} \
       --env SENSEI_PORT \
+      --env SENSEI_WATCH_POLL \
       --cap-add=SYS_ADMIN \
       zenika/sensei'
     ```
@@ -31,6 +32,11 @@ using a simpler and newer stack. It's not up-to-par in terms of features, but it
 > to set `MSYS_NO_PATHCONV` to `1` to disable path conversion on the volume paths.
 > This avoids the `C:/Program Files/Git/...: no such file or directory` type of
 > errors.
+
+> ⚠ If sensei fails to recompile on changes, try setting `SENSEI_WATCH_POLL` to
+> `true`. This is required if running sensei inside a Docker container backed by
+> WSL2 while the compiled files are located outside of the WSL2 file system (see
+> [#117](https://github.com/Zenika/sensei/issues/117)).
 
 ### Using a Docker image built from sources 🐳
 
