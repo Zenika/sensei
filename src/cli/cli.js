@@ -98,9 +98,7 @@ async function pdf(options) {
 function pdfSlides({ slug, slideWidth, slideHeight, port }) {
   return new Promise((resolve, reject) => {
     const child = spawn("node", [
-      path.resolve(
-        path.join(__dirname, "../node_modules/decktape/decktape.js")
-      ),
+      require.resolve("decktape"),
       "reveal",
       "-p",
       "0",
@@ -138,7 +136,7 @@ function pdfSlides({ slug, slideWidth, slideHeight, port }) {
 function pdfLabs({ slug, port }) {
   return new Promise((resolve, reject) => {
     const child = fork(
-      path.resolve(path.join(__dirname, "../src/pdf/pdf.js")),
+      path.resolve(path.join(__dirname, "../pdf/pdf.js")),
       [
         `http://localhost:${port}/labs.html`,
         `./pdf/Zenika-${slug}-Workbook.pdf`,
