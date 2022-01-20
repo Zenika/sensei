@@ -27,10 +27,13 @@ using a simpler and newer stack. It's not up-to-par in terms of features, but it
 > ⚠ When running sensei inside a Docker container, the `--material` is limited
 > to descendants of the working directory.
 
-> ⚠ If you expect to use this alias within Git Bash for Windows, you might need
-> to set `MSYS_NO_PATHCONV` to `1` to disable path conversion on the volume paths.
-> This avoids the `C:/Program Files/Git/...: no such file or directory` type of 
-> errors. 
+> ⚠ If you expect to use this alias within Git Bash for Windows, prepend the
+> `--volume` and `--workdir` options with an additional slash (ie `--volume
+> /$(pwd):/$(basename $(pwd)) --workdir //$(basename $(pwd)`. See [known issues
+> of Git for
+> Windows](https://github.com/git-for-windows/build-extra/blob/main/ReleaseNotes.md#known-issues).
+> This avoids the `C:/Program Files/Git/...: no such file or directory` kind of
+> errors.
 
 ### Using a Docker image built from sources 🐳
 
