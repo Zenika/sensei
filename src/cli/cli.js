@@ -135,13 +135,10 @@ function pdfSlides({ slug, slideWidth, slideHeight, port }) {
 
 function pdfLabs({ slug, port }) {
   return new Promise((resolve, reject) => {
-    const child = fork(
-      path.resolve(path.join(__dirname, "../pdf/pdf.js")),
-      [
-        `http://localhost:${port}/labs.html`,
-        `./pdf/Zenika-${slug}-Workbook.pdf`,
-      ]
-    );
+    const child = fork(path.resolve(path.join(__dirname, "../pdf/pdf.js")), [
+      `http://localhost:${port}/labs.html`,
+      `./pdf/Zenika-${slug}-Workbook.pdf`,
+    ]);
 
     child.on("exit", function (code) {
       if (code !== 0) {
