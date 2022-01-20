@@ -1,2 +1,2 @@
-require("./src/loaders/slides-json-loader.test.js");
-require("./bin/webpack.config.test.js");
+require("./src/build/loaders/slides-json-loader.test.js");
+require("./src/build/webpack.config.test.js");

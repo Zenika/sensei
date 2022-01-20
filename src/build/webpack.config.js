@@ -27,16 +27,16 @@ module.exports = (env = {}, argv = {}) => {
   return {
     mode: argv.mode || "development",
     entry: {
-      index: path.resolve(__dirname, "../src/index.js"),
-      slides: path.resolve(__dirname, `../src/slides/${slidesEntry}.js`),
-      labs: path.resolve(__dirname, "../src/labs/labs.js"),
+      index: path.resolve(__dirname, "../app/index.js"),
+      slides: path.resolve(__dirname, `../app/slides/${slidesEntry}.js`),
+      labs: path.resolve(__dirname, "../app/labs/labs.js"),
     },
     module: {
       rules: [
         {
           test: [/slides\.json$/, /parts\.json$/],
           type: "javascript/auto",
-          use: path.resolve(__dirname, "../src/loaders/slides-json-loader"),
+          use: path.resolve(__dirname, "./loaders/slides-json-loader"),
         },
         {
           test: /[\/\\]Slides[\/\\].+\.md$/,
@@ -44,7 +44,7 @@ module.exports = (env = {}, argv = {}) => {
             require.resolve("html-loader"),
             {
               loader: path.resolve(
-                path.join(__dirname, "../src/loaders/revealjs-loader")
+                path.join(__dirname, "./loaders/revealjs-loader")
               ),
               options: { materialVersion },
             },
@@ -112,19 +112,19 @@ module.exports = (env = {}, argv = {}) => {
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, "../src/index.html"),
+        template: path.resolve(__dirname, "../app/index.html"),
         chunks: ["index"],
         filename: "index.html",
         ...commonPluginOptions,
       }),
       new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, "../src/slides/slides.html"),
+        template: path.resolve(__dirname, "../app/slides/slides.html"),
         chunks: ["slides"],
         filename: "slides.html",
         ...commonPluginOptions,
       }),
       new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, "../src/labs/labs.html"),
+        template: path.resolve(__dirname, "../app/labs/labs.html"),
         chunks: ["labs"],
         filename: "labs.html",
         ...commonPluginOptions,

@@ -7,11 +7,11 @@
     "prettier:write": "npm run prettier -- --write",
     "test": "node test.js",
     "test:watch": "nodemon test.js --ignore dist",
-    "start": "node bin/sensei.js",
-    "dev": "nodemon --watch src/loaders --watch bin bin/sensei.js"
+    "start": "node src/cli/cli.js",
+    "dev": "nodemon --watch src/build --watch src/cli src/cli/cli.js"
   },
   "bin": {
-    "sensei": "bin/sensei.js"
+    "sensei": "src/cli/cli.js"
   },
   "dependencies": {
     "css-loader": "6.5.1",

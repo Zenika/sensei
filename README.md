@@ -29,8 +29,8 @@ using a simpler and newer stack. It's not up-to-par in terms of features, but it
 
 > ⚠ If you expect to use this alias within Git Bash for Windows, you might need
 > to set `MSYS_NO_PATHCONV` to `1` to disable path conversion on the volume paths.
-> This avoids the `C:/Program Files/Git/...: no such file or directory` type of 
-> errors. 
+> This avoids the `C:/Program Files/Git/...: no such file or directory` type of
+> errors.
 
 ### Using a Docker image built from sources 🐳
 
@@ -45,7 +45,9 @@ using a simpler and newer stack. It's not up-to-par in terms of features, but it
 
 - Install with `npm install --global https://github.com/Zenika/sensei`
 
-> ⚠ You may use Yarn, however it's been to known to have cache issues when installing packages from GitHub, resulting in failures to update sensei correctly.
+> ⚠ You may use Yarn, however it's been known to have cache issues when
+> installing packages from GitHub, resulting in failures to update sensei
+> correctly.
 
 ## Usage
 
@@ -58,8 +60,6 @@ Run `sensei --help` for available commands and options.
 - `cd` into a training material folder (must have `Slides/slides.json` and `Workbook/parts.json`)
 - Run `sensei pdf`
 - PDFs are generated inside `pdf` folder
-
-⚠️ Note about slide sizing and PDF rendering: to avoid any layout inconsistencies, the `width` and `height` values present in [src/slides/slides.js](src/slides/slides.js) file must match the values of the `--size` parameter in the `slides` npm script
 
 ### Serving the slides and labs
 
@@ -77,3 +77,26 @@ The following plugins are enabled:
  - Math
 
 Refer to [Reveal's documentation](https://revealjs.com/plugins/#built-in-plugins) for usage.
+
+## Development
+
+### Running
+
+Install dependencies (`npm i`) then use `npm start --` to run the CLI (eg `npm
+start -- serve --material=./training-material` where `./training-material`
+points to directory with training material in it). You may alternatively use
+`npm run dev --` instead to enable restart on change (eg `npm run dev -- serve
+--material=./training-material`).
+
+### Source file structure
+
+- `src/app`: source code for the web app that embeds training material
+- `src/build`: source code that builds the previously mentioned web app,
+  including the training material
+- `src/pdf`: source code that builds PDFs from the training material
+- `src/cli`: source code for the CLI
+
+### Code formating
+
+This project uses Prettier. Don't forget to format before committing! You may
+use `npm run prettier:write` to do that.
