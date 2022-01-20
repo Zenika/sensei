@@ -5,7 +5,7 @@ const fork = require("child_process").fork;
 const fs = require("fs");
 const path = require("path");
 const WebpackDevServer = require("webpack-dev-server");
-const webpackConfig = require("./webpack.config");
+const webpackConfig = require("../build/webpack.config");
 const webpack = require("webpack");
 const yargs = require("yargs/yargs");
 
@@ -98,9 +98,7 @@ async function pdf(options) {
 function pdfSlides({ slug, slideWidth, slideHeight, port }) {
   return new Promise((resolve, reject) => {
     const child = spawn("node", [
-      path.resolve(
-        path.join(__dirname, "../node_modules/decktape/decktape.js")
-      ),
+      require.resolve("decktape"),
       "reveal",
       "-p",
       "0",
@@ -137,13 +135,10 @@ function pdfSlides({ slug, slideWidth, slideHeight, port }) {
 
 function pdfLabs({ slug, port }) {
   return new Promise((resolve, reject) => {
-    const child = fork(
-      path.resolve(path.join(__dirname, "../src/pdf/pdf.js")),
-      [
-        `http://localhost:${port}/labs.html`,
-        `./pdf/Zenika-${slug}-Workbook.pdf`,
-      ]
-    );
+    const child = fork(path.resolve(__dirname, "../pdf/pdf.js"), [
+      `http://localhost:${port}/labs.html`,
+      `./pdf/Zenika-${slug}-Workbook.pdf`,
+    ]);
 
     child.on("exit", function (code) {
       if (code !== 0) {
