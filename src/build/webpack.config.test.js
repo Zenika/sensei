@@ -47,6 +47,11 @@ testCompilation(
   { ignoreWarnings: [TITLE_NOT_FOUND_WARNING] }
 );
 
+testCompilation("one slide with a title including HTML", {
+  slides: [{ file: "img.md", content: '# <img src="../assets/img.png">' }],
+  assets: [{ file: "img.png" }],
+});
+
 testCompilation("first chapter of training material template", {
   slides: [
     {
