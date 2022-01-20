@@ -20,5 +20,5 @@ WORKDIR /training-material
 
 USER chrome
 
-ENTRYPOINT [ "/app/src/cli/cli.js" ]
+ENTRYPOINT [ "node", "/app/src/cli/cli.js" ]
 CMD ["serve"]
