@@ -99,6 +99,7 @@ points to directory with training material in it). You may alternatively use
 - `src/app`: source code for the web app that embeds training material
 - `src/build`: source code that builds the previously mentioned web app,
   including the training material
+- `src/pdf`: source code that builds PDFs from the training material
 - `src/cli`: source code for the CLI
 
 ### Code formating
