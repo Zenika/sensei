@@ -262,17 +262,17 @@ body:lang(en) {
   background-size: 55%;
 }
 
-.reveal section [class^="page-tp"]:before {
+.reveal section[class^="page-tp"]:before {
   content: "";
   display: inline-block;
   vertical-align: middle;
   height: 80%;
 }
-.reveal section [class^="page-tp"] {
+.reveal section[class^="page-tp"] {
   background: white top center no-repeat url("./assets/Programming-pana.svg");
   background-size: 48%;
 }
-.reveal section [class^="page-tp"]:after {
+.reveal section[class^="page-tp"]:after {
   display: block;
   color: var(--zenika-red);
   font-size: 50px;
