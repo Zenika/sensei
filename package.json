@@ -24,7 +24,7 @@
     "markdown-loader": "6.0.0",
     "marked": "4.0.10",
     "mini-css-extract-plugin": "2.4.5",
-    "prismjs": "1.25.0",
+    "prismjs": "1.27.0",
     "puppeteer": "10.4.0",
     "reveal.js": "4.0.2",
     "serve-handler": "6.1.3",
