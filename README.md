@@ -35,14 +35,17 @@ using a simpler and newer stack. It's not up-to-par in terms of features, but it
 > This avoids the `C:/Program Files/Git/...: no such file or directory` kind of
 > errors.
 
+> ⚠ To change `SENSEI_PORT` when using this alias, use the following syntax: 
+> `export SENSEI_PORT=9000; sensei`. See 
+> [here](https://github.com/Zenika/sensei/issues/147#issuecomment-1091188979).
+
 ### Using a Docker image built from sources 🐳
 
 - Clone this repo and `cd` into the created folder
 - Build the image with `sh build.sh`
 - Create the same alias as for the published Docker image but without the `--pull always`
 
-> ⚠ When running sensei inside a Docker container, the `--material` is limited
-> to descendants of the working directory.
+> ⚠ The same warnings as for the published Docker image apply.
 
 ### Using Node.js
 
