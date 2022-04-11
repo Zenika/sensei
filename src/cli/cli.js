@@ -44,11 +44,13 @@ async function serve(buildOptions, serveOptions) {
       },
       // Disables HMR, enables live reload, see https://webpack.js.org/configuration/dev-server/#devserverhot
       hot: false,
+      port: serveOptions.port,
+      host: serveOptions.host,
     },
     webpack(webpackConfig(buildOptions))
   );
   try {
-    await server.start(serveOptions.port, serveOptions.host);
+    await server.start();
   } catch (err) {
     console.log(err);
   }
