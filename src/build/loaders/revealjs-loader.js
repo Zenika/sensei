@@ -234,6 +234,7 @@ function createMarkdownSlide(content, options) {
       const prismLang = Prism.languages[lang] || Prism.languages.clike;
       return Prism.highlight(code, prismLang);
     },
+    headerIds: false,
   });
   return marked(content); //'<script type="text/template">' + marked(content) + "</script>";
 }
