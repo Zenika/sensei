@@ -94,6 +94,16 @@ points to directory with training material in it). You may alternatively use
 `npm run dev --` instead to enable restart on change (eg `npm run dev -- serve
 --material=./training-material`).
 
+### Testing
+
+Tests are written using the built-in [test](https://nodejs.org/api/test.html)
+module.
+
+- Run all tests: `npm test`
+- Run one test file: `npm test path/to/test/file.test.js`
+- Run one test file and rerun on changes: `npm run test:watch
+  path/to/test/file.test.js`
+
 ### Source file structure
 
 - `src/app`: source code for the web app that embeds training material

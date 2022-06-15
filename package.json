@@ -5,8 +5,8 @@
     "prettier": "prettier \"{*,**/*}.{yml,html,css,js}\"",
     "prettier:check": "npm run prettier -- --check",
     "prettier:write": "npm run prettier -- --write",
-    "test": "node test.js",
-    "test:watch": "nodemon test.js --ignore dist",
+    "test": "node --test",
+    "test:watch": "nodemon --ignore dist --test",
     "start": "node src/cli/cli.js",
     "dev": "nodemon --watch src/build --watch src/cli src/cli/cli.js"
   },
