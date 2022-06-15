@@ -1,9 +1,76 @@
 version: 2.1
 
 orbs:
-  docker: circleci/docker@1.6.0
+  docker: circleci/docker@2.1.1
 
 jobs:
+  build-publish: # Adapted from https://circleci.com/developer/orbs/orb/circleci/docker#jobs-publish while using buildx
+    parameters:
+      deploy:
+        default: true
+        description: Push the image to a registry?
+        type: boolean
+      docker-password:
+        default: DOCKER_PASSWORD
+        description: |
+          Name of environment variable storing your Docker password
+        type: env_var_name
+      docker-username:
+        default: DOCKER_LOGIN
+        description: |
+          Name of environment variable storing your Docker username
+        type: env_var_name
+      image:
+        description: Name of image to build
+        type: string
+      tag:
+        default: $CIRCLE_SHA1
+        description: |
+          Image tag, defaults to the value of $CIRCLE_SHA1
+        type: string
+      platform:
+        default: linux/amd64
+        description: |
+          Comma-separated list of platforms, defaults to linux/amd64
+        type: string
+      update-description:
+        default: false
+        description: Update the image description on Docker Hub?
+        type: boolean
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.14
+          docker_layer_caching: yes
+      - when:
+          condition: <<parameters.deploy>>
+          steps:
+            - docker/check:
+                docker-password: <<parameters.docker-password>>
+                docker-username: <<parameters.docker-username>>
+      - run:
+          name: Set up QEMU
+          command: |
+            docker container run --rm --privileged tonistiigi/binfmt:latest --install all
+      - run:
+          name: Set up buildx
+          command: |
+            docker context create buildx-build
+            docker buildx create --use --driver docker-container buildx-build
+            docker buildx inspect
+      - run:
+          name: Build docker image
+          command: docker buildx build --progress=plain --platform <<parameters.platform>> --tag <<parameters.image>>:<<parameters.tag>> <<# parameters.deploy >>--push<</ parameters.deploy >> .
+      - when:
+          condition: <<parameters.update-description>>
+          steps:
+            - docker/update-description:
+                docker-password: <<parameters.docker-password>>
+                docker-username: <<parameters.docker-username>>
+                image: <<parameters.image>>
+
   quality-checks:
     docker:
       - image: circleci/node:14
@@ -26,17 +93,15 @@ workflows:
   build:
     jobs:
       - quality-checks
-      - docker/publish: &docker-build-params
+      - build-publish: &docker-build-params
           name: build-docker-image
-          executor: docker/docker
-          use-remote-docker: yes
-          remote-docker-dlc: yes
           image: zenika/sensei
+          platform: linux/amd64,linux/arm64
           deploy: no
           filters:
             branches:
               ignore: main
-      - docker/publish:
+      - build-publish:
           <<: *docker-build-params
           name: build-and-publish-docker-image
           tag: latest
