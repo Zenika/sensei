@@ -90,7 +90,6 @@ workflows:
     jobs:
       - check-code-quality
       - node/test:
-          name: run-tests
           matrix:
             parameters:
               version:
