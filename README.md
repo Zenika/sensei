@@ -1,7 +1,7 @@
 # @zenika/sensei
 
-Sensei is meant to be a replacement of [zenika-formation-framework](https://github.com/Zenika/zenika-formation-framework/),
-using a simpler and newer stack. It's not up-to-par in terms of features, but it's ready for test drives.
+The compiler for our training material. Sensei is a replacement for
+[zenika-formation-framework](https://github.com/Zenika/zenika-formation-framework/).
 
 ## Installation
 
@@ -35,15 +35,16 @@ using a simpler and newer stack. It's not up-to-par in terms of features, but it
 > This avoids the `C:/Program Files/Git/...: no such file or directory` kind of
 > errors.
 
-> ⚠ To change `SENSEI_PORT` when using this alias, use the following syntax: 
-> `export SENSEI_PORT=9000; sensei`. See 
+> ⚠ To change `SENSEI_PORT` when using this alias, use the following syntax:
+> `export SENSEI_PORT=9000; sensei`. See
 > [here](https://github.com/Zenika/sensei/issues/147#issuecomment-1091188979).
 
 ### Using a Docker image built from sources 🐳
 
 - Clone this repo and `cd` into the created folder
 - Build the image with `sh build.sh`
-- Create the same alias as for the published Docker image but without the `--pull always`
+- Create the same alias as for the published Docker image but without the
+  `--pull always`
 
 > ⚠ The same warnings as for the published Docker image apply.
 
@@ -63,13 +64,15 @@ Run `sensei --help` for available commands and options.
 
 ### Generating PDFs
 
-- `cd` into a training material folder (must have `Slides/slides.json` and `Workbook/parts.json`)
+- `cd` into a training material folder (must have `Slides/slides.json` and
+  `Workbook/parts.json`)
 - Run `sensei pdf`
 - PDFs are generated inside `pdf` folder
 
 ### Serving the slides and labs
 
-- `cd` into a training material folder (must have `Slides/slides.json` and `Workbook/parts.json`)
+- `cd` into a training material folder (must have `Slides/slides.json` and
+  `Workbook/parts.json`)
 - Run `sensei serve`
 - Navigate to `http://localhost:8080/`
 
@@ -82,7 +85,8 @@ The following plugins are enabled:
  - Notes
  - Math
 
-Refer to [Reveal's documentation](https://revealjs.com/plugins/#built-in-plugins) for usage.
+Refer to [Reveal's
+documentation](https://revealjs.com/plugins/#built-in-plugins) for usage.
 
 ## Development
 
