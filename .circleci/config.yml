@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   docker: circleci/docker@2.1.1
+  node: circleci/node@5.0.2
 
 jobs:
   build-publish: # Adapted from https://circleci.com/developer/orbs/orb/circleci/docker#jobs-publish while using buildx
@@ -71,20 +72,15 @@ jobs:
                 docker-username: <<parameters.docker-username>>
                 image: <<parameters.image>>
 
-  quality-checks:
+  check-code-quality:
     docker:
-      - image: circleci/node:14
+      - image: cimg/node:lts
     steps:
       - checkout
-      - run:
-          name: Install Sensei
-          command: npm ci
+      - node/install-packages
       - run:
           name: Check code formatting
           command: npm run prettier:check
-      - run:
-          name: Launch tests
-          command: npm test
       - docker/dockerlint
 
 workflows:
@@ -92,7 +88,14 @@ workflows:
 
   build:
     jobs:
-      - quality-checks
+      - check-code-quality
+      - node/test:
+          name: run-tests
+          matrix:
+            parameters:
+              version:
+                - lts
+                - current
       - build-publish: &docker-build-params
           name: build-docker-image
           image: zenika/sensei
