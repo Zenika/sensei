@@ -73,7 +73,7 @@ jobs:
 
   quality-checks:
     docker:
-      - image: circleci/node:14
+      - image: cimg/node:18.3
     steps:
       - checkout
       - run:
