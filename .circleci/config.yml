@@ -95,7 +95,7 @@ jobs:
             npm start -- build --material=example
             tar -cvzf dist.tar.gz dist
       - store_artifacts:
-          path: dist.tar
+          path: dist.tar.gz
       - run:
           name: Build PDF version
           command: npm start -- pdf --material=example
