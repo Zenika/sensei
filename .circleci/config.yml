@@ -90,10 +90,10 @@ jobs:
       - checkout
       - node/install-packages
       - run: npm start -- build --material=example
-      - store_artifact:
+      - store_artifacts:
           path: dist
       - run: npm start -- pdf --material=example
-      - store_artifact:
+      - store_artifacts:
           path: pdf
 
 workflows:
