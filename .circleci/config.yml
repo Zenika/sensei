@@ -83,12 +83,26 @@ jobs:
           command: npm run prettier:check
       - docker/dockerlint
 
+  build-example-material:
+    docker:
+      - image: cimg/node:lts
+    steps:
+      - checkout
+      - node/install-packages
+      - run: npm start -- build --material=example
+      - store_artifact:
+          path: dist
+      - run: npm start -- pdf --material=example
+      - store_artifact:
+          path: pdf
+
 workflows:
   version: 2.0
 
   build:
     jobs:
       - check-code-quality
+      - build-example-material
       - node/test:
           matrix:
             parameters:
