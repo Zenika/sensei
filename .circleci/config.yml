@@ -89,10 +89,16 @@ jobs:
     steps:
       - checkout
       - node/install-packages
-      - run: npm start -- build --material=example
+      - run:
+          name: Build web version
+          command: |
+            npm start -- build --material=example
+            tar -cvzf dist.tar dist
       - store_artifacts:
-          path: dist
-      - run: npm start -- pdf --material=example
+          path: dist.tar
+      - run:
+          name: Build PDF version
+          command: npm start -- pdf --material=example
       - store_artifacts:
           path: pdf
 
