@@ -1,4 +1,4 @@
-FROM zenika/alpine-chrome:89-with-puppeteer
+FROM zenika/alpine-chrome:with-puppeteer
 
 USER root
 
