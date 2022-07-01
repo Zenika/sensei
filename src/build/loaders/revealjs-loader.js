@@ -58,7 +58,8 @@ var DEFAULT_SLIDE_SEPARATOR = "^\r?\n---\r?\n$",
   DEFAULT_ELEMENT_ATTRIBUTES_SEPARATOR = "\\.element\\s*?(.+?)$",
   DEFAULT_SLIDE_ATTRIBUTES_SEPARATOR = "\\.slide:\\s*?(\\S.+?)$";
 
-var SCRIPT_END_PLACEHOLDER = "__SCRIPT_END__";
+var SCRIPT_START_PLACEHOLDER = "__SCRIPT_START__",
+  SCRIPT_END_PLACEHOLDER = "__SCRIPT_END__";
 
 function slidify(markdown, options) {
   options = getSlidifyOptions(options);
@@ -213,10 +214,6 @@ function createMarkdownSlide(content, options) {
       "</aside>";
   }
 
-  // prevent script end tags in the content from interfering
-  // with parsing
-  content = content.replace(/<\/script>/g, SCRIPT_END_PLACEHOLDER);
-
   marked.use({
     renderer: {
       html(_html) {
@@ -236,7 +233,13 @@ function createMarkdownSlide(content, options) {
     },
     headerIds: false,
   });
-  return marked(content); //'<script type="text/template">' + marked(content) + "</script>";
+  content = marked(content);
+
+  // prevent script tags in plain markdown
+  content = content.replace(/<script>/g, SCRIPT_START_PLACEHOLDER);
+  content = content.replace(/<\/script>/g, SCRIPT_END_PLACEHOLDER);
+
+  return content;
 }
 
 function getSlidifyOptions(options) {
