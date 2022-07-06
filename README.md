@@ -80,7 +80,7 @@ Run `sensei --help` for available commands and options.
 
 ### Slides
 
-Write slides as you would a usual Reveal.js slides. Refer to [Reveal's
+Write slides as you would usual Reveal.js slides. Refer to [Reveal's
 documentation](https://revealjs.com/) for features. Note that the following
 plugins are enabled:
  - Markdown
