@@ -39,7 +39,8 @@ const { compileLabsJson } = require("./labs-json-loader");
 
 (async () => {
   const actual = await compileLabsJson('["part1"]', {
-    importWorkbookPart: () => '<!-- toc --><h2 id="just-a-title">just a title</h2>',
+    importWorkbookPart: () =>
+      '<!-- toc --><h2 id="just-a-title">just a title</h2>',
   });
   const expected = /<li><a href="#just-a-title">just a title<\/a><\/li>/;
   assert.match(
