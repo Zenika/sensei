@@ -23,10 +23,7 @@ function insertToc(content) {
  * @param {{ importWorkbookPart: (filename: string) => string | Promise<string> }} options
  * @returns {Promise<string>} resulting js module
  */
-async function compileLabsJson(
-  labsJsonFileContent,
-  { importWorkbookPart, includeToc = true }
-) {
+async function compileLabsJson(labsJsonFileContent, { importWorkbookPart }) {
   /** @type {string[]} */
   const partPaths = JSON.parse(labsJsonFileContent);
   const parts = await Promise.all(
