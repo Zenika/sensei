@@ -39,6 +39,18 @@ const { compileLabsJson } = require("./labs-json-loader");
 
 (async () => {
   const actual = await compileLabsJson('["part1"]', {
+    importWorkbookPart: () => "<!-- toc --> space <!-- toc -->",
+  });
+  const expected = /^export const content = `<h2 class="toc">.* space <h2 class="toc">/;
+  assert.match(
+    actual,
+    expected,
+    "labs.json loader does not include table of content at every marker"
+  );
+})();
+
+(async () => {
+  const actual = await compileLabsJson('["part1"]', {
     importWorkbookPart: () =>
       '<!-- toc --><h2 id="just-a-title">just a title</h2>',
   });
