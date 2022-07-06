@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { compileLabsJson } = require("./labs-json-loader");
+const { compileLabsJson } = require("./workbook-json-loader");
 
 (async () => {
   const actual = await compileLabsJson('["part1"]', {
@@ -9,7 +9,7 @@ const { compileLabsJson } = require("./labs-json-loader");
   assert.equal(
     actual,
     expected,
-    "labs.json loader cannot compile a workbook with one part"
+    "workbook.json loader cannot compile a workbook with one part"
   );
 })();
 
@@ -21,7 +21,7 @@ const { compileLabsJson } = require("./labs-json-loader");
   assert.equal(
     actual,
     expected,
-    "labs.json loader cannot compile a workbook with two parts"
+    "workbook.json loader cannot compile a workbook with two parts"
   );
 })();
 
@@ -33,7 +33,7 @@ const { compileLabsJson } = require("./labs-json-loader");
   assert.match(
     actual,
     expected,
-    "labs.json loader does not include table of content at the marker"
+    "workbook.json loader does not include table of content at the marker"
   );
 })();
 
@@ -45,7 +45,7 @@ const { compileLabsJson } = require("./labs-json-loader");
   assert.match(
     actual,
     expected,
-    "labs.json loader does not include table of content at every marker"
+    "workbook.json loader does not include table of content at every marker"
   );
 })();
 
@@ -58,6 +58,6 @@ const { compileLabsJson } = require("./labs-json-loader");
   assert.match(
     actual,
     expected,
-    "labs.json loader does not include title in table of content"
+    "workbook.json loader does not include title in table of content"
   );
 })();

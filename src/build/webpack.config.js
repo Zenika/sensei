@@ -39,10 +39,10 @@ module.exports = (env = {}, argv = {}) => {
           use: path.resolve(__dirname, "./loaders/slides-json-loader"),
         },
         {
-          test: /(labs|parts)\.json$/,
+          test: /(workbook|parts)\.json$/,
           type: "javascript/auto",
           use: {
-            loader: path.resolve(__dirname, "./loaders/labs-json-loader"),
+            loader: path.resolve(__dirname, "./loaders/workbook-json-loader"),
             options: { material: env.material },
           },
         },
@@ -107,7 +107,7 @@ module.exports = (env = {}, argv = {}) => {
         "node_modules",
       ],
       fallback: {
-        "training-material/Workbook/labs.json":
+        "training-material/Workbook/workbook.json":
           "training-material/Workbook/parts.json",
         "training-material/Workbook/parts.json":
           "training-material/CahierExercices/parts.json",
