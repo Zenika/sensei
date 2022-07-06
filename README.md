@@ -76,17 +76,25 @@ Run `sensei --help` for available commands and options.
 - Run `sensei serve`
 - Navigate to `http://localhost:8080/`
 
-## Reveal plugins
+## Material authoring
 
-The following plugins are enabled:
+### Slides
+
+Write slides as you would a usual Reveal.js slides. Refer to [Reveal's
+documentation](https://revealjs.com/) for features. Note that the following
+plugins are enabled:
  - Markdown
  - Highlight
  - Zoom
  - Notes
  - Math
 
-Refer to [Reveal's
-documentation](https://revealjs.com/plugins/#built-in-plugins) for usage.
+### Workbook
+
+Write the workbook as you would a usual markdown document.
+
+> ℹ You may use `<!-- toc
+-->` to have a table of content inserted at that place.
 
 ## Development
 
