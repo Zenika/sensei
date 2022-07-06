@@ -1,5 +1,3 @@
-// @ts-check
-
 const assert = require("assert");
 const { compileLabsJson } = require("./labs-json-loader");
 
