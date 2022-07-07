@@ -93,8 +93,8 @@ plugins are enabled:
 
 Write the workbook as you would a usual markdown document.
 
-> ℹ You may use `<!-- toc
--->` to have a table of content inserted at that place.
+> ℹ You may use `<!-- toc -->` to have
+a table of content inserted at that place.
 
 ## Development
 
