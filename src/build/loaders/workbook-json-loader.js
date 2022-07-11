@@ -6,14 +6,14 @@ const path = require("path");
  * @returns {string}
  */
 function insertToc(content) {
-  let toc = '<h2 class="toc">&nbsp;</h2><ul class="toc">';
+  let toc = '<ul class="toc">';
   const regexp = /<h2 id="(?<id>[^"]*)"[^>]*>(?<title>.+?)<\/h2>/g;
   const matches = content.matchAll(regexp);
   for (const match of matches) {
     const { id, title } = match.groups || {};
     toc += `<li><a href="#${id}">${title}</a></li>`;
   }
-  toc += '</ul><div class="pb"></div>';
+  toc += '</ul>';
 
   return content.replaceAll("<!-- toc -->", toc);
 }

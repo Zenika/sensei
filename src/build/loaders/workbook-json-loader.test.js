@@ -29,7 +29,7 @@ const { compileWorkbookJson } = require("./workbook-json-loader");
   const actual = await compileWorkbookJson('["part1"]', {
     importWorkbookPart: () => "<!-- toc -->",
   });
-  const expected = /^export const content = `<h2 class="toc">/;
+  const expected = /^export const content = `<ul class="toc">/;
   assert.match(
     actual,
     expected,
@@ -41,7 +41,7 @@ const { compileWorkbookJson } = require("./workbook-json-loader");
   const actual = await compileWorkbookJson('["part1"]', {
     importWorkbookPart: () => "<!-- toc --> space <!-- toc -->",
   });
-  const expected = /^export const content = `<h2 class="toc">.* space <h2 class="toc">/;
+  const expected = /^export const content = `<ul class="toc">.* space <ul class="toc">/;
   assert.match(
     actual,
     expected,

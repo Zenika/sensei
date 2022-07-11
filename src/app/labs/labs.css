@@ -9,12 +9,6 @@ body {
   background-color: white;
   padding: 30px;
 }
-body:lang(fr) {
-  --toc: "Table des mati\0000E8res";
-}
-body:lang(en) {
-  --toc: "Table of content";
-}
 
 body > *:first-child {
   margin-top: 0 !important;
@@ -202,10 +196,6 @@ h4 p,
 h5 p,
 h6 p {
   margin-top: 0;
-}
-
-h2.toc::before {
-  content: var(--toc);
 }
 
 li p.first {
