@@ -5,7 +5,7 @@ const { compileWorkbookJson } = require("./workbook-json-loader");
   const actual = await compileWorkbookJson('["part1"]', {
     importWorkbookPart: () => "content",
   });
-  const expected = "export const content = `content`";
+  const expected = "content";
   assert.equal(
     actual,
     expected,
@@ -17,47 +17,10 @@ const { compileWorkbookJson } = require("./workbook-json-loader");
   const actual = await compileWorkbookJson('["part1", "part2"]', {
     importWorkbookPart: (filename) => filename,
   });
-  const expected = "export const content = `part1\npart2`";
+  const expected = "part1\npart2";
   assert.equal(
     actual,
     expected,
     "workbook.json loader cannot compile a workbook with two parts"
-  );
-})();
-
-(async () => {
-  const actual = await compileWorkbookJson('["part1"]', {
-    importWorkbookPart: () => "<!-- toc -->",
-  });
-  const expected = /^export const content = `<ul class="toc">/;
-  assert.match(
-    actual,
-    expected,
-    "workbook.json loader does not include table of content at the marker"
-  );
-})();
-
-(async () => {
-  const actual = await compileWorkbookJson('["part1"]', {
-    importWorkbookPart: () => "<!-- toc --> space <!-- toc -->",
-  });
-  const expected = /^export const content = `<ul class="toc">.* space <ul class="toc">/;
-  assert.match(
-    actual,
-    expected,
-    "workbook.json loader does not include table of content at every marker"
-  );
-})();
-
-(async () => {
-  const actual = await compileWorkbookJson('["part1"]', {
-    importWorkbookPart: () =>
-      '<!-- toc --><h2 id="just-a-title">just a title</h2>',
-  });
-  const expected = /<li><a href="#just-a-title">just a title<\/a><\/li>/;
-  assert.match(
-    actual,
-    expected,
-    "workbook.json loader does not include title in table of content"
   );
 })();

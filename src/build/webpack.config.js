@@ -41,10 +41,24 @@ module.exports = (env = {}, argv = {}) => {
         {
           test: /(workbook|parts)\.json$/,
           type: "javascript/auto",
-          use: {
-            loader: path.resolve(__dirname, "./loaders/workbook-json-loader"),
-            options: { material: env.material },
-          },
+          use: [
+            require.resolve("html-loader"),
+            path.resolve(__dirname, "./loaders/workbook-toc-loader"),
+            {
+              loader: require.resolve("markdown-loader"),
+              options: {
+                highlight(code, lang) {
+                  const prismLang =
+                    Prism.languages[lang] || Prism.languages.clike;
+                  return Prism.highlight(code, prismLang, lang);
+                },
+              },
+            },
+            {
+              loader: path.resolve(__dirname, "./loaders/workbook-json-loader"),
+              options: { material: env.material },
+            },
+          ],
         },
         {
           test: /[\/\\]Slides[\/\\].+\.md$/,
@@ -60,19 +74,7 @@ module.exports = (env = {}, argv = {}) => {
         },
         {
           test: /[\/\\](Workbook|CahierExercices)[\/\\].+\.md$/,
-          use: [
-            require.resolve("html-loader"),
-            {
-              loader: require.resolve("markdown-loader"),
-              options: {
-                highlight(code, lang) {
-                  const prismLang =
-                    Prism.languages[lang] || Prism.languages.clike;
-                  return Prism.highlight(code, prismLang, lang);
-                },
-              },
-            },
-          ],
+          type: "asset/source",
         },
         {
           test: /\.css$/,
