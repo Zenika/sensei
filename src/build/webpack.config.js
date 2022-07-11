@@ -34,9 +34,31 @@ module.exports = (env = {}, argv = {}) => {
     module: {
       rules: [
         {
-          test: [/slides\.json$/, /parts\.json$/],
+          test: /slides\.json$/,
           type: "javascript/auto",
           use: path.resolve(__dirname, "./loaders/slides-json-loader"),
+        },
+        {
+          test: /(workbook|parts)\.json$/,
+          type: "javascript/auto",
+          use: [
+            require.resolve("html-loader"),
+            path.resolve(__dirname, "./loaders/workbook-toc-loader"),
+            {
+              loader: require.resolve("markdown-loader"),
+              options: {
+                highlight(code, lang) {
+                  const prismLang =
+                    Prism.languages[lang] || Prism.languages.clike;
+                  return Prism.highlight(code, prismLang, lang);
+                },
+              },
+            },
+            {
+              loader: path.resolve(__dirname, "./loaders/workbook-json-loader"),
+              options: { material: env.material },
+            },
+          ],
         },
         {
           test: /[\/\\]Slides[\/\\].+\.md$/,
@@ -52,19 +74,7 @@ module.exports = (env = {}, argv = {}) => {
         },
         {
           test: /[\/\\](Workbook|CahierExercices)[\/\\].+\.md$/,
-          use: [
-            require.resolve("html-loader"),
-            {
-              loader: require.resolve("markdown-loader"),
-              options: {
-                highlight(code, lang) {
-                  const prismLang =
-                    Prism.languages[lang] || Prism.languages.clike;
-                  return Prism.highlight(code, prismLang, lang);
-                },
-              },
-            },
-          ],
+          type: "asset/source",
         },
         {
           test: /\.css$/,
@@ -99,6 +109,8 @@ module.exports = (env = {}, argv = {}) => {
         "node_modules",
       ],
       fallback: {
+        "training-material/Workbook/workbook.json":
+          "training-material/Workbook/parts.json",
         "training-material/Workbook/parts.json":
           "training-material/CahierExercices/parts.json",
         "training-material/Slides/resources/custom.css":
