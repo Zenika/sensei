@@ -37,7 +37,19 @@ module.exports = (env = {}, argv = {}) => {
         {
           test: /slides\.json$/,
           type: "javascript/auto",
-          use: path.resolve(__dirname, "./loaders/slides-json-loader"),
+          use: [
+            path.resolve(__dirname, "./loaders/main-title-loader"),
+            {
+              loader: path.resolve(
+                path.join(__dirname, "./loaders/revealjs-loader")
+              ),
+              options: { materialVersion },
+            },
+            {
+              loader: path.resolve(__dirname, "./loaders/json-parts-loader"),
+              options: { material: env.material },
+            },
+          ],
         },
         {
           test: /(workbook|parts)\.json$/,
@@ -56,25 +68,13 @@ module.exports = (env = {}, argv = {}) => {
               },
             },
             {
-              loader: path.resolve(__dirname, "./loaders/workbook-json-loader"),
+              loader: path.resolve(__dirname, "./loaders/json-parts-loader"),
               options: { material: env.material },
             },
           ],
         },
         {
-          test: /[\/\\]Slides[\/\\].+\.md$/,
-          use: [
-            require.resolve("html-loader"),
-            {
-              loader: path.resolve(
-                path.join(__dirname, "./loaders/revealjs-loader")
-              ),
-              options: { materialVersion },
-            },
-          ],
-        },
-        {
-          test: /[\/\\](Workbook|CahierExercices)[\/\\].+\.md$/,
+          test: /[\/\\](Workbook|CahierExercices|Slides)[\/\\].+\.md$/,
           type: "asset/source",
         },
         {
@@ -186,6 +186,7 @@ function composeMaterialVersion(material) {
     commitHash = childProcess
       .execSync("git -c safe.directory=* rev-parse --short HEAD", {
         cwd: material,
+        env: { LANG: "C" } /* ensure language of output to catch error */,
       })
       .toString()
       .trim();
