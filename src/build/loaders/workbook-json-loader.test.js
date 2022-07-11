@@ -1,8 +1,8 @@
 const assert = require("assert");
-const { compileLabsJson } = require("./workbook-json-loader");
+const { compileWorkbookJson } = require("./workbook-json-loader");
 
 (async () => {
-  const actual = await compileLabsJson('["part1"]', {
+  const actual = await compileWorkbookJson('["part1"]', {
     importWorkbookPart: () => "content",
   });
   const expected = "export const content = `content`";
@@ -14,7 +14,7 @@ const { compileLabsJson } = require("./workbook-json-loader");
 })();
 
 (async () => {
-  const actual = await compileLabsJson('["part1", "part2"]', {
+  const actual = await compileWorkbookJson('["part1", "part2"]', {
     importWorkbookPart: (filename) => filename,
   });
   const expected = "export const content = `part1\npart2`";
@@ -26,7 +26,7 @@ const { compileLabsJson } = require("./workbook-json-loader");
 })();
 
 (async () => {
-  const actual = await compileLabsJson('["part1"]', {
+  const actual = await compileWorkbookJson('["part1"]', {
     importWorkbookPart: () => "<!-- toc -->",
   });
   const expected = /^export const content = `<h2 class="toc">/;
@@ -38,7 +38,7 @@ const { compileLabsJson } = require("./workbook-json-loader");
 })();
 
 (async () => {
-  const actual = await compileLabsJson('["part1"]', {
+  const actual = await compileWorkbookJson('["part1"]', {
     importWorkbookPart: () => "<!-- toc --> space <!-- toc -->",
   });
   const expected = /^export const content = `<h2 class="toc">.* space <h2 class="toc">/;
@@ -50,7 +50,7 @@ const { compileLabsJson } = require("./workbook-json-loader");
 })();
 
 (async () => {
-  const actual = await compileLabsJson('["part1"]', {
+  const actual = await compileWorkbookJson('["part1"]', {
     importWorkbookPart: () =>
       '<!-- toc --><h2 id="just-a-title">just a title</h2>',
   });

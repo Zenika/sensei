@@ -19,13 +19,16 @@ function insertToc(content) {
 }
 
 /**
- * @param {string} labsJsonFileContent
+ * @param {string} workbookJsonFileContent
  * @param {{ importWorkbookPart: (filename: string) => string | Promise<string> }} options
  * @returns {Promise<string>} resulting js module
  */
-async function compileLabsJson(labsJsonFileContent, { importWorkbookPart }) {
+async function compileWorkbookJson(
+  workbookJsonFileContent,
+  { importWorkbookPart }
+) {
   /** @type {string[]} */
-  const partPaths = JSON.parse(labsJsonFileContent);
+  const partPaths = JSON.parse(workbookJsonFileContent);
   const parts = await Promise.all(
     partPaths.map((filename) => importWorkbookPart(filename))
   );
@@ -40,7 +43,7 @@ async function compileLabsJson(labsJsonFileContent, { importWorkbookPart }) {
 }
 
 /** @type {import("webpack").PitchLoaderDefinitionFunction<{ material: string }, {}>} */
-function labsJsonLoader(content) {
+function workbookJsonLoader(content) {
   const { material } = this.getOptions();
   const workbookFolder = path.relative(material, this.context);
   const importWorkbookPart = async (filename) => {
@@ -49,8 +52,8 @@ function labsJsonLoader(content) {
     );
     return partModule.default;
   };
-  return compileLabsJson(content, { importWorkbookPart });
+  return compileWorkbookJson(content, { importWorkbookPart });
 }
 
-module.exports = labsJsonLoader;
-module.exports.compileLabsJson = compileLabsJson;
+module.exports = workbookJsonLoader;
+module.exports.compileWorkbookJson = compileWorkbookJson;
