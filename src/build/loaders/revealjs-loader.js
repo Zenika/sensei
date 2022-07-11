@@ -1,27 +1,21 @@
 const { marked } = require("marked");
 const Prism = require("prismjs");
 require("prismjs/components/")();
+const { PART_SEPARATOR } = require("./json-parts-loader");
 
 module.exports = function (content) {
-  const resourceQuery = new URLSearchParams(this.resourceQuery.substring(1));
   const options = this.getOptions();
-  if (resourceQuery.has("titleOnly")) {
-    const title = content.match(/^[^\S\r\n]*#[^\S\r\n]*([^#\r\n]+)$/m)?.[1];
-    if (!title) {
-      this.emitWarning(
-        new Error(
-          `The title of the training was not found. Please ensure that the slides include a first level title (e.g. '# My title') in '${this.resourcePath}'`
-        )
-      );
-    }
-    return title || "⚠ TITLE NOT FOUND";
-  }
-  return slidify(content, {
-    verticalSeparator: "^\r?\n\r?\n\r?\n",
-    notesSeparator: "^Notes :",
-    chapterIndex: parseInt(resourceQuery.get("chapterIndex")),
-    materialVersion: options.materialVersion,
-  });
+  return content
+    .split(PART_SEPARATOR)
+    .map((part, index) =>
+      slidify(part, {
+        verticalSeparator: "^\r?\n\r?\n\r?\n",
+        notesSeparator: "^Notes :",
+        chapterIndex: index,
+        materialVersion: options.materialVersion,
+      })
+    )
+    .join("\n");
 };
 
 /*
