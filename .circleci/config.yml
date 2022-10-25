@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  docker: circleci/docker@2.1.1
+  docker: circleci/docker@2.1.4
   node: circleci/node@5.0.2
 
 jobs:
@@ -128,7 +128,7 @@ workflows:
           name: build-and-publish-docker-image
           tag: latest
           deploy: yes
-          update-description: no # switch to yes when https://github.com/Zenika/sensei/issues/159 is closed
+          update-description: yes
           docker-username: DOCKERHUB_USERNAME
           docker-password: DOCKERHUB_PASS
           filters:
