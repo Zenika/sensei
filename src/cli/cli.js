@@ -268,6 +268,11 @@ cli(
       describe:
         "Training name used in PDF files and HTML page titles. Defaults to the name of the 'material' directory.",
     })
+    .option("repositoryUrl", {
+      type: "string",
+      describe: "URL to training git repository",
+      default: "",
+    })
     .option("language", {
       type: "string",
       describe: "Language used for typographic rules. Defaults to 'en'.",

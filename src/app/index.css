@@ -25,6 +25,16 @@ a {
   flex-direction: column;
 }
 
-.link-pdf {
+.sub-link {
   font-size: 40%;
+}
+
+.sub-link[href=""] {
+  display: none;
+}
+
+#github.sub-link::before {
+  content: url("./assets/GitHub-Mark-32px.png");
+  padding-right: 5px;
+  vertical-align: -0.5em;
 }
