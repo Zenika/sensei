@@ -104,17 +104,16 @@ Install dependencies (`npm i`) then use `npm start --` to run the CLI (eg `npm
 start -- serve --material=./training-material` where `./training-material`
 points to directory with training material in it). You may alternatively use
 `npm run dev --` instead to enable restart on change (eg `npm run dev -- serve
---material=./training-material`).
+--material=./training-material`). Note that `npm run dev` requires Node.js 18.11
+or later.
 
 ### Testing
 
 Tests are written using the built-in [test](https://nodejs.org/api/test.html)
-module.
+module, which requires Node.js 18.3 or later.
 
 - Run all tests: `npm test`
 - Run one test file: `npm test path/to/test/file.test.js`
-- Run one test file and rerun on changes: `npm run test:watch
-  path/to/test/file.test.js`
 
 ### Source file structure
 
