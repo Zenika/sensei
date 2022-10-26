@@ -1,7 +1,8 @@
-const assert = require("assert");
-const fs = require("fs");
-const os = require("os");
-const path = require("path");
+const assert = require("node:assert");
+const fs = require("node:fs");
+const os = require("node:os");
+const path = require("node:path");
+const test = require("node:test");
 const webpack = require("webpack");
 const webpackConfig = require("./webpack.config.js");
 
@@ -102,44 +103,47 @@ function testCompilation(
   fakeMaterialConfig,
   { ignoreWarnings = [] } = {}
 ) {
-  const { input, output, cleanUp } = setupFakeMaterial(
-    caseName,
-    fakeMaterialConfig
-  );
-  webpack(
-    {
-      ...webpackConfig({
-        material: input,
-        slug: "slug",
-        slideWidth: 1000,
-        slideHeight: 1000,
-      }),
-      output: {
-        path: output,
+  return test(caseName, (t, done) => {
+    const { input, output, cleanUp } = setupFakeMaterial(
+      caseName,
+      fakeMaterialConfig
+    );
+    webpack(
+      {
+        ...webpackConfig({
+          material: input,
+          slug: "slug",
+          slideWidth: 1000,
+          slideHeight: 1000,
+        }),
+        output: {
+          path: output,
+        },
+        mode: "production",
+        performance: {
+          hints: false,
+        },
+        ignoreWarnings,
       },
-      mode: "production",
-      performance: {
-        hints: false,
-      },
-      ignoreWarnings,
-    },
-    (err, stats) => {
-      cleanUp();
-      assert.ifError(err);
-      assert(
-        !stats.hasErrors(),
-        `compilation of material '${caseName}' fails: ${stats.toString()}`
-      );
-      assert.strictEqual(
-        // Can't use 'stats.hasWarnings' because it's 'true' even if said warnings are ignored by the config.
-        stats.toJson().warningsCount,
-        0,
-        `compilation of material '${caseName}' emits warnings: ${stats.toString(
-          { children: true, warnings: true, errorDetails: true }
-        )}`
-      );
-    }
-  );
+      (err, stats) => {
+        cleanUp();
+        assert.ifError(err);
+        assert(
+          !stats.hasErrors(),
+          `compilation of material '${caseName}' fails: ${stats.toString()}`
+        );
+        assert.strictEqual(
+          // Can't use 'stats.hasWarnings' because it's 'true' even if said warnings are ignored by the config.
+          stats.toJson().warningsCount,
+          0,
+          `compilation of material '${caseName}' emits warnings: ${stats.toString(
+            { children: true, warnings: true, errorDetails: true }
+          )}`
+        );
+        done();
+      }
+    );
+  });
 }
 
 function setupFakeMaterial(
