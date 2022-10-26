@@ -2,7 +2,7 @@ function escapeForStringExport(string) {
   return string.replace(/["]/g, "\\$&").replace(/\n/g, "\\n\\$&");
 }
 
-/** @type {import("webpack").LoaderDefinitionFunction<{ material: string }, {}>} */
+/** @type {import("webpack").LoaderDefinitionFunction<{}, {}>} */
 module.exports = function (content) {
   const title = content.match(/<h1[^>]*>(.+?)<\/h1>/m)?.[1];
   if (!title) {
