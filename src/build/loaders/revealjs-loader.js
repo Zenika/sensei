@@ -3,6 +3,7 @@ const Prism = require("prismjs");
 require("prismjs/components/")();
 const { PART_SEPARATOR } = require("./json-parts-loader");
 
+/** @type {import("webpack").LoaderDefinitionFunction<{ materialVersion: string }, {}>} */
 module.exports = function (content) {
   const options = this.getOptions();
   return content
