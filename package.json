@@ -6,9 +6,8 @@
     "prettier:check": "npm run prettier -- --check",
     "prettier:write": "npm run prettier -- --write",
     "test": "node --test",
-    "test:watch": "nodemon --ignore dist --test",
     "start": "node src/cli/cli.js",
-    "dev": "nodemon --watch src/build --watch src/cli src/cli/cli.js"
+    "dev": "node --watch src/cli/cli.js"
   },
   "bin": {
     "sensei": "src/cli/cli.js"
@@ -34,7 +33,6 @@
     "yargs": "17.2.1"
   },
   "devDependencies": {
-    "nodemon": "2.0.7",
     "prettier": "2.0.5"
   }
 }
