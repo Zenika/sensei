@@ -128,7 +128,7 @@ workflows:
           name: build-and-publish-docker-image
           tag: latest
           deploy: yes
-          update-description: yes
+          update-description: no # switch to yes when https://github.com/Zenika/sensei/issues/159 is closed
           docker-username: DOCKERHUB_USERNAME
           docker-password: DOCKERHUB_PASS
           filters:
