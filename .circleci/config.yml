@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   docker: circleci/docker@2.1.1
+  node: circleci/node@5.0.2
 
 jobs:
   build-publish: # Adapted from https://circleci.com/developer/orbs/orb/circleci/docker#jobs-publish while using buildx
@@ -71,28 +72,49 @@ jobs:
                 docker-username: <<parameters.docker-username>>
                 image: <<parameters.image>>
 
-  quality-checks:
+  check-code-quality:
     docker:
-      - image: cimg/node:18.3
+      - image: cimg/node:lts
     steps:
       - checkout
-      - run:
-          name: Install Sensei
-          command: npm ci
+      - node/install-packages
       - run:
           name: Check code formatting
           command: npm run prettier:check
-      - run:
-          name: Launch tests
-          command: npm test
       - docker/dockerlint
+
+  build-example:
+    docker:
+      - image: cimg/node:lts-browsers
+    steps:
+      - checkout
+      - node/install-packages
+      - run:
+          name: Build web version
+          command: |
+            npm start -- build --material=example
+            tar -cvzf dist.tar.gz dist
+      - store_artifacts:
+          path: dist.tar.gz
+      - run:
+          name: Build PDF version
+          command: npm start -- pdf --material=example
+      - store_artifacts:
+          path: pdf
 
 workflows:
   version: 2.0
 
   build:
     jobs:
-      - quality-checks
+      - check-code-quality
+      - build-example
+      - node/test:
+          matrix:
+            parameters:
+              version:
+                - lts
+                - current
       - build-publish: &docker-build-params
           name: build-docker-image
           image: zenika/sensei
@@ -106,7 +128,7 @@ workflows:
           name: build-and-publish-docker-image
           tag: latest
           deploy: yes
-          update-description: yes
+          update-description: no # switch to yes when https://github.com/Zenika/sensei/issues/159 is closed
           docker-username: DOCKERHUB_USERNAME
           docker-password: DOCKERHUB_PASS
           filters:
