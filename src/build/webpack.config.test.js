@@ -86,8 +86,8 @@ testCompilation("first chapter of training material template", {
 
         <!-- .slide: class="page-questions" -->
       `
-      // remove indentation because it is significant in markdown
-      .replaceAll(/^        /gm, ""),
+        // remove indentation because it is significant in markdown
+        .replaceAll(/^        /gm, ""),
     },
   ],
 });
