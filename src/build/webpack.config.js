@@ -22,6 +22,7 @@ module.exports = (env = {}, argv = {}) => {
     trainingSlug: env.slug,
     language: env.language,
     materialVersion,
+    repositoryUrl: env.repositoryUrl,
   };
 
   return {

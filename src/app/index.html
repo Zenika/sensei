@@ -18,7 +18,7 @@
         <a href="slides.html#/">👩‍🏫 Slides</a>
         <a
           href="pdf/Zenika-<%- htmlWebpackPlugin.options.trainingSlug %>-Slides.pdf"
-          class="link-pdf"
+          class="sub-link"
           >📄 PDF</a
         >
       </div>
@@ -26,10 +26,20 @@
         <a href="labs.html">👩‍🔬 Labs</a>
         <a
           href="pdf/Zenika-<%- htmlWebpackPlugin.options.trainingSlug %>-Workbook.pdf"
-          class="link-pdf"
+          class="sub-link"
           >📄 PDF</a
         >
       </div>
+    </div>
+    <div class="link">
+      <a
+        id="github"
+        href="<%- htmlWebpackPlugin.options.repositoryUrl %>"
+        class="sub-link"
+        ><%-
+        htmlWebpackPlugin.options.repositoryUrl.replace('https://github.com/',
+        '') %>
+      </a>
     </div>
   </body>
 </html>

@@ -123,6 +123,7 @@ function testCompilation(
         ...webpackConfig({
           material: input,
           slug: "slug",
+          repositoryUrl: "https://github.com/Zenika-Training/training-template",
           slideWidth: 1000,
           slideHeight: 1000,
         }),
