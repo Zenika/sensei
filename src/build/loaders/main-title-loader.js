@@ -1,5 +1,5 @@
 function escapeForStringExport(string) {
-  return string.replace(/["]/g, "\\$&").replace(/\n/g, "\\n\\$&");
+  return string.replace(/[\\"]/g, "\\$&").replace(/\n/g, "\\n\\$&");
 }
 
 /** @type {import("webpack").LoaderDefinitionFunction<{}, {}>} */
