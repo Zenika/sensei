@@ -1,9 +1,6 @@
-function escapeForStringExport(string) {
-  return string.replace(/[\\"]/g, "\\$&").replace(/\n/g, "\\n\\$&");
-}
-
 /** @type {import("webpack").LoaderDefinitionFunction<{}, {}>} */
 module.exports = function (content) {
+  // Input is code from 'html-loader' in the form 'var code = "..."; export default code;'
   const title = content.match(/<h1[^>]*>(.+?)<\/h1>/m)?.[1];
   if (!title) {
     this.emitWarning(
@@ -12,11 +9,7 @@ module.exports = function (content) {
       )
     );
   }
-  const titleExport = `export const title = "${escapeForStringExport(
-    title || "⚠ TITLE NOT FOUND"
-  )}";`;
-  const contentExport = `export const content = "${escapeForStringExport(
-    content
-  )}";`;
-  return titleExport + contentExport;
+  const titleExport = `export const title = "${title || "⚠ TITLE NOT FOUND"}";`;
+  result = content + "\n" + titleExport;
+  return result;
 };

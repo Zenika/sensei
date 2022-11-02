@@ -39,6 +39,7 @@ module.exports = (env = {}, argv = {}) => {
           type: "javascript/auto",
           use: [
             path.resolve(__dirname, "./loaders/main-title-loader"),
+            require.resolve("html-loader"),
             {
               loader: path.resolve(
                 path.join(__dirname, "./loaders/revealjs-loader")
