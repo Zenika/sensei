@@ -85,18 +85,28 @@ testCompilation("first chapter of training material template", {
 
 
         <!-- .slide: class="page-questions" -->
-      `,
+      `
+        // remove indentation because it is significant in markdown
+        .replaceAll(/^        /gm, ""),
     },
   ],
 });
 
-testCompilation("one workbook file but no content", {
-  workbook: [{ file: "1.md" }],
-});
+testCompilation(
+  "one workbook file but no content",
+  {
+    workbook: [{ file: "1.md" }],
+  },
+  { ignoreWarnings: [TITLE_NOT_FOUND_WARNING] }
+);
 
-testCompilation("multiple workbook files but no content", {
-  workbook: [{ file: "1.md" }, { file: "2.md" }],
-});
+testCompilation(
+  "multiple workbook files but no content",
+  {
+    workbook: [{ file: "1.md" }, { file: "2.md" }],
+  },
+  { ignoreWarnings: [TITLE_NOT_FOUND_WARNING] }
+);
 
 function testCompilation(
   caseName,
@@ -167,7 +177,7 @@ function setupFakeMaterial(
   const workbookFolder = path.join(input, "Workbook");
   fs.mkdirSync(workbookFolder, { recursive: true });
   fs.writeFileSync(
-    path.join(workbookFolder, "parts.json"),
+    path.join(workbookFolder, "workbook.json"),
     JSON.stringify(workbook.map(({ file }) => file))
   );
   workbook.forEach(({ file, content = "" }) =>

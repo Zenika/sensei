@@ -1,14 +1,15 @@
 import "prismjs/themes/prism.css";
 import "./labs.css";
+import { title } from "./content.js";
 
 const labsContainer = document.getElementById("labs-container");
-const { title, version } = labsContainer.dataset;
+const { version } = labsContainer.dataset;
 
 // insert title
 const coverPageTitle = labsContainer.querySelector(
   ":root div:first-of-type h1:first-of-type"
 );
-coverPageTitle.textContent = title;
+coverPageTitle.innerHTML = title;
 
 // insert version
 const versionSpan = document.createElement("span");
