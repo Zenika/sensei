@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "css-loader": "6.5.1",
-    "decktape": "3.4.1",
     "expose-loader": "3.1.0",
     "file-loader": "6.2.0",
     "get-port": "6.0.0",

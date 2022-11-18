@@ -29,7 +29,7 @@ module.exports = (env = {}, argv = {}) => {
     mode: argv.mode || "development",
     entry: {
       index: path.resolve(__dirname, "../app/index.js"),
-      slides: path.resolve(__dirname, `../app/slides/${slidesEntry}.js`),
+      slides: path.resolve(__dirname, `../app/slides/slides.js`),
       labs: path.resolve(__dirname, "../app/labs/labs.js"),
     },
     module: {

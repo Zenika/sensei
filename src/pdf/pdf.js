@@ -2,30 +2,26 @@ const fs = require("fs");
 const path = require("path");
 const puppeteer = require("puppeteer");
 
-async function urlToPdfString(url, options) {
+async function urlToPdf(url, options) {
   const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-  await page.goto(url, { waitUntil: "networkidle0" });
-  const pdfContent = await page.pdf(options);
-  browser.close();
-  return pdfContent.toString("base64");
+  try {
+    const page = await browser.newPage();
+    await page.goto(url, { waitUntil: "networkidle0" });
+    await page.pdf(options);
+  } finally {
+    browser.close();
+  }
 }
 
-async function savePdfFile(filepath, url, options) {
+async function generatePdf(filepath, url, options) {
   const pdfDir = path.dirname(filepath);
   await fs.promises.mkdir(pdfDir, { recursive: true });
-  const pdfContent = await urlToPdfString(url, options);
-  await fs.promises.writeFile(filepath, pdfContent, "base64");
+  console.log(`Generating ${filepath}...`);
+  await urlToPdf(url, {
+    ...options,
+    printBackground: true,
+    path: filepath,
+  });
 }
 
-if (require.main === module) {
-  if (process.argv.length !== 4) {
-    console.error("Usage: node pdf.js <url> <output file path>");
-    return;
-  }
-  savePdfFile(process.argv[3], process.argv[2], {
-    format: "A4",
-    margin: { top: "1cm", right: "1cm", bottom: "1cm", left: "1cm" },
-    printBackground: true,
-  }).then(() => console.log("Done!"));
-}
+module.exports = { generatePdf };

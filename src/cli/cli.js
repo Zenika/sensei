@@ -8,6 +8,7 @@ const WebpackDevServer = require("webpack-dev-server");
 const webpackConfig = require("../build/webpack.config");
 const webpack = require("webpack");
 const yargs = require("yargs/yargs");
+const pdf = require("../pdf/pdf");
 
 async function cli(args, env) {
   const {
@@ -29,7 +30,7 @@ async function cli(args, env) {
       await build({ ...options, bundleAnalyzer });
       break;
     case "pdf":
-      await pdf(options);
+      await generatePdf(options);
       break;
     default:
       throw new Error(`unknown command: '${command}'`);
@@ -72,7 +73,7 @@ function build(options) {
   });
 }
 
-async function pdf(options) {
+async function generatePdf(options) {
   console.log("Generate pdf slides & labs");
   await build({ ...options, pdf: true });
   const serveHandler = require("serve-handler");
@@ -90,73 +91,45 @@ async function pdf(options) {
   const { default: getPort } = await import("get-port");
   const port = await getPort();
   server.listen(port, async () => {
-    await pdfSlides({ ...options, port });
-    await pdfLabs({ ...options, port });
-    server.close();
+    try {
+      await Promise.all([
+        pdfSlides({ ...options, port }),
+        pdfLabs({ ...options, port }),
+      ]);
+    } finally {
+      server.close();
+    }
   });
   return result;
 }
 
-function pdfSlides({ slug, slideWidth, slideHeight, port }) {
-  return new Promise((resolve, reject) => {
-    const child = spawn("node", [
-      require.resolve("decktape"),
-      "reveal",
-      "-p",
-      "0",
-      "--size",
-      `${slideWidth}x${slideHeight}`,
-      `http://localhost:${port}/slides.html`,
+async function pdfSlides({ slug, slideWidth, slideHeight, port }) {
+  await pdf
+    .generatePdf(
       `./pdf/Zenika-${slug}-Slides.pdf`,
-    ]);
-
-    child.stdout.on("data", function (data) {
-      process.stdout.write(data);
-    });
-
-    child.stderr.on("data", function (data) {
-      process.stderr.write(data);
-    });
-
-    child.on("exit", function (code) {
-      if (code !== 0) {
-        return reject(
-          new Error(`spawned process exited with non-zero code '${code}'`)
-        );
+      `http://localhost:${port}/slides.html?print-pdf`,
+      {
+        width: slideWidth,
+        height: slideHeight,
+        timeout: 300000,
       }
-      console.log("PDF slides generated");
-      resolve();
-    });
-
-    child.on("error", function (err) {
-      console.error("PDF slides generation failed!", err);
-      reject(err);
-    });
-  });
+    )
+    .then(() => console.log("PDF slides generated"))
+    .catch((err) => console.error("PDF slides generation failed!", err));
 }
 
-function pdfLabs({ slug, port }) {
-  return new Promise((resolve, reject) => {
-    const child = fork(path.resolve(__dirname, "../pdf/pdf.js"), [
-      `http://localhost:${port}/labs.html`,
+async function pdfLabs({ slug, port }) {
+  await pdf
+    .generatePdf(
       `./pdf/Zenika-${slug}-Workbook.pdf`,
-    ]);
-
-    child.on("exit", function (code) {
-      if (code !== 0) {
-        return reject(
-          new Error(`forked process exited with non-zero code '${code}'`)
-        );
+      `http://localhost:${port}/labs.html`,
+      {
+        format: "A4",
+        margin: { top: "1cm", right: "1cm", bottom: "1cm", left: "1cm" },
       }
-      console.log("PDF labs generated");
-      resolve();
-    });
-
-    child.on("error", function (err) {
-      console.error("PDF Labs generation failed!", err);
-      reject(err);
-    });
-  });
+    )
+    .then(() => console.log("PDF labs generated"))
+    .catch((err) => console.error("PDF Labs generation failed!", err));
 }
 
 // quit on ctrl-c when running docker in terminal
