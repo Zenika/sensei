@@ -36,12 +36,13 @@ body:lang(en) {
 }
 
 .reveal .slides section,
-.reveal .slides section section {
+.reveal .slides section section,
+html.print-pdf .reveal .slides .pdf-page section {
   box-shadow: 0 0 5px 1px #cccccc;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  padding: 0 var(--main-content-horizontal-padding);
+  padding: 0 var(--main-content-horizontal-padding) !important;
 }
 
 .reveal .slides section section {
@@ -217,7 +218,8 @@ body:lang(en) {
   white-space: pre-wrap;
 }
 
-.slides section > section:not([class^="page-"]) {
+.slides section > section:not([class^="page-"]),
+.slides .pdf-page > section:not([class^="page-"]) {
   background-image: url("./assets/zenika-gradient-bar.png"),
     var(--zenika-logo-monogram);
   --logo-offset-from-border: 50px;
@@ -547,12 +549,14 @@ body:lang(en) .reveal section.page-demo:after {
   color: unset;
 }
 
-.reveal .slides section section .version {
+.reveal .slides section section .version,
+.reveal .slides .pdf-page section .version {
   right: 50px;
   visibility: hidden;
 }
 
-.reveal .slides section section:first-child .version {
+.reveal .slides section:first-child section:first-child .version,
+.reveal .slides .pdf-page:first-of-type section .version {
   visibility: visible;
 }
 
