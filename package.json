@@ -13,26 +13,26 @@
     "sensei": "src/cli/cli.js"
   },
   "dependencies": {
-    "css-loader": "6.5.1",
-    "decktape": "3.4.1",
-    "expose-loader": "3.1.0",
-    "file-loader": "6.2.0",
-    "get-port": "6.0.0",
-    "html-loader": "3.0.1",
-    "html-webpack-plugin": "5.5.0",
-    "markdown-loader": "6.0.0",
-    "marked": "4.0.10",
-    "mini-css-extract-plugin": "2.4.5",
-    "prismjs": "1.27.0",
-    "puppeteer": "13.5.2",
-    "reveal.js": "4.3.0",
-    "serve-handler": "6.1.5",
-    "webpack": "5.64.2",
-    "webpack-bundle-analyzer": "4.5.0",
-    "webpack-dev-server": "4.11.1",
-    "yargs": "17.2.1"
+    "css-loader": "~6.7.3",
+    "decktape": "~3.5.0",
+    "expose-loader": "~4.0.0",
+    "file-loader": "~6.2.0",
+    "get-port": "~6.1.2",
+    "html-loader": "~4.2.0",
+    "html-webpack-plugin": "~5.5.0",
+    "markdown-loader": "~8.0.0",
+    "marked": "~4.2.4",
+    "mini-css-extract-plugin": "~2.7.2",
+    "prismjs": "~1.29.0",
+    "puppeteer": "~19.4.1",
+    "reveal.js": "~4.4.0",
+    "serve-handler": "~6.1.5",
+    "webpack": "~5.75.0",
+    "webpack-bundle-analyzer": "~4.7.0",
+    "webpack-dev-server": "~4.11.1",
+    "yargs": "~17.6.2"
   },
   "devDependencies": {
-    "prettier": "2.0.5"
+    "prettier": "~2.8.1"
   }
 }

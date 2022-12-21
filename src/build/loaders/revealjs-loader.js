@@ -212,14 +212,12 @@ function createMarkdownSlide(content, options) {
   marked.use({
     renderer: {
       html(_html) {
-        return _html.replace(/^(\s*<[^>]+>)(.*)(<\/[^>]+>\s*)$/ims, function (
-          match,
-          opening,
-          inner,
-          closing
-        ) {
-          return opening + marked.parseInline(inner) + closing;
-        });
+        return _html.replace(
+          /^(\s*<[^>]+>)(.*)(<\/[^>]+>\s*)$/ims,
+          function (match, opening, inner, closing) {
+            return opening + marked.parseInline(inner) + closing;
+          }
+        );
       },
     },
     highlight(code, lang) {
