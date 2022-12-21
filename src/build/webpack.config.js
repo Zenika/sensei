@@ -183,9 +183,8 @@ function composeMaterialVersion(material) {
 
   let commitHash = "";
   try {
-    // 'safe.directory=*' is needed to avoid error 'unsafe repository', see https://github.com/Zenika/sensei/pull/154
     commitHash = childProcess
-      .execSync("git -c safe.directory=* rev-parse --short HEAD", {
+      .execSync("git rev-parse --short HEAD", {
         cwd: material,
         env: { LANG: "C" } /* ensure language of output to catch error */,
       })
