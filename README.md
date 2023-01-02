@@ -27,22 +27,33 @@ The compiler for our training material. Sensei is a replacement for
 > ⚠ When running sensei inside a Docker container, the `--material` is limited
 > to descendants of the working directory.
 
-> ⚠ If you expect to use this alias within Git Bash for Windows, prepend the
-> `--volume` and `--workdir` options with an additional slash (ie `--volume
-> /$(pwd):/$(basename $(pwd)) --workdir //$(basename $(pwd)`. See [known issues
-> of Git for
-> Windows](https://github.com/git-for-windows/build-extra/blob/main/ReleaseNotes.md#known-issues).
-> This avoids the `C:/Program Files/Git/...: no such file or directory` kind of
-> errors.
-
 > ⚠ To change `SENSEI_PORT` when using this alias, use the following syntax:
 > `export SENSEI_PORT=9000; sensei`. See
 > [here](https://github.com/Zenika/sensei/issues/147#issuecomment-1091188979).
 
+#### Note about Windows
+
+When bind-mounting files in Docker for Windows with WSL2,
+the [recommendation](https://docs.docker.com/desktop/windows/wsl/#best-practices)
+is to store files in the Linux filesystem, i.e. inside WSL2.
+The Linux filesystem can then be accessed on Windows through the share `\\wsl$\` (or `\\wsl.localhost\`).
+When using VSCode, you can also use the [WSL extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl)
+to edit files on the Linux filesystem.
+
+So it is recommended to clone the training repository in the Linux filesystem and launch the alias from WSL2.
+
+> ⚠ If you use the Windows filesystem, hot reload when changing training content won't work.
+
+> ⚠ If you use the Windows filesystem and expect to use the alias within Git Bash for Windows, prepend the
+> `--volume` and `--workdir` options with an additional slash
+> (i.e. `--volume /$(pwd):/$(basename $(pwd)) --workdir //$(basename $(pwd)`).
+> See [known issues of Git for Windows](https://github.com/git-for-windows/build-extra/blob/main/ReleaseNotes.md#known-issues).
+> This avoids the `C:/Program Files/Git/...: no such file or directory` kind of errors.
+
 ### Using a Docker image built from sources 🐳
 
 - Clone this repo and `cd` into the created folder
-- Build the image with `sh build.sh`
+- Build the image with `docker image build --tag zenika/sensei ./`
 - Create the same alias as for the published Docker image but without the
   `--pull always`
 
@@ -65,14 +76,14 @@ Run `sensei --help` for available commands and options.
 ### Generating PDFs
 
 - `cd` into a training material folder (must have `Slides/slides.json` and
-  `Workbook/parts.json`)
+  `Workbook/workbook.json`)
 - Run `sensei pdf`
 - PDFs are generated inside `pdf` folder
 
 ### Serving the slides and labs
 
 - `cd` into a training material folder (must have `Slides/slides.json` and
-  `Workbook/parts.json`)
+  `Workbook/workbook.json`)
 - Run `sensei serve`
 - Navigate to `http://localhost:8080/`
 
@@ -80,9 +91,9 @@ Run `sensei --help` for available commands and options.
 
 ### Slides
 
-Write slides as you would usual Reveal.js slides. Refer to [Reveal's
-documentation](https://revealjs.com/) for features. Note that the following
-plugins are enabled:
+Write slides as you would usual Reveal.js slides.
+Refer to [Reveal's documentation](https://revealjs.com/) for features.
+Note that the following plugins are enabled:
  - Markdown
  - Highlight
  - Zoom
@@ -94,18 +105,18 @@ plugins are enabled:
 Write the workbook as you would a usual markdown document.
 
 > ℹ You may use `<!-- toc -->` to have
-a table of content inserted at that place.
+> a table of content inserted at that place.
 
 ## Development
 
 ### Running
 
-Install dependencies (`npm i`) then use `npm start --` to run the CLI (eg `npm
-start -- serve --material=./training-material` where `./training-material`
-points to directory with training material in it). You may alternatively use
-`npm run dev --` instead to enable restart on change (eg `npm run dev -- serve
---material=./training-material`). Note that `npm run dev` requires Node.js 18.11
-or later.
+Install dependencies (`npm i`) then use `npm start --` to run the CLI
+(e.g. `npm start -- serve --material=./training-material` where `./training-material`
+points to directory with training material in it).
+You may alternatively use `npm run dev --` instead to enable restart on change
+(e.g. `npm run dev -- serve --material=./training-material`).
+Note that `npm run dev` requires Node.js 18.11 or later.
 
 ### Testing
 
