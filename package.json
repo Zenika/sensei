@@ -20,7 +20,7 @@
     "get-port": "6.0.0",
     "html-loader": "3.0.1",
     "html-webpack-plugin": "5.5.0",
-    "markdown-loader": "6.0.0",
+    "markdown-loader": "8.0.0",
     "marked": "4.0.10",
     "mini-css-extract-plugin": "2.4.5",
     "prismjs": "1.27.0",
