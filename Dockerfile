@@ -10,7 +10,8 @@ WORKDIR /app
 
 COPY package.json package-lock.json ./
 
-RUN npm ci --production --unsafe-perm
+RUN npm ci --production --unsafe-perm \
+    && chown -R 0:0 /app/node_modules
 
 COPY ./ ./
 
