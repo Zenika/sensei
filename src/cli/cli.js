@@ -90,8 +90,8 @@ async function pdf(options) {
   const { default: getPort } = await import("get-port");
   const port = await getPort();
   server.listen(port, async () => {
-    await pdfSlides({ ...options, port });
     await pdfLabs({ ...options, port });
+    await pdfSlides({ ...options, port });
     server.close();
   });
   return result;

@@ -27,5 +27,5 @@ if (require.main === module) {
     format: "A4",
     margin: { top: "1cm", right: "1cm", bottom: "1cm", left: "1cm" },
     printBackground: true,
-  }).then(() => console.log("Done!"));
+  }).then(() => console.log("PDF saved!"));
 }
