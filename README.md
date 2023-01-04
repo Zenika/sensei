@@ -31,16 +31,16 @@ The compiler for our training material. Sensei is a replacement for
 > `export SENSEI_PORT=9000; sensei`. See
 > [here](https://github.com/Zenika/sensei/issues/147#issuecomment-1091188979).
 
-#### Note about Windows
+#### Notes on running in Docker for Windows
 
 When bind-mounting files in Docker for Windows with WSL2,
 the [recommendation](https://docs.docker.com/desktop/windows/wsl/#best-practices)
 is to store files in the Linux filesystem, i.e. inside WSL2.
-The Linux filesystem can then be accessed on Windows through the share `\\wsl$\` (or `\\wsl.localhost\`).
+The Linux filesystem can then be accessed from Windows through the path `\\wsl$\` (or `\\wsl.localhost\`).
 When using VSCode, you can also use the [WSL extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl)
 to edit files on the Linux filesystem.
 
-So it is recommended to clone the training repository in the Linux filesystem and launch the alias from WSL2.
+Therefore it is recommended to clone the training repository in the Linux filesystem then to run the alias from WSL2.
 
 > ⚠ If you use the Windows filesystem, hot reload when changing training content won't work.
 
