@@ -67,6 +67,16 @@ Therefore it is recommended to clone the training repository in the Linux filesy
 > installing packages from GitHub, resulting in failures to update sensei
 > correctly.
 
+⚠️ On Mac M1 or M2, you need to follow special steps to enable PDF generation:
+
+```
+# Install chromium without Mac OS Quarantine to allow puppeteer to launch it
+brew install --cask chromium --no-quarantine
+# Put these variables export in your .bashrc or .zshrc to make sure puppeteer use the right chromium
+export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+export PUPPETEER_EXECUTABLE_PATH=`which chromium`
+```
+
 ## Usage
 
 ### Help
@@ -79,16 +89,6 @@ Run `sensei --help` for available commands and options.
   `Workbook/workbook.json`)
 - Run `sensei pdf`
 - PDFs are generated inside `pdf` folder
-
-⚠️ If running native sensei on Mac M1, you need to follow special steps:
-
-```
-# Install chromium without Mac OS Quarantine to allow puppeteer to launch it
-brew install --cask chromium --no-quarantine
-# Put these variables export in your .bashrc or .zshrc to make sure puppeteer use the right chromium
-export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
-export PUPPETEER_EXECUTABLE_PATH=`which chromium`
-```
 
 ### Serving the slides and labs
 
