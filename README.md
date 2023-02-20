@@ -80,6 +80,16 @@ Run `sensei --help` for available commands and options.
 - Run `sensei pdf`
 - PDFs are generated inside `pdf` folder
 
+⚠️ If running native sensei on Mac M1, you need to follow special steps:
+
+```
+# Install chromium without Mac OS Quarantine to allow puppeteer to launch it
+brew install --cask chromium --no-quarantine
+# Put these variables export in your .bashrc or .zshrc to make sure puppeteer use the right chromium
+export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+export PUPPETEER_EXECUTABLE_PATH=`which chromium`
+```
+
 ### Serving the slides and labs
 
 - `cd` into a training material folder (must have `Slides/slides.json` and
