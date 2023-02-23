@@ -68,7 +68,7 @@ Therefore it is recommended to clone the training repository in the Linux filesy
 > correctly.
 
 ⚠️ On Mac M1 or M2, you need to follow special steps to enable PDF generation.
-You must do this before the `npm install`, otherwise you will have an unused version of chromium installed in `~/.cache/puppeteer`
+You must do this before the `npm install`, otherwise you will have an unused version of chromium installed in `~/.cache/puppeteer`.
 
 ```
 # Install chromium without Mac OS Quarantine to allow puppeteer to launch it
