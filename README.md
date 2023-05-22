@@ -20,6 +20,7 @@ The compiler for our training material. Sensei is a replacement for
       --workdir /$(basename $(pwd)) \
       --publish ${SENSEI_PORT:-8080}:${SENSEI_PORT:-8080} \
       --env SENSEI_PORT \
+      --env SENSEI_WATCH_POLL \
       --cap-add=SYS_ADMIN \
       zenika/sensei'
     ```
@@ -27,11 +28,16 @@ The compiler for our training material. Sensei is a replacement for
 > ⚠ When running sensei inside a Docker container, the `--material` is limited
 > to descendants of the working directory.
 
+> ⚠ If sensei fails to recompile on changes, try setting `SENSEI_WATCH_POLL` to
+> `true`.
+
 > ⚠ To change `SENSEI_PORT` when using this alias, use the following syntax:
 > `export SENSEI_PORT=9000; sensei`. See
 > [here](https://github.com/Zenika/sensei/issues/147#issuecomment-1091188979).
 
 #### Notes on running in Docker for Windows
+
+> ℹ️ The following also applies to Colima on macOS.
 
 When bind-mounting files in Docker for Windows with WSL2,
 the [recommendation](https://docs.docker.com/desktop/windows/wsl/#best-practices)
@@ -42,7 +48,9 @@ to edit files on the Linux filesystem.
 
 Therefore it is recommended to clone the training repository in the Linux filesystem then to run the alias from WSL2.
 
-> ⚠ If you use the Windows filesystem, hot reload when changing training content won't work.
+> ⚠ If you use the Windows filesystem, hot reload when changing training content
+> won't work out-of-the-box, but you can set `SENSEI_WATCH_POLL` to `true` to
+> enable it.
 
 > ⚠ If you use the Windows filesystem and expect to use the alias within Git Bash for Windows, prepend the
 > `--volume` and `--workdir` options with an additional slash
