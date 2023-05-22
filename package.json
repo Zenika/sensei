@@ -27,7 +27,7 @@
     "puppeteer": "~19.4.1",
     "reveal.js": "~4.4.0",
     "serve-handler": "~6.1.5",
-    "webpack": "~5.75.0",
+    "webpack": "~5.76.0",
     "webpack-bundle-analyzer": "~4.7.0",
     "webpack-dev-server": "~4.11.1",
     "yargs": "~17.6.2"
