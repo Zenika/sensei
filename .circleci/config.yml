@@ -128,7 +128,7 @@ workflows:
           name: build-and-publish-docker-image
           tag: latest
           deploy: yes
-          update-description: yes
+          update-description: no # switch back to yes when authent/API issue is fixed
           docker-username: DOCKERHUB_USERNAME
           docker-password: DOCKERHUB_PASS
           filters:
