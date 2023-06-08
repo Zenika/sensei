@@ -6,22 +6,19 @@ RUN git config --system --add safe.directory '*'
 
 RUN apk add --no-cache ttf-liberation
 
+USER chrome
+
 WORKDIR /app
 
 COPY package.json package-lock.json ./
-
-RUN npm ci --omit=dev --unsafe-perm \
-    && chown -R 0:0 /app/node_modules
-
+RUN npm ci --omit=dev
 COPY ./ ./
 
 VOLUME [ "/training-material" ]
-ENV SENSEI_HOST=0.0.0.0
-EXPOSE 8080
-
 WORKDIR /training-material
 
-USER chrome
+EXPOSE 8080
 
+ENV SENSEI_HOST=0.0.0.0
 ENTRYPOINT [ "node", "/app/src/cli/cli.js" ]
 CMD ["serve"]
