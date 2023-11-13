@@ -63,7 +63,13 @@ jobs:
             docker buildx inspect
       - run:
           name: Build docker image
-          command: docker buildx build --progress=plain --platform <<parameters.platform>> --tag <<parameters.image>>:<<parameters.tag>> <<# parameters.deploy >>--push<</ parameters.deploy >> .
+          command: |
+            docker buildx build --progress=plain \
+              --platform <<parameters.platform>> \
+              --tag <<parameters.image>>:<<parameters.tag>> \
+              --tag <<parameters.image>>:$(date --utc +%Y-%m-%dT%H-%M-%S) \
+              <<# parameters.deploy >>--push<</ parameters.deploy >> \
+              .
       - when:
           condition: <<parameters.update-description>>
           steps:
