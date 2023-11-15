@@ -45,7 +45,7 @@ async function serve(buildOptions, serveOptions) {
   const server = new WebpackDevServer(
     {
       devMiddleware: {
-        stats: { children: true, warnings: true, errors: true },
+        stats: "minimal",
       },
       // Disables HMR, enables live reload, see https://webpack.js.org/configuration/dev-server/#devserverhot
       hot: false,
