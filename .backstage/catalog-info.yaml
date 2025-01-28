@@ -11,6 +11,16 @@ metadata:
     - revealjs
     - webpack
     - contributors-welcome
+links:
+  - url: https://github.com/Zenika/sensei/
+    title: GitHub repository
+    type: website
+  - url: https://app.circleci.com/pipelines/github/Zenika/sensei
+    title: CircleCI
+    type: website
+  - url: https://hub.docker.com/r/zenika/sensei
+    title: Docker Hub page
+    type: website
 spec:
   type: cli
   owner: hugo.wood@zenika.com
