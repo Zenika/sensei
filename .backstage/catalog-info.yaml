@@ -1,0 +1,17 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: sensei
+  title: Sensei
+  description: |
+     The compiler for our training material
+  tags:
+    - web
+    - javascript
+    - reveal.js
+    - webpack
+    - contributors-welcome
+spec:
+  type: cli
+  owner: hugo.wood@zenika.com
+  lifecycle: production
