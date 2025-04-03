@@ -15,6 +15,7 @@
   "dependencies": {
     "css-loader": "~6.7.3",
     "decktape": "~3.13.0",
+    "reveal.js-mermaid-plugin": "~2.3.0",
     "expose-loader": "~4.0.0",
     "file-loader": "~6.2.0",
     "get-port": "~6.1.2",

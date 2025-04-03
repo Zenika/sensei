@@ -2,6 +2,7 @@ import reveal from "reveal.js/dist/reveal.js";
 import revealPluginNotes from "reveal.js/plugin/notes/notes.js";
 import revealPluginZoom from "reveal.js/plugin/zoom/zoom.js";
 import revealPluginMathJax from "reveal.js/plugin/math/math.js";
+import RevealMermaid from "reveal.js-mermaid-plugin/plugin/mermaid/mermaid.js";
 import "reveal.js/dist/reveal.css";
 import "prismjs/themes/prism.css";
 import "./slides.css";
@@ -40,7 +41,12 @@ reveal.initialize({
   margin: 0,
   width: SLIDE_WIDTH,
   height: SLIDE_HEIGHT,
-  plugins: [revealPluginMathJax, revealPluginNotes, revealPluginZoom],
+  plugins: [
+    revealPluginMathJax,
+    revealPluginNotes,
+    revealPluginZoom,
+    RevealMermaid,
+  ],
   math: {
     tex2jax: { inlineMath: [["\\(", "\\)"]] },
   },
