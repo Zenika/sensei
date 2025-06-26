@@ -8,6 +8,7 @@ const WebpackDevServer = require("webpack-dev-server");
 const webpackConfig = require("../build/webpack.config");
 const webpack = require("webpack");
 const yargs = require("yargs/yargs");
+const { clearText } = require('../app/lint/lint');
 
 /**
  *
@@ -36,6 +37,9 @@ async function cli(args, env) {
     case "pdf":
       await pdf(options);
       break;
+    case "lint":
+      await lint(options);
+      break;
     default:
       throw new Error(`unknown command: '${command}'`);
   }
@@ -58,6 +62,32 @@ async function serve(buildOptions, serveOptions) {
     await server.start();
   } catch (err) {
     console.log(err);
+  }
+}
+
+async function lint(options) {
+  const material = options.material;
+  console.info(`Start linting from material '${material}...`);
+
+  for (const f of fs.readdirSync(material)) {
+    await lintMardownFiles(path.join(material, f));
+  }
+}
+
+async function lintMardownFiles(file) {
+  if (fs.lstatSync(file).isDirectory()) {
+    console.info(`The path '${file}' is a directory. Recursively reading its contents...`);
+
+    for (const f of fs.readdirSync(file)) {
+      await lintMardownFiles(path.join(file, f));
+    }
+  } else if (fs.lstatSync(file).isFile() && file.endsWith('.md')) {
+    console.info(`The path '${file}' is a file. Starting lint...`);
+
+    const content = fs.readFileSync(file).toString();
+
+    fs.writeFileSync(file, clearText(content));
+    console.info(`✔ Nettoyé : ${file}`);
   }
 }
 
@@ -253,6 +283,10 @@ cli(
       "build [material] [slug]",
       "build the static web site",
       describePositionalArguments
+    )
+    .command(
+      "lint [material]",
+      "lint each Markdown files (e.g. clears line break before new slides)"
     )
     .option("config", {
       type: "string",
