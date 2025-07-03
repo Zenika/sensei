@@ -3,13 +3,13 @@
 const spawn = require("child_process").spawn;
 const fork = require("child_process").fork;
 const fs = require("fs");
-const readline = require('readline');
+const readline = require("readline");
 const path = require("path");
 const WebpackDevServer = require("webpack-dev-server");
 const webpackConfig = require("../build/webpack.config");
 const webpack = require("webpack");
 const yargs = require("yargs/yargs");
-const { checkLines } = require('../app/lint/lint');
+const { checkLines } = require("../app/lint/lint");
 
 /**
  *
@@ -77,28 +77,32 @@ async function lint(options) {
 
 async function lintMardownFiles(file) {
   if (fs.lstatSync(file).isDirectory()) {
-    console.info(`The path '${file}' is a directory. Recursively reading its contents...`);
+    console.info(
+      `The path '${file}' is a directory. Recursively reading its contents...`
+    );
 
     for (const f of fs.readdirSync(file)) {
       await lintMardownFiles(path.join(file, f));
     }
-  } else if (fs.lstatSync(file).isFile() && file.endsWith('.md')) {
+  } else if (fs.lstatSync(file).isFile() && file.endsWith(".md")) {
     const containsError = await checkLines(createReadStream(file));
 
     if (containsError) {
-      console.error(`\x1b[41mLe fichier "${file}" contient une ou plusieurs erreurs.\x1b[0m`)
+      console.error(
+        `\x1b[41mLe fichier "${file}" contient une ou plusieurs erreurs.\x1b[0m`
+      );
       process.exit(0);
     } else {
-      console.debug(`Le fichier "${file}" ne contient pas d'erreurs.`)
+      console.debug(`Le fichier "${file}" ne contient pas d'erreurs.`);
     }
   }
 }
 
 function createReadStream(filePath) {
-    console.debug("Create read stream for file at : ", filePath);
-    return readline.createInterface({
-        input: fs.createReadStream(filePath)
-    });
+  console.debug("Create read stream for file at : ", filePath);
+  return readline.createInterface({
+    input: fs.createReadStream(filePath),
+  });
 }
 
 function build(options) {

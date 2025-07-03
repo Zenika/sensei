@@ -2,7 +2,7 @@ const titleOrCommentLinePattern = /^\s*((##)|(<!-- \.slide: class="page-).*)$/;
 const nPreviousEmpty = 3;
 
 function allEmpty(lines) {
-    return lines.every(l => l.trim() === '')
+  return lines.every((l) => l.trim() === "");
 }
 
 export async function checkLines(readStream) {
@@ -15,7 +15,9 @@ export async function checkLines(readStream) {
     // Vérifie si la ligne courante match le pattern
     if (titleOrCommentLinePattern.test(line)) {
       if (!allEmpty(prevLines)) {
-        console.info(`Il faut minimum ${nPreviousEmpty} lignes vides devant le bloc "${line}" ligne n°${index}.`);
+        console.info(
+          `Il faut minimum ${nPreviousEmpty} lignes vides devant le bloc "${line}" ligne n°${index}.`
+        );
         containsError = true;
       }
     }
