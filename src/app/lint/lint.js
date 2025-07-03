@@ -1,15 +1,34 @@
-/**
- * Regular expression to capture lines in the following format:
- * - Multiple blank lines (tabs, new lines, white space)
- * - Followed by a title starting with double # and potentially tabs, new lines, white spaces
- */
-const titleLineWithEmptyLineRegex = /(?:^\s*)((##)|(<!--).*)/gm;
+const titleOrCommentLinePattern = /^\s*((##)|(<!-- \.slide: class="page-).*)$/;
+const nPreviousEmpty = 3;
 
+function allEmpty(lines) {
+    return lines.every(l => l.trim() === '')
+}
 
+export async function checkLines(readStream) {
+  // Buffer circulaire pour stocker les nPreviousEmpty lignes précédentes
+  const prevLines = [];
+  var index = 1;
+  var containsError = false;
 
-// Number of new lines to creates a new slide
-const newLineNumber = 3;
+  for await (const line of readStream) {
+    // Vérifie si la ligne courante match le pattern
+    if (titleOrCommentLinePattern.test(line)) {
+      if (!allEmpty(prevLines)) {
+        console.info(`Il faut minimum ${nPreviousEmpty} lignes vides devant le bloc "${line}" ligne n°${index}.`);
+        containsError = true;
+      }
+    }
 
-export function clearText(text) {
-    return text.replaceAll(titleLineWithEmptyLineRegex, ("\n".repeat(newLineNumber) + "$1"));
+    // Increment du nombre de ligne
+    index += 1;
+
+    // Ajoute la ligne actuelle dans le buffer, limite la taille à nPreviousEmpty
+    prevLines.push(line);
+    if (prevLines.length > nPreviousEmpty) {
+      prevLines.shift(); // enlève la plus vieille ligne
+    }
+  }
+
+  return containsError;
 }

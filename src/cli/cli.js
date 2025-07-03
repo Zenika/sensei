@@ -3,12 +3,13 @@
 const spawn = require("child_process").spawn;
 const fork = require("child_process").fork;
 const fs = require("fs");
+const readline = require('readline');
 const path = require("path");
 const WebpackDevServer = require("webpack-dev-server");
 const webpackConfig = require("../build/webpack.config");
 const webpack = require("webpack");
 const yargs = require("yargs/yargs");
-const { clearText } = require('../app/lint/lint');
+const { checkLines } = require('../app/lint/lint');
 
 /**
  *
@@ -82,13 +83,22 @@ async function lintMardownFiles(file) {
       await lintMardownFiles(path.join(file, f));
     }
   } else if (fs.lstatSync(file).isFile() && file.endsWith('.md')) {
-    console.info(`The path '${file}' is a file. Starting lint...`);
+    const containsError = await checkLines(createReadStream(file));
 
-    const content = fs.readFileSync(file).toString();
-
-    fs.writeFileSync(file, clearText(content));
-    console.info(`✔ Nettoyé : ${file}`);
+    if (containsError) {
+      console.error(`\x1b[41mLe fichier "${file}" contient une ou plusieurs erreurs.\x1b[0m`)
+      process.exit(0);
+    } else {
+      console.debug(`Le fichier "${file}" ne contient pas d'erreurs.`)
+    }
   }
+}
+
+function createReadStream(filePath) {
+    console.debug("Create read stream for file at : ", filePath);
+    return readline.createInterface({
+        input: fs.createReadStream(filePath)
+    });
 }
 
 function build(options) {
