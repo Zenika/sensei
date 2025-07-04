@@ -91,7 +91,6 @@ async function lintMardownFiles(file) {
       console.error(
         `\x1b[41m The file "${file}" contains one or more errors..\x1b[0m`
       );
-      
     } else {
       console.debug(`The file "${file}" contains no errors.`);
       process.exit(-1);
