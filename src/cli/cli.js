@@ -300,7 +300,7 @@ cli(
     )
     .command(
       "lint [material]",
-      "lint each Markdown files (e.g. clears line break before new slides)"
+      "lint each Markdown files (e.g. check the number of empty new lines before new slides)"
     )
     .option("config", {
       type: "string",
