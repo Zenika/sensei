@@ -10,15 +10,15 @@ export async function containsAnyError(readStream) {
   const prevLines = [];
   var index = 1;
   var containsError = false;
+   
 
   for await (const line of readStream) {
     // Vérifie si la ligne courante match le pattern
     if (titleOrCommentLinePattern.test(line)) {
       if (!allEmpty(prevLines)) {
-        console.info(
-          `Il faut minimum ${nPreviousEmpty} lignes vides devant le bloc "${line}" ligne n°${index}.`
-        );
+        console.info(`ligne n°${index}  There must be at least ${nPreviousEmpty} blank lines before the block "${line}" .` );
         containsError = true;
+         
       }
     }
 
@@ -31,6 +31,6 @@ export async function containsAnyError(readStream) {
       prevLines.shift(); // enlève la plus vieille ligne
     }
   }
-
+  
   return containsError;
 }

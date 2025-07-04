@@ -89,11 +89,12 @@ async function lintMardownFiles(file) {
 
     if (containsError) {
       console.error(
-        `\x1b[41mLe fichier "${file}" contient une ou plusieurs erreurs.\x1b[0m`
+        `\x1b[41m The file "${file}" contains one or more errors..\x1b[0m`
       );
-      process.exit(-1);
+      
     } else {
-      console.debug(`Le fichier "${file}" ne contient pas d'erreurs.`);
+      console.debug(`The file "${file}" contains no errors.`);
+      process.exit(-1);
     }
   }
 }
