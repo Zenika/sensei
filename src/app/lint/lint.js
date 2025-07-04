@@ -1,11 +1,11 @@
-const titleOrCommentLinePattern = /^\s*((##)|(<!-- \.slide: class="page-).*)$/;
+const titleOrCommentLinePattern = /^\s*(##.*)|(<!-- \.slide: class="page-.*)$/;
 const nPreviousEmpty = 3;
 
 function allEmpty(lines) {
   return lines.every((l) => l.trim() === "");
 }
 
-export async function checkLines(readStream) {
+export async function containsAnyError(readStream) {
   // Buffer circulaire pour stocker les nPreviousEmpty lignes précédentes
   const prevLines = [];
   var index = 1;

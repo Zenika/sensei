@@ -9,7 +9,7 @@ const WebpackDevServer = require("webpack-dev-server");
 const webpackConfig = require("../build/webpack.config");
 const webpack = require("webpack");
 const yargs = require("yargs/yargs");
-const { checkLines } = require("../app/lint/lint");
+const { containsAnyError } = require("../app/lint/lint");
 
 /**
  *
@@ -85,13 +85,13 @@ async function lintMardownFiles(file) {
       await lintMardownFiles(path.join(file, f));
     }
   } else if (fs.lstatSync(file).isFile() && file.endsWith(".md")) {
-    const containsError = await checkLines(createReadStream(file));
+    const containsError = await containsAnyError(createReadStream(file));
 
     if (containsError) {
       console.error(
         `\x1b[41mLe fichier "${file}" contient une ou plusieurs erreurs.\x1b[0m`
       );
-      process.exit(0);
+      process.exit(-1);
     } else {
       console.debug(`Le fichier "${file}" ne contient pas d'erreurs.`);
     }
