@@ -52,6 +52,19 @@ test("Lint - Contains any error should return true using a specific html comment
   assert.strictEqual(actual, true);
 });
 
+test("Lint - Contains any error should return true using 2 specifics html comment that not follows 3 empty lines.", async () => {
+  const content = `
+    # Titre de la formation
+
+    <!-- .slide: class="page-title" -->
+
+    <!-- .slide: class="page-title" -->
+    `;
+
+  const actual = await containsAnyError(createReadStream(content));
+  assert.strictEqual(actual, true);
+});
+
 function createReadStream(content) {
   return readline.createInterface({
     input: Readable.from(content),
