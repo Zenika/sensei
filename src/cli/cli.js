@@ -70,8 +70,15 @@ async function lint(options) {
   const material = options.material;
   console.info(`Start linting from material '${material}...`);
 
+  var hasError = false;
+
   for (const f of fs.readdirSync(material)) {
-    await lintMardownFiles(path.join(material, f));
+    const hasSubFolderError = await lintMardownFiles(path.join(material, f));
+    hasError = hasError || hasSubFolderError;
+  }
+
+  if (hasError) {
+    process.exit(-1);
   }
 }
 
@@ -81,9 +88,14 @@ async function lintMardownFiles(file) {
       `The path '${file}' is a directory. Recursively reading its contents...`
     );
 
+    var containsError = false;
+
     for (const f of fs.readdirSync(file)) {
-      await lintMardownFiles(path.join(file, f));
+      const hasSubFolderError = await lintMardownFiles(path.join(file, f));
+      containsError = containsError || hasSubFolderError;
     }
+
+    return containsError;
   } else if (fs.lstatSync(file).isFile() && file.endsWith(".md")) {
     const containsError = await containsAnyError(createReadStream(file));
 
@@ -92,9 +104,10 @@ async function lintMardownFiles(file) {
         `\x1b[41m The file "${file}" contains one or more errors..\x1b[0m`
       );
     } else {
-      console.debug(`The file "${file}" contains no errors.`);
-      process.exit(-1);
+      console.debug(`\x1b[42mThe file "${file}" contains no errors.\x1b[0m`);
     }
+
+    return containsError;
   }
 }
 
