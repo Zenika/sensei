@@ -1,4 +1,5 @@
-const titleOrCommentLinePattern = /^\s*(##.*)|(<!-- \.slide: class="page-.*)$/;
+const titleOrCommentLinePattern =
+  /^\s*(## .*)|(<!-- \.slide: class="page-(?!title).*)$/;
 const nPreviousEmpty = 3;
 
 function allEmpty(lines) {
