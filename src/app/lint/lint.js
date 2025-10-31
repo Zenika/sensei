@@ -16,8 +16,8 @@ export async function containsAnyError(readStream) {
     // Vérifie si la ligne courante match le pattern
     if (titleOrCommentLinePattern.test(line)) {
       if (!allEmpty(prevLines)) {
-        console.info(
-          `line nb: ${index} - There must be at least ${nPreviousEmpty} blank lines before the block "${line}" .`
+        process.stdout.write(
+          `\n    line nb: ${index} - There must be at least ${nPreviousEmpty} blank lines before the block "${line}" .`
         );
         containsError = true;
       }

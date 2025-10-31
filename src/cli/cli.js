@@ -84,10 +84,6 @@ async function lint(options) {
 
 async function lintMardownFiles(file) {
   if (fs.lstatSync(file).isDirectory()) {
-    console.info(
-      `The path '${file}' is a directory. Recursively reading its contents...`
-    );
-
     var containsError = false;
 
     for (const f of fs.readdirSync(file)) {
@@ -97,14 +93,14 @@ async function lintMardownFiles(file) {
 
     return containsError;
   } else if (fs.lstatSync(file).isFile() && file.endsWith(".md")) {
+    process.stdout.write("  Verifying file: " + file + ": ");
     const containsError = await containsAnyError(createReadStream(file));
 
     if (containsError) {
-      console.error(
-        `\x1b[41m The file "${file}" contains one or more errors..\x1b[0m`
+      console.log(`\n❌ The file "${file}" contains one or more errors.`
       );
     } else {
-      console.debug(`\x1b[42mThe file "${file}" contains no errors.\x1b[0m`);
+      console.debug("✅");
     }
 
     return containsError;
@@ -112,7 +108,6 @@ async function lintMardownFiles(file) {
 }
 
 function createReadStream(filePath) {
-  console.debug("Create read stream for file at : ", filePath);
   return readline.createInterface({
     input: fs.createReadStream(filePath),
   });
