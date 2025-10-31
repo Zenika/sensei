@@ -73,8 +73,10 @@ async function lint(options) {
   var hasError = false;
 
   for (const f of fs.readdirSync(material)) {
-    const hasSubFolderError = await lintMardownFiles(path.join(material, f));
-    hasError = hasError || hasSubFolderError;
+    if (!f.startsWith(".")) {
+      const hasSubFolderError = await lintMardownFiles(path.join(material, f));
+      hasError = hasError || hasSubFolderError;
+    }
   }
 
   if (hasError) {
@@ -92,7 +94,7 @@ async function lintMardownFiles(file) {
     }
 
     return containsError;
-  } else if (fs.lstatSync(file).isFile() && file.endsWith(".md")) {
+  } else if (fs.lstatSync(file).isFile() && file.endsWith(".md") && !file.endsWith("README.md")) {
     process.stdout.write("  Verifying file: " + file + ": ");
     const containsError = await containsAnyError(createReadStream(file));
 
