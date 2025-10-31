@@ -94,13 +94,16 @@ async function lintMardownFiles(file) {
     }
 
     return containsError;
-  } else if (fs.lstatSync(file).isFile() && file.endsWith(".md") && !file.endsWith("README.md")) {
+  } else if (
+    fs.lstatSync(file).isFile() &&
+    file.endsWith(".md") &&
+    !file.endsWith("README.md")
+  ) {
     process.stdout.write("  Verifying file: " + file + ": ");
     const containsError = await containsAnyError(createReadStream(file));
 
     if (containsError) {
-      console.log(`\n❌ The file "${file}" contains one or more errors.`
-      );
+      console.log(`\n❌ The file "${file}" contains one or more errors.`);
     } else {
       console.debug("✅");
     }
