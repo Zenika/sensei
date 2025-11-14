@@ -3,11 +3,13 @@
 const spawn = require("child_process").spawn;
 const fork = require("child_process").fork;
 const fs = require("fs");
+const readline = require("readline");
 const path = require("path");
 const WebpackDevServer = require("webpack-dev-server");
 const webpackConfig = require("../build/webpack.config");
 const webpack = require("webpack");
 const yargs = require("yargs/yargs");
+const { containsAnyError } = require("../app/lint/lint");
 
 /**
  *
@@ -36,6 +38,9 @@ async function cli(args, env) {
     case "pdf":
       await pdf(options);
       break;
+    case "lint":
+      await lint(options);
+      break;
     default:
       throw new Error(`unknown command: '${command}'`);
   }
@@ -59,6 +64,58 @@ async function serve(buildOptions, serveOptions) {
   } catch (err) {
     console.log(err);
   }
+}
+
+async function lint(options) {
+  const material = options.material;
+  console.info(`Start linting from material '${material}...`);
+
+  var hasError = false;
+
+  for (const f of fs.readdirSync(material)) {
+    if (!f.startsWith(".")) {
+      const hasSubFolderError = await lintMardownFiles(path.join(material, f));
+      hasError = hasError || hasSubFolderError;
+    }
+  }
+
+  if (hasError) {
+    process.exit(-1);
+  }
+}
+
+async function lintMardownFiles(file) {
+  if (fs.lstatSync(file).isDirectory()) {
+    var containsError = false;
+
+    for (const f of fs.readdirSync(file)) {
+      const hasSubFolderError = await lintMardownFiles(path.join(file, f));
+      containsError = containsError || hasSubFolderError;
+    }
+
+    return containsError;
+  } else if (
+    fs.lstatSync(file).isFile() &&
+    file.endsWith(".md") &&
+    !file.endsWith("README.md")
+  ) {
+    process.stdout.write("  Verifying file: " + file + ": ");
+    const containsError = await containsAnyError(createReadStream(file));
+
+    if (containsError) {
+      console.log(`\n❌ The file "${file}" contains one or more errors.`);
+    } else {
+      console.debug("✅");
+    }
+
+    return containsError;
+  }
+}
+
+function createReadStream(filePath) {
+  return readline.createInterface({
+    input: fs.createReadStream(filePath),
+  });
 }
 
 function build(options) {
@@ -253,6 +310,10 @@ cli(
       "build [material] [slug]",
       "build the static web site",
       describePositionalArguments
+    )
+    .command(
+      "lint [material]",
+      "lint each Markdown files (e.g. check the number of empty new lines before new slides)"
     )
     .option("config", {
       type: "string",
