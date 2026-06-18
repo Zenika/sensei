@@ -6,7 +6,7 @@ function allEmpty(lines) {
   return lines.every((l) => l.trim() === "");
 }
 
-export async function containsAnyError(readStream) {
+async function containsAnyError(readStream) {
   // Buffer circulaire pour stocker les nPreviousEmpty lignes précédentes
   const prevLines = [];
   var index = 1;
@@ -35,3 +35,5 @@ export async function containsAnyError(readStream) {
 
   return containsError;
 }
+
+module.exports = { containsAnyError };
