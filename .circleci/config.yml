@@ -3,6 +3,7 @@ version: 2.1
 orbs:
   docker: circleci/docker@4.0.0
   node: circleci/node@7.2.1
+  browser-tools: circleci/browser-tools@1.1.0
 
 executors:
   node-lts:
@@ -99,6 +100,7 @@ jobs:
     docker:
       - image: cimg/node:lts-browsers
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - node/install-packages
       - run:
