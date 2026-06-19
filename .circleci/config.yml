@@ -2,7 +2,15 @@ version: 2.1
 
 orbs:
   docker: circleci/docker@4.0.0
-  node: circleci/node@5.0.2
+  node: circleci/node@7.2.1
+
+executors:
+  node-lts:
+    docker:
+      - image: cimg/node:lts
+  node-current:
+    docker:
+      - image: cimg/node:current
 
 jobs:
   build-publish: # Adapted from https://circleci.com/developer/orbs/orb/circleci/docker#jobs-publish while using buildx
@@ -116,9 +124,9 @@ workflows:
       - node/test:
           matrix:
             parameters:
-              version:
-                - lts
-                - current
+              executor:
+                - node-lts
+                - node-current
       - build-publish: &docker-build-params
           name: build-docker-image
           image: zenika/sensei
