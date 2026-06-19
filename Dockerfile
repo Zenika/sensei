@@ -2,9 +2,8 @@ FROM zenika/alpine-chrome:with-puppeteer
 
 USER root
 
-RUN git config --system --add safe.directory '*'
-
-RUN apk add --no-cache ttf-liberation
+RUN git config --system --add safe.directory '*' && \
+    apk add --no-cache ttf-liberation
 
 USER chrome
 
