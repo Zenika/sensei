@@ -47,8 +47,8 @@ jobs:
           condition: <<parameters.deploy>>
           steps:
             - docker/check:
-                docker-password: <<parameters.docker-password>>
-                docker-username: <<parameters.docker-username>>
+                docker_password: <<parameters.docker-password>>
+                docker_username: <<parameters.docker-username>>
       - run:
           name: Set up QEMU
           command: |
@@ -71,9 +71,9 @@ jobs:
       - when:
           condition: <<parameters.update-description>>
           steps:
-            - docker/update-description:
-                docker-password: <<parameters.docker-password>>
-                docker-username: <<parameters.docker-username>>
+            - docker/update_description:
+                docker_password: <<parameters.docker-password>>
+                docker_username: <<parameters.docker-username>>
                 image: <<parameters.image>>
 
   check-code-quality:
@@ -85,7 +85,7 @@ jobs:
       - run:
           name: Check code formatting
           command: npm run prettier:check
-      - docker/dockerlint
+      - docker/hadolint
 
   build-example:
     docker:
