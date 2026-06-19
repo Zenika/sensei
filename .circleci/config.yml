@@ -100,7 +100,10 @@ jobs:
     docker:
       - image: cimg/node:lts-browsers
     steps:
-      - browser-tools/install-browser-tools
+      - browser-tools/install_chrome:
+          timeout: 5m
+      - browser-tools/install_chromedriver:
+          timeout: 5m
       - checkout
       - node/install-packages
       - run:
