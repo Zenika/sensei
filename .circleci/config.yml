@@ -99,6 +99,8 @@ jobs:
   build-example:
     docker:
       - image: cimg/node:lts-browsers
+    environment:
+      PUPPETEER_EXECUTABLE_PATH: /usr/bin/google-chrome-stable
     steps:
       - browser-tools/install_chrome:
           timeout: 5m
