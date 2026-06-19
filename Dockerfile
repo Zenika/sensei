@@ -2,6 +2,7 @@ FROM zenika/alpine-chrome:with-puppeteer
 
 USER root
 
+# hadolint ignore=DL3018
 RUN git config --system --add safe.directory '*' && \
     apk add --no-cache ttf-liberation
 
