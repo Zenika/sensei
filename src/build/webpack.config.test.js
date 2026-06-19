@@ -130,7 +130,7 @@ function testCompilation(
         output: {
           path: output,
         },
-        mode: "production",
+        mode: "development",
         performance: {
           hints: false,
         },
