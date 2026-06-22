@@ -1,8 +1,17 @@
 version: 2.1
 
 orbs:
-  docker: circleci/docker@2.1.4
-  node: circleci/node@5.0.2
+  docker: circleci/docker@4.0.0
+  node: circleci/node@7.2.1
+  browser-tools: circleci/browser-tools@2.4.2
+
+executors:
+  node-lts:
+    docker:
+      - image: cimg/node:lts
+  node-current:
+    docker:
+      - image: cimg/node:current
 
 jobs:
   build-publish: # Adapted from https://circleci.com/developer/orbs/orb/circleci/docker#jobs-publish while using buildx
@@ -47,8 +56,8 @@ jobs:
           condition: <<parameters.deploy>>
           steps:
             - docker/check:
-                docker-password: <<parameters.docker-password>>
-                docker-username: <<parameters.docker-username>>
+                docker_password: <<parameters.docker-password>>
+                docker_username: <<parameters.docker-username>>
       - run:
           name: Set up QEMU
           command: |
@@ -71,9 +80,9 @@ jobs:
       - when:
           condition: <<parameters.update-description>>
           steps:
-            - docker/update-description:
-                docker-password: <<parameters.docker-password>>
-                docker-username: <<parameters.docker-username>>
+            - docker/update_description:
+                docker_password: <<parameters.docker-password>>
+                docker_username: <<parameters.docker-username>>
                 image: <<parameters.image>>
 
   check-code-quality:
@@ -85,12 +94,18 @@ jobs:
       - run:
           name: Check code formatting
           command: npm run prettier:check
-      - docker/dockerlint
+      - docker/hadolint
 
   build-example:
     docker:
       - image: cimg/node:lts-browsers
+    environment:
+      PUPPETEER_EXECUTABLE_PATH: /usr/bin/google-chrome-stable
     steps:
+      - browser-tools/install_chrome:
+          timeout: 5m
+      - browser-tools/install_chromedriver:
+          timeout: 5m
       - checkout
       - node/install-packages
       - run:
@@ -116,9 +131,9 @@ workflows:
       - node/test:
           matrix:
             parameters:
-              version:
-                - lts
-                - current
+              executor:
+                - node-lts
+                - node-current
       - build-publish: &docker-build-params
           name: build-docker-image
           image: zenika/sensei
