@@ -268,6 +268,29 @@ blockquote > :last-child {
   margin-bottom: 0;
 }
 
+/* Strigo md-extended `> aside positive/neutral/negative` — classes applied by labs.js transformer */
+blockquote.aside {
+  border-left: 4px solid;
+  padding: 10px 16px;
+  margin: 16px 0;
+  color: inherit; /* override the #777 default on blockquote */
+}
+
+blockquote.aside-positive {
+  border-left-color: var(--zenika-green, #00eb84);
+  background-color: rgba(0, 235, 132, 0.07);
+}
+
+blockquote.aside-neutral {
+  border-left-color: var(--zenika-blue, #4ca8e7);
+  background-color: rgba(76, 168, 231, 0.07);
+}
+
+blockquote.aside-negative {
+  border-left-color: var(--zenika-red, #ee2238);
+  background-color: rgba(238, 34, 56, 0.07);
+}
+
 table {
   padding: 0;
 }
