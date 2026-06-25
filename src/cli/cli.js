@@ -8,7 +8,7 @@ const path = require("path");
 const WebpackDevServer = require("webpack-dev-server");
 const webpackConfig = require("../build/webpack.config");
 const webpack = require("webpack");
-const yargs = require("yargs/yargs");
+const yargs = require("yargs");
 const { containsAnyError } = require("../app/lint/lint");
 
 /**
@@ -67,7 +67,10 @@ async function serve(buildOptions, serveOptions) {
 }
 
 async function lint(options) {
-  const material = options.material;
+  const material =
+    options.material === process.cwd()
+      ? path.join(options.material, "Slides")
+      : options.material;
   console.info(`Start linting from '${material}'...`);
 
   var hasError = false;
@@ -315,16 +318,7 @@ cli(
     )
     .command(
       "lint [material]",
-      "lint each Markdown files (e.g. check the number of empty new lines before new slides)",
-      (yargs) => {
-        yargs.positional("material", {
-          type: "string",
-          describe:
-            "Path to the folder to lint. Defaults to the Slides subfolder of the current working directory.",
-          default: "Slides",
-          coerce: (arg) => path.resolve(arg),
-        });
-      }
+      "lint each Markdown files (e.g. check the number of empty new lines before new slides)"
     )
     .option("config", {
       type: "string",
