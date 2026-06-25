@@ -67,10 +67,7 @@ async function serve(buildOptions, serveOptions) {
 }
 
 async function lint(options) {
-  const material =
-    options.material === process.cwd()
-      ? path.join(options.material, "Slides")
-      : options.material;
+  const material = path.join(options.material, options.folder);
   console.info(`Start linting from '${material}'...`);
 
   var hasError = false;
@@ -317,8 +314,14 @@ cli(
       describePositionalArguments
     )
     .command(
-      "lint [material]",
-      "lint each Markdown files (e.g. check the number of empty new lines before new slides)"
+      "lint [material] [folder]",
+      "lint each Markdown files (e.g. check the number of empty new lines before new slides)",
+      (yargs) => {
+        yargs.positional("folder", {
+          type: "string",
+          default: "Slides",
+        });
+      }
     )
     .option("config", {
       type: "string",
