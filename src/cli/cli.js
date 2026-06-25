@@ -68,7 +68,7 @@ async function serve(buildOptions, serveOptions) {
 
 async function lint(options) {
   const material = options.material;
-  console.info(`Start linting from material '${material}...`);
+  console.info(`Start linting from '${material}'...`);
 
   var hasError = false;
 
@@ -103,7 +103,7 @@ async function lintMardownFiles(file) {
     const containsError = await containsAnyError(createReadStream(file));
 
     if (containsError) {
-      console.log(`\n❌ The file "${file}" contains one or more errors.`);
+      console.error(`\n\x1b[31m❌ The file "${file}" contains one or more errors.\x1b[0m`);
     } else {
       console.debug("✅");
     }
@@ -313,7 +313,15 @@ cli(
     )
     .command(
       "lint [material]",
-      "lint each Markdown files (e.g. check the number of empty new lines before new slides)"
+      "lint each Markdown files (e.g. check the number of empty new lines before new slides)",
+      (yargs) => {
+        yargs.positional("material", {
+          type: "string",
+          describe: "Path to the folder to lint. Defaults to the Slides subfolder of the current working directory.",
+          default: "Slides",
+          coerce: (arg) => path.resolve(arg),
+        });
+      }
     )
     .option("config", {
       type: "string",
