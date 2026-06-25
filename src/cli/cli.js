@@ -24,7 +24,7 @@ async function cli(args, env) {
   } = args;
 
   console.info(
-    `Processing folder '${options.material}' as '${options.slug}' using slide size ${options.slideWidth}x${options.slideHeight} and language '${options.language}'`,
+    `Processing folder '${options.material}' as '${options.slug}' using slide size ${options.slideWidth}x${options.slideHeight} and language '${options.language}'`
   );
 
   const { host, port, bundleAnalyzer, watch } = env;
@@ -57,7 +57,7 @@ async function serve(buildOptions, serveOptions) {
       port: serveOptions.port,
       host: serveOptions.host,
     },
-    webpack(webpackConfig(buildOptions)),
+    webpack(webpackConfig(buildOptions))
   );
   try {
     await server.start();
@@ -104,7 +104,7 @@ async function lintMardownFiles(file) {
 
     if (containsError) {
       console.error(
-        `\n\x1b[31m❌ The file "${file}" contains one or more errors.\x1b[0m`,
+        `\n\x1b[31m❌ The file "${file}" contains one or more errors.\x1b[0m`
       );
     } else {
       console.debug("✅");
@@ -185,7 +185,7 @@ function pdfSlides({ slug, slideWidth, slideHeight, port }) {
     child.on("exit", function (code) {
       if (code !== 0) {
         return reject(
-          new Error(`spawned process exited with non-zero code '${code}'`),
+          new Error(`spawned process exited with non-zero code '${code}'`)
         );
       }
       console.log("PDF slides generated");
@@ -209,7 +209,7 @@ function pdfLabs({ slug, port }) {
     child.on("exit", function (code) {
       if (code !== 0) {
         return reject(
-          new Error(`forked process exited with non-zero code '${code}'`),
+          new Error(`forked process exited with non-zero code '${code}'`)
         );
       }
       console.log("PDF labs generated");
@@ -227,7 +227,7 @@ function pdfLabs({ slug, port }) {
 process.on("SIGINT", function onSigint() {
   console.info(
     "Got SIGINT (aka ctrl-c in docker). Graceful shutdown",
-    new Date().toISOString(),
+    new Date().toISOString()
   );
   process.exit();
 });
@@ -236,7 +236,7 @@ process.on("SIGINT", function onSigint() {
 process.on("SIGTERM", function onSigterm() {
   console.info(
     "Got SIGTERM (docker container stop). Graceful shutdown",
-    new Date().toISOString(),
+    new Date().toISOString()
   );
   process.exit();
 });
@@ -305,13 +305,13 @@ cli(
     .command(
       "serve [material] [slug]",
       "serve locally, with live-reloading",
-      describePositionalArguments,
+      describePositionalArguments
     )
     .command("pdf [material] [slug]", "build PDFs", describePositionalArguments)
     .command(
       "build [material] [slug]",
       "build the static web site",
-      describePositionalArguments,
+      describePositionalArguments
     )
     .command(
       "lint [material]",
@@ -324,7 +324,7 @@ cli(
           default: "Slides",
           coerce: (arg) => path.resolve(arg),
         });
-      },
+      }
     )
     .option("config", {
       type: "string",
@@ -385,9 +385,9 @@ cli(
           if (!yargs.parsed.defaulted?.config) {
             throw Object.assign(
               new Error(
-                `Cannot read config file '${configFilePath}': ${err.message}`,
+                `Cannot read config file '${configFilePath}': ${err.message}`
               ),
-              err,
+              err
             );
           }
         }
@@ -396,7 +396,7 @@ cli(
           config = JSON.parse(rawConfig);
         } catch (err) {
           throw new Error(
-            `Cannot parse the content of config file '${configFilePath}' as JSON: ${err.message}`,
+            `Cannot parse the content of config file '${configFilePath}' as JSON: ${err.message}`
           );
         }
         for (const [name, value] of Object.entries(argv)) {
@@ -417,5 +417,5 @@ cli(
       "strip-dashed": true,
     })
     .help().argv,
-  composeEnv(),
+  composeEnv()
 );

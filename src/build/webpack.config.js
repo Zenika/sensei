@@ -48,7 +48,7 @@ module.exports = (env = {}, argv = {}) => {
             require.resolve("html-loader"),
             {
               loader: path.resolve(
-                path.join(__dirname, "./loaders/revealjs-loader"),
+                path.join(__dirname, "./loaders/revealjs-loader")
               ),
               options: { materialVersion },
             },

@@ -11,7 +11,7 @@ async function compileJsonParts(jsonFileContent, { importPart }) {
   /** @type {string[]} */
   const partPaths = JSON.parse(jsonFileContent);
   const parts = await Promise.all(
-    partPaths.map((filename) => importPart(filename)),
+    partPaths.map((filename) => importPart(filename))
   );
   const content = parts.join(`${PART_SEPARATOR}`);
   return content;
@@ -23,7 +23,7 @@ function JsonPartsLoader(content) {
   const partsFolder = path.relative(material, this.context);
   const importPart = async (filename) => {
     const part = await this.importModule(
-      `training-material/${partsFolder}/${filename}`,
+      `training-material/${partsFolder}/${filename}`
     );
     return part;
   };

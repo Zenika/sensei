@@ -15,7 +15,7 @@ testCompilation(
   {
     slides: [{ file: "1.md" }],
   },
-  { ignoreWarnings: [TITLE_NOT_FOUND_WARNING] },
+  { ignoreWarnings: [TITLE_NOT_FOUND_WARNING] }
 );
 
 testCompilation(
@@ -23,7 +23,7 @@ testCompilation(
   {
     slides: [{ file: "1.md" }, { file: "2.md" }],
   },
-  { ignoreWarnings: [TITLE_NOT_FOUND_WARNING] },
+  { ignoreWarnings: [TITLE_NOT_FOUND_WARNING] }
 );
 
 testCompilation(
@@ -32,7 +32,7 @@ testCompilation(
     slides: [{ file: "img.md", content: '<img src="../assets/img.png">' }],
     assets: [{ file: "img.png" }],
   },
-  { ignoreWarnings: [TITLE_NOT_FOUND_WARNING] },
+  { ignoreWarnings: [TITLE_NOT_FOUND_WARNING] }
 );
 
 testCompilation(
@@ -45,7 +45,7 @@ testCompilation(
       },
     ],
   },
-  { ignoreWarnings: [TITLE_NOT_FOUND_WARNING] },
+  { ignoreWarnings: [TITLE_NOT_FOUND_WARNING] }
 );
 
 testCompilation("one slide with a title including HTML", {
@@ -97,7 +97,7 @@ testCompilation(
   {
     workbook: [{ file: "1.md" }],
   },
-  { ignoreWarnings: [TITLE_NOT_FOUND_WARNING] },
+  { ignoreWarnings: [TITLE_NOT_FOUND_WARNING] }
 );
 
 testCompilation(
@@ -105,18 +105,18 @@ testCompilation(
   {
     workbook: [{ file: "1.md" }, { file: "2.md" }],
   },
-  { ignoreWarnings: [TITLE_NOT_FOUND_WARNING] },
+  { ignoreWarnings: [TITLE_NOT_FOUND_WARNING] }
 );
 
 function testCompilation(
   caseName,
   fakeMaterialConfig,
-  { ignoreWarnings = [] } = {},
+  { ignoreWarnings = [] } = {}
 ) {
   return test(caseName, (t, done) => {
     const { input, output, cleanUp } = setupFakeMaterial(
       caseName,
-      fakeMaterialConfig,
+      fakeMaterialConfig
     );
     webpack(
       {
@@ -141,52 +141,52 @@ function testCompilation(
         assert.ifError(err);
         assert(
           !stats.hasErrors(),
-          `compilation of material '${caseName}' fails: ${stats.toString()}`,
+          `compilation of material '${caseName}' fails: ${stats.toString()}`
         );
         assert.strictEqual(
           // Can't use 'stats.hasWarnings' because it's 'true' even if said warnings are ignored by the config.
           stats.toJson().warningsCount,
           0,
           `compilation of material '${caseName}' emits warnings: ${stats.toString(
-            { children: true, warnings: true, errorDetails: true },
-          )}`,
+            { children: true, warnings: true, errorDetails: true }
+          )}`
         );
         done();
-      },
+      }
     );
   });
 }
 
 function setupFakeMaterial(
   folderLabel,
-  { slides = [], workbook = [], assets = [] } = {},
+  { slides = [], workbook = [], assets = [] } = {}
 ) {
   const sandbox = fs.mkdtempSync(
-    path.join(os.tmpdir(), `sensei_webpack.config.test.js_${folderLabel}_`),
+    path.join(os.tmpdir(), `sensei_webpack.config.test.js_${folderLabel}_`)
   );
   const input = path.join(sandbox, "input");
   const slidesFolder = path.join(input, "Slides");
   fs.mkdirSync(slidesFolder, { recursive: true });
   fs.writeFileSync(
     path.join(slidesFolder, "slides.json"),
-    JSON.stringify(slides.map(({ file }) => file)),
+    JSON.stringify(slides.map(({ file }) => file))
   );
   slides.forEach(({ file, content = "" }) =>
-    fs.writeFileSync(path.join(slidesFolder, file), content),
+    fs.writeFileSync(path.join(slidesFolder, file), content)
   );
   const workbookFolder = path.join(input, "Workbook");
   fs.mkdirSync(workbookFolder, { recursive: true });
   fs.writeFileSync(
     path.join(workbookFolder, "workbook.json"),
-    JSON.stringify(workbook.map(({ file }) => file)),
+    JSON.stringify(workbook.map(({ file }) => file))
   );
   workbook.forEach(({ file, content = "" }) =>
-    fs.writeFileSync(path.join(workbookFolder, file), content),
+    fs.writeFileSync(path.join(workbookFolder, file), content)
   );
   const assetsFolder = path.join(input, "assets");
   fs.mkdirSync(assetsFolder, { recursive: true });
   assets.forEach(({ file, content = "" }) =>
-    fs.writeFileSync(path.join(assetsFolder, file), content),
+    fs.writeFileSync(path.join(assetsFolder, file), content)
   );
   const output = path.join(sandbox, "output");
   return {

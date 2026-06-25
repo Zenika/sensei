@@ -16,7 +16,7 @@ test("workbook TOC loader includes table of content at every marker", () => {
 
 test("workbook TOC loader includes title in table of content", () => {
   const actual = workbookTocLoader(
-    '<!-- toc --><h2 id="just-a-title">just a title</h2>',
+    '<!-- toc --><h2 id="just-a-title">just a title</h2>'
   );
   const expected = /<li><a href="#just-a-title">just a title<\/a><\/li>/;
   assert.match(actual, expected);
