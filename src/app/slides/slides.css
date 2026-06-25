@@ -64,7 +64,7 @@ body:lang(en) {
 
 .reveal .slides table th,
 .reveal .slides table td {
-  padding: 0px 10px;
+  padding: 0 10px;
 }
 
 .reveal .slides table {
@@ -91,6 +91,28 @@ body:lang(en) {
 .reveal .slides table.no-border tr td,
 .reveal .slides table.no-border tr th {
   border: none;
+}
+
+.reveal .slides table.large-table th,
+.reveal .slides table.large-table td {
+  padding: 0.3em;
+}
+
+.reveal .slides table.quizz th {
+  padding: 0.3em;
+}
+
+.reveal .slides table.quizz td {
+  padding: 0.5em;
+}
+
+.reveal .slides table thead th {
+  background-color: var(--zenika-red);
+  color: #ffffff;
+}
+
+.reveal .slides table tbody tr:nth-child(even) td {
+  background-color: #fde8eb;
 }
 
 /*********************************************
@@ -537,7 +559,7 @@ body:lang(en) .reveal section.page-demo:after {
 }
 
 .reveal .slides footer.copyright {
-  left: 0px;
+  left: 0;
   width: 100%;
   text-align: center;
 }
@@ -602,7 +624,7 @@ body:lang(en) .reveal section.page-demo:after {
   border-color: #ebccd1;
 }
 
-/** incusion de font-awesome avec reveal : cf https://github.com/FortAwesome/Font-Awesome/pull/2131 */
+/** inclusion de font-awesome avec reveal : cf https://github.com/FortAwesome/Font-Awesome/pull/2131 */
 .reveal .fa {
   font-family: "FontAwesome";
   font-style: normal;
