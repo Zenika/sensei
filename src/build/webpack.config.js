@@ -124,6 +124,12 @@ module.exports = (env = {}, argv = {}) => {
         "training-material/Slides/resources/custom.css":
           "training-material/Slides/ressources/custom.css",
         "training-material/Slides/ressources/custom.css": false,
+        "training-material/Workbook/resources/custom.css":
+          "training-material/Workbook/ressources/custom.css",
+        "training-material/Workbook/ressources/custom.css": false,
+        "training-material/Workbook/resources/custom.js":
+          "training-material/Workbook/ressources/custom.js",
+        "training-material/Workbook/ressources/custom.js": false,
       },
     },
     output: {
