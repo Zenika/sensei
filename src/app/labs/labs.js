@@ -24,7 +24,7 @@ const { version } = labsContainer.dataset;
 
 // insert title
 const coverPageTitle = labsContainer.querySelector(
-  ":root div:first-of-type h1:first-of-type"
+  ":root div:first-of-type h1:first-of-type",
 );
 coverPageTitle.innerHTML = title;
 
@@ -33,6 +33,6 @@ const versionSpan = document.createElement("span");
 versionSpan.className = "version";
 versionSpan.innerHTML = version;
 const coverPageContainer = labsContainer.querySelector(
-  ":root div:first-of-type"
+  ":root div:first-of-type",
 );
 coverPageContainer.appendChild(versionSpan);

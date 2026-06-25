@@ -5,8 +5,8 @@ module.exports = function (content) {
   if (!title) {
     this.emitWarning(
       new Error(
-        `The title of the training was not found. Please ensure that the slides include a first level title (e.g. '# My title') in '${this.resourcePath}'`
-      )
+        `The title of the training was not found. Please ensure that the slides include a first level title (e.g. '# My title') in '${this.resourcePath}'`,
+      ),
     );
   }
   const titleExport = `export const title = "${title || "⚠ TITLE NOT FOUND"}";`;

@@ -17,7 +17,7 @@ async function containsAnyError(readStream) {
     if (titleOrCommentLinePattern.test(line)) {
       if (!allEmpty(prevLines)) {
         process.stdout.write(
-          `\n    line nb: ${index} - There must be at least ${nPreviousEmpty} blank lines before the block "${line}" .`
+          `\n    line nb: ${index} - There must be at least ${nPreviousEmpty} blank lines before the block "${line}" .`,
         );
         containsError = true;
       }

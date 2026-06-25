@@ -14,7 +14,7 @@ module.exports = function (content) {
         notesSeparator: "^Notes :",
         chapterIndex: index,
         materialVersion: options.materialVersion,
-      })
+      }),
     )
     .join("\n");
 };
@@ -62,7 +62,7 @@ function slidify(markdown, options) {
   var separatorRegex = new RegExp(
       options.separator +
         (options.verticalSeparator ? "|" + options.verticalSeparator : ""),
-      "mg"
+      "mg",
     ),
     horizontalSeparatorRegex = new RegExp(options.separator);
 
@@ -102,7 +102,7 @@ function slidify(markdown, options) {
 
   // add the remaining slide
   (wasHorizontal ? sectionStack : sectionStack[sectionStack.length - 1]).push(
-    markdown.substring(lastIndex)
+    markdown.substring(lastIndex),
   );
 
   var markdownSections = "";
@@ -151,7 +151,7 @@ function slidify(markdown, options) {
 function handleDotElementRevealSyntax(markdownSections) {
   return markdownSections.replace(
     /(?<comment><!--\s*\.element:?(?<injectedAttrs>["\w \t=:;%-]+)-->\s*?)<(?<targetTagName>[\w\-]+)/g,
-    "$<comment><$<targetTagName> $<injectedAttrs>"
+    "$<comment><$<targetTagName> $<injectedAttrs>",
   );
 }
 
@@ -160,7 +160,7 @@ function footer({ chapterIndex, slideIndex, materialVersion }) {
     <footer class="copyright">&copy; Copyright ${new Date().getFullYear()} Zenika. All rights reserved</footer>
     <footer class="slide-number">${slideNumber(
       chapterIndex,
-      slideIndex
+      slideIndex,
     )}</footer>
     <footer class="version">${materialVersion}</footer>
   `;
@@ -175,7 +175,7 @@ function slideNumber(chapterIndex, slideIndex) {
 
 function getEmbeddedClasses(
   markdown,
-  separator = DEFAULT_SLIDE_ATTRIBUTES_SEPARATOR
+  separator = DEFAULT_SLIDE_ATTRIBUTES_SEPARATOR,
 ) {
   const result = {};
   var mardownClassesInElementsRegex = new RegExp(separator, "mg");
@@ -216,7 +216,7 @@ function createMarkdownSlide(content, options) {
           /^(\s*<[^>]+>)(.*)(<\/[^>]+>\s*)$/ims,
           function (match, opening, inner, closing) {
             return opening + marked.parseInline(inner) + closing;
-          }
+          },
         );
       },
     },
