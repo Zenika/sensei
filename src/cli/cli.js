@@ -8,7 +8,7 @@ const path = require("path");
 const WebpackDevServer = require("webpack-dev-server");
 const webpackConfig = require("../build/webpack.config");
 const webpack = require("webpack");
-const yargs = require("yargs/yargs");
+const yargs = require("yargs");
 const { containsAnyError } = require("../app/lint/lint");
 
 /**
@@ -67,8 +67,11 @@ async function serve(buildOptions, serveOptions) {
 }
 
 async function lint(options) {
-  const material = options.material;
-  console.info(`Start linting from material '${material}...`);
+  const material =
+    options.material === process.cwd()
+      ? path.join(options.material, "Slides")
+      : options.material;
+  console.info(`Start linting from '${material}'...`);
 
   var hasError = false;
 
@@ -103,7 +106,9 @@ async function lintMardownFiles(file) {
     const containsError = await containsAnyError(createReadStream(file));
 
     if (containsError) {
-      console.log(`\n❌ The file "${file}" contains one or more errors.`);
+      console.error(
+        `\n\x1b[31m❌ The file "${file}" contains one or more errors.\x1b[0m`
+      );
     } else {
       console.debug("✅");
     }

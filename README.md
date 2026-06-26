@@ -46,7 +46,7 @@ The Linux filesystem can then be accessed from Windows through the path `\\wsl$\
 When using VSCode, you can also use the [WSL extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl)
 to edit files on the Linux filesystem.
 
-Therefore it is recommended to clone the training repository in the Linux filesystem then to run the alias from WSL2.
+Therefore, it is recommended to clone the training repository in the Linux filesystem then to run the alias from WSL2.
 
 > ⚠ If you use the Windows filesystem, hot reload when changing training content
 > won't work out-of-the-box, but you can set `SENSEI_WATCH_POLL` to `true` to
@@ -75,7 +75,7 @@ Therefore it is recommended to clone the training repository in the Linux filesy
 > installing packages from GitHub, resulting in failures to update sensei
 > correctly.
 
-⚠️ On Mac M1 or M2, you need to follow special steps to enable PDF generation.
+⚠️ On Mac with silicon chip, you need to follow special steps to enable PDF generation.
 You must do this before the `npm install`, otherwise you will have an unused version of chromium installed in `~/.cache/puppeteer`.
 
 ```
@@ -106,6 +106,12 @@ Run `sensei --help` for available commands and options.
 - Run `sensei serve`
 - Navigate to `http://localhost:8080/`
 
+### Lint
+
+- `cd` into a training material folder (must have `Slides/slides.json`)
+- Run `sensei lint`
+- If a slide is not properly formatted, an error will be thrown
+
 ## Material authoring
 
 ### Slides
@@ -121,7 +127,7 @@ Note that the following plugins are enabled:
 
 ### Workbook
 
-Write the workbook as you would a usual markdown document.
+Write the workbook as you would a usual Markdown document.
 
 > ℹ You may use `<!-- toc -->` to have
 > a table of content inserted at that place.

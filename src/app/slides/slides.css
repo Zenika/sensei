@@ -440,7 +440,8 @@ body:lang(en) .reveal section.page-demo:after {
   transition: color 0.15s ease;
 }
 
-.reveal a[href^="http://"], .reveal a[href^="https://"]
+.reveal a[href^="http://"],
+.reveal a[href^="https://"]
 {
   text-decoration: underline;
   text-decoration-style: dotted;
